@@ -5,4 +5,5 @@ in
 {
   inherit (helpers)
     mkNixos;
+  tailscale = import ./tailscale.nix;
 }

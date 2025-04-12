@@ -1,6 +1,7 @@
 # Home Server
 
 This is my home server configs in NixOS.
+It uses Tailscale to connect the hosts to my Tailscale network.
 
 ## Hosts
 
@@ -43,6 +44,30 @@ For example, to partition the disk for the `bitcoin` host, you can run:
 ```bash
 just disko bitcoin
 ```
+
+## `sops`
+
+Currently, I'm using `sops` to manage secrets.
+The only secret I have is the tailscale auth key,
+which can be found in `secrets/tailscale.yaml`.
+
+To use it, you need to:
+
+1. As `root`, copy your age keys, or generate new ones, to `/var/lib/sops/age/keys.txt`
+   adjusting permissions to `0600`:
+
+   ```bash
+   mkdir -p /var/lib/sops/age
+   age-keygen -o /var/lib/sops/age/keys.txt
+   chown root:root /var/lib/sops/age/keys.txt
+   chmod 600 /var/lib/sops/age/keys.txt
+   ```
+
+2. You can test that it works by decrypting a file:
+
+   ```bash
+   SOPS_AGE_KEY_FILE=/var/lib/sops/age/keys.txt sops -d secrets/tailscale.yaml
+   ```
 
 ## LICENSE
 

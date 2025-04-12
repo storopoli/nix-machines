@@ -1,6 +1,10 @@
 { config, inputs, pkgs, name, lib, ... }:
 
 {
+  imports = [
+    inputs.self.lib.tailscale
+  ];
+
   environment.systemPackages = with pkgs; [
     monero-cli
   ];

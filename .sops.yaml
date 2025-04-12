@@ -1,0 +1,9 @@
+keys:
+  - &yubikey_nano_macbook age1yubikey1qv025ycyq0fa23arvqe62a5ydnc2jqvyyhh5sx6f2ykfdld6nn4qyv5lgt7
+  - &age age1vgtu0mumd8v3wk2w4sx8l9ztq5f4a446rcttvdpejlfazs794a9q4wgv68
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *age
+      - *yubikey_nano_macbook
