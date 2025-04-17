@@ -2,7 +2,7 @@
 
 {
   imports = [
-    (inputs.nix-bitcoin + "/modules/presets/secure-node.nix")
+    (nix-bitcoin + "/modules/presets/secure-node.nix")
     inputs.self.lib.tailscale
   ];
 

@@ -1,17 +1,54 @@
 # lib/helper.nix
-{ inputs, outputs, stateVersion, ... }:
+{ inputs, ... }:
 {
-  mkNixos = { system, hostname, username, extraModules ? [] }:
+  mkNixos =
+    {
+      hostname,
+      username ? "user",
+      system ? "x86_64-linux",
+      stateVersion ? "24.11",
+      extraModules ? [ ],
+    }:
     let
-      pkgs = import inputs.nixpkgs { inherit system; config.allowUnfree = true; };
-      unstablePkgs = import inputs.nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+
+        config.allowUnfree = true;
+
+      };
+
+      _assertHostname = pkgs.lib.asserts.assertMsg (hostname == "") "you must specify a hostname!";
+
+      unstablePkgs = import inputs.nixpkgs-unstable {
+        inherit system;
+
+        config.allowUnfree = true;
+      };
+
+      systemExpression = import ../hosts {
+        inherit pkgs stateVersion;
+        module = hostname;
+        inherit username;
+      };
+      tailscaleModule = import ./tailscale.nix;
+
     in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit pkgs unstablePkgs inputs system hostname username; };
+      specialArgs = {
+        inherit
+          pkgs
+          unstablePkgs
+          inputs
+          system
+          hostname
+          username
+          ;
+      };
       modules = [
-        ../hosts/nixos/${hostname}
-        ../hosts/common/nixos-common.nix
+        systemExpression
+        tailscaleModule
       ] ++ extraModules;
     };
 }

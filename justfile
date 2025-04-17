@@ -18,7 +18,7 @@ update *host: update-flake-inputs reclaim-storage
 
 # Automated disk partitioning with disko
 disko *host:
-  nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko hosts/nixos/{{host}}/disko.nix
+  nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko hosts/{{host}}/disko.nix
 
 # Show Bitcoin service status
 bitcoin-status:

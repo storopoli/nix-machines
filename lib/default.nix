@@ -1,9 +1,4 @@
-{ inputs, outputs, stateVersion, ... }:
-let
-  helpers = import ./helpers.nix { inherit inputs outputs stateVersion; };
-in
+{ inputs, ... }:
 {
-  inherit (helpers)
-    mkNixos;
-  tailscale = import ./tailscale.nix;
+  inherit (import ./helpers.nix { inherit inputs; }) mkNixos;
 }
