@@ -24,22 +24,16 @@
     extraModulePackages = [ ];
 
   };
-  # These are already defined at disko.nix
-  #  fileSystems."/" =
-  #    {
-  #      device = "/dev/sda2";
-  #      fsType = "ext4";
-  #    };
-  #
-  # fileSystems."/boot" = {
-  #  device = "/dev/sda1";
-  # fsType = "vfat";
-  # options = [
-  #   "fmask=0022"
-  #   "dmask=0022"
-  #  ];
-  # };
-  swapDevices = [ ];
+
+  # TODO: change this to your /etc/nixos/hardware-configuration.nix stuff
+  # fileSystems."/" =
+  #   { device = "/dev/disk/by-uuid/920510e9-8798-469c-ab18-02169dc7eea8";
+  #     fsType = "ext4";
+  #   };
+
+  # swapDevices =
+  #   [ { device = "/dev/disk/by-uuid/df286d25-4ce5-444c-9ed0-7ee5f9a1d8fb"; }
+  #   ];
 
   # Enabless DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

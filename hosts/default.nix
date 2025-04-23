@@ -88,8 +88,8 @@ in
   };
   # Boot configuration
   boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+    grub.enable = true;
+    grub.device = "/dev/sda";
   };
   # System localization
   time.timeZone = "UTC";
