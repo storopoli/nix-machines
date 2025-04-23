@@ -35,7 +35,7 @@ in
       "wheel"
       "docker"
     ];
-    hashedPassword = "$y$j9T$d06yK/vE4fb.ELlX6ES/C0$To7VWsiXoxQ2K45QWe.NtXaifY6HLdhGSCSWmwTmDn0";
+    hashedPassword = "$y$j9T$iTXoDEZ5x7aQVXMN7KWT70$CGPkAv13F1Zk8S9PEUrKIMvR34O00A9Lp3KYCuVwaVB";
     packages = with pkgs; [
       #home-manager
       hello
