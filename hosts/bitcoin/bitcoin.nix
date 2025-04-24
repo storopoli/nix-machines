@@ -74,7 +74,11 @@
     # Enable the mempool space
     mempool = {
       enable = true;
-      frontend.enable = true;
+      frontend = {
+        enable = true;
+        address = "0.0.0.0";
+        port = 60845;
+      };
       tor = {
         proxy = true;
         enforce = true;
