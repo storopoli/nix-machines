@@ -103,6 +103,7 @@
             just
             vim
             helix
+            lazygit
             age
             age-plugin-yubikey
             sops
@@ -118,7 +119,9 @@
             echo "- just: $(just --version)"
             echo "- sops: $(sops --version)"
             echo "- age: $(age --version)"
-            echo "- helix $(helix --version)"
+            echo "- helix $(hx --version)"
+            echo "- lazygit $(lazygit --version)"
+            alias lg=lazygit
           '';
         };
       }
