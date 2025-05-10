@@ -7,14 +7,16 @@ Note you would probably want to protect your IP with a reverse proxy
 in a VPS somewhere and ending the TLS connection there
 and forwarding the traffic to your home server using something
 like Wireguard or Tailscale.
+Or you need to add reverse proxy configs to your NixOS deployments.
 
 ## Hosts
 
 I have 3 hosts configured as hardened secure servers:
 
-- `bitcoin`: a nixOS machine running a bitcoin full node.
-- `monero`: a nixOS machine running a monero full node.
-- `matrix`: a nixOS machine running a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity)
+- `bitcoin`: a bitcoin full node with [`nix-bitcoin`](https://nixbitcoin.org)
+- `monero`: a monero full node.
+- `matrix`: a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity)
+- `git`: a [`forgejo`](https://forgejo.org) server.
 
 ## To deploy
 

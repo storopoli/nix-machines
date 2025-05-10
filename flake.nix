@@ -72,6 +72,15 @@
             inputs.disko.nixosModules.disko
           ];
         };
+
+        git = libx.mkNixos {
+          hostname = "git";
+          username = "user";
+          extraModules = [
+            inputs.sops-nix.nixosModules.sops
+            inputs.disko.nixosModules.disko
+          ];
+        };
       };
     }
     // inputs.flake-utils.lib.eachSystem [ "x86_64-linux" ] (
