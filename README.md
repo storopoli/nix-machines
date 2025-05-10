@@ -3,19 +3,25 @@
 This is my home server configs in NixOS.
 It uses Tailscale to connect the hosts to my Tailscale network.
 
+Note you would probably want to protect your IP with a reverse proxy
+in a VPS somewhere and ending the TLS connection there
+and forwarding the traffic to your home server using something
+like Wireguard or Tailscale.
+
 ## Hosts
 
-I have 2 hosts configured as hardened secure servers:
+I have 3 hosts configured as hardened secure servers:
 
 - `bitcoin`: a nixOS machine running a bitcoin full node.
 - `monero`: a nixOS machine running a monero full node.
+- `matrix`: a nixOS machine running a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity)
 
 ## To deploy
 
 I have configured several `just` commands to deploy the configs to the hosts.
 
 ```bash
-$ just              
+$ just
 Available recipes:
     bitcoin-logs        # Show Bitcoin service logs since last boot
     bitcoin-status      # Show Bitcoin service status

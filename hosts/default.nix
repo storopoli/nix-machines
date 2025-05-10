@@ -1,9 +1,10 @@
 # Some common expressions between systems, one can call this expression as it was "configuration.nix".
 {
   pkgs,
-  module, # Should be any of the derivations, [ "bitcoin", "monero"].
+  module, # Should be any of the derivations, [ "bitcoin", "monero", "matrix"].
   stateVersion,
   username,
+  inputs,
   ...
 }:
 let
@@ -13,7 +14,7 @@ in
   system.stateVersion = stateVersion;
 
   imports = [
-    (import ./${module} { inherit module; })
+    (import ./${module} { inherit module inputs; })
   ];
 
   environment.systemPackages = with pkgs; [

@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
+    continuwuity = {
+      url = "git+https://forgejo.ellis.link/continuwuation/continuwuity";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -49,9 +54,19 @@
             (inputs.nix-bitcoin + "/modules/presets/secure-node.nix")
           ];
         };
+
         monero = libx.mkNixos {
           hostname = "monero";
-          username = "monero-user";
+          username = "user";
+          extraModules = [
+            inputs.sops-nix.nixosModules.sops
+            inputs.disko.nixosModules.disko
+          ];
+        };
+
+        matrix = libx.mkNixos {
+          hostname = "matrix";
+          username = "user";
           extraModules = [
             inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko

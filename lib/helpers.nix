@@ -27,7 +27,7 @@
       };
 
       systemExpression = import ../hosts {
-        inherit pkgs stateVersion;
+        inherit pkgs stateVersion inputs;
         module = hostname;
         inherit username;
       };

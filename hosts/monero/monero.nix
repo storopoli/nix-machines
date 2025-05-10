@@ -1,4 +1,10 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  username,
+  lib,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs; [
@@ -27,5 +33,4 @@
 
   # Open the RPC port in the firewall
   networking.firewall.allowedTCPPorts = [ 18081 ];
-
 }
