@@ -23,6 +23,7 @@ in
     curl
     just
     vim
+    helix
     doas
   ];
   # userland
@@ -88,9 +89,16 @@ in
     };
   };
   # Boot configuration
-  boot.loader = {
-    grub.enable = true;
-    grub.device = "/dev/sda";
+  boot = {
+    kernelModules = [ "tcp_bbr" ];
+    kernel.sysctl = {
+      "net.core.default_qdisc" = "fq";
+      "net.ipv4.tcp_congestion_control" = "bbr";
+    };
+    loader.grub = {
+      enable = true;
+      device = "/dev/sda";
+    };
   };
   # System localization
   time.timeZone = "UTC";

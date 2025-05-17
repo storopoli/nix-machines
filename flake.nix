@@ -28,7 +28,6 @@
     continuwuity = {
       url = "git+https://forgejo.ellis.link/continuwuation/continuwuity";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
   };
 
@@ -137,6 +136,7 @@
             nil
           ];
           shellHook = ''
+            export TERM=xterm
             echo "Welcome to home-server devshell!"
             echo "Available tools:"
             echo "- git: $(git --version)"
