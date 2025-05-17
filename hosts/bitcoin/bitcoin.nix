@@ -21,7 +21,7 @@
     # The nix-bitcoin release version that your config is compatible with.
     # When upgrading to a backwards-incompatible release, nix-bitcoin will display an
     # an error and provide instructions for migrating your config to the new release.
-    configVersion = "0.0.85";
+    configVersion = "0.0.123";
   };
 
   services = {
@@ -62,6 +62,7 @@
       tor.proxy = false;
     };
 
+    # Indexer
     electrs = {
       enable = true;
 
@@ -71,6 +72,7 @@
       # Set this if you're using the `secure-node.nix` template
       tor.enforce = false;
     };
+
     # Enable the mempool space
     mempool = {
       enable = true;
@@ -83,6 +85,11 @@
         proxy = true;
         enforce = true;
       };
+    };
+
+    # LND node
+    lnd = {
+      enable = true;
     };
   };
 
