@@ -23,7 +23,7 @@ in
     curl
     just
     vim
-    helix
+    evil-helix
     doas
   ];
   # userland

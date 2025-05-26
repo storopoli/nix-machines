@@ -125,7 +125,7 @@
             git
             just
             vim
-            helix
+            evil-helix
             lazygit
             age
             age-plugin-yubikey
@@ -143,7 +143,7 @@
             echo "- just: $(just --version)"
             echo "- sops: $(sops --version)"
             echo "- age: $(age --version)"
-            echo "- helix $(hx --version)"
+            echo "- evil-helix $(hx --version)"
             echo "- lazygit $(lazygit --version)"
             alias lg=lazygit
           '';
