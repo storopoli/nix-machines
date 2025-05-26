@@ -101,6 +101,7 @@
     # LND node
     lnd = {
       enable = true;
+      address = "0.0.0.0";
       rpcAddress = "0.0.0.0";
       restAddress = "0.0.0.0";
       certificate.extraIPs = [ "0.0.0.0" ];
@@ -116,5 +117,8 @@
     config.services.bitcoind.port # P2P
     config.services.bitcoind.rpc.port # RPC
     config.services.electrs.port # electrs
+    config.services.lnd.port # LND
+    config.services.lnd.rpcPort # LND
+    config.services.lnd.restPort # LND
   ];
 }
