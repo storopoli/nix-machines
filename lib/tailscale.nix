@@ -1,10 +1,5 @@
 # Module that holds all tailscale related config
-{
-  username,
-  config,
-  ...
-}:
-{
+{ username, config, ... }: {
   networking.firewall = {
     # enable the firewall
     enable = true;

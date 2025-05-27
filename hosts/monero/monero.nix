@@ -1,20 +1,10 @@
-{
-  pkgs,
-  config,
-  username,
-  lib,
-  ...
-}:
+{ pkgs, config, username, lib, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    monero-cli
-  ];
+  environment.systemPackages = with pkgs; [ monero-cli ];
 
   # Configure Tailscale hostname
-  services.tailscale.extraUpFlags = lib.mkAfter [
-    "--hostname=monero"
-  ];
+  services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=monero" ];
 
   services.monero = {
     enable = true;

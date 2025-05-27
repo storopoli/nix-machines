@@ -1,4 +1,1 @@
-{ inputs, ... }:
-{
-  inherit (import ./helpers.nix { inherit inputs; }) mkNixos;
-}
+{ inputs, ... }: { inherit (import ./helpers.nix { inherit inputs; }) mkNixos; }
