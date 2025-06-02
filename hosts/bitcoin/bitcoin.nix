@@ -25,6 +25,9 @@
       # Enable BitcoinD
       enable = true;
 
+      # Fuck the wallet
+      disablewallet = true;
+
       # Accept incoming peer connections
       listen = true;
 
