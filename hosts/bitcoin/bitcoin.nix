@@ -47,6 +47,10 @@
         "0.0.0.0/0" # Allow all addresses
       ];
 
+      # ZMQ
+      zmqpubrawblock = "tcp://0.0.0.0:28332";
+      zmqpubrawtx = "tcp://0.0.0.0:28333";
+
       extraConfig = ''
         mempoolfullrbf=1
         dbcache=4096 # this will help sync blocks faster
@@ -123,5 +127,10 @@
     config.services.lnd.rpcPort # LND
     config.services.lnd.restPort # LND
     config.services.mempool.frontend.port # Mempool
+    # ZMQ
+    {
+      from = 28332;
+      to = 28334;
+    }
   ];
 }
