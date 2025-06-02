@@ -122,5 +122,6 @@
     config.services.lnd.port # LND
     config.services.lnd.rpcPort # LND
     config.services.lnd.restPort # LND
+    config.services.mempool.frontend.port # Mempool
   ];
 }
