@@ -132,9 +132,8 @@
     config.services.lnd.restPort # LND
     config.services.mempool.frontend.port # Mempool
     # ZMQ
-    {
-      from = 28332;
-      to = 28334;
-    }
+    28332
+    28333
+    28334
   ];
 }
