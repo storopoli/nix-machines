@@ -1,7 +1,7 @@
 # lib/helper.nix
 { inputs, ... }: {
   mkNixos = { hostname, username ? "user", system ? "x86_64-linux"
-    , stateVersion ? "24.11", extraModules ? [ ], }:
+    , stateVersion ? "25.05", extraModules ? [ ], }:
     let
 
       pkgs = import inputs.nixpkgs {

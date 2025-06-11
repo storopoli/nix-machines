@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-24.11"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.05"; };
     nixpkgs-unstable = { url = "github:nixos/nixpkgs/nixos-unstable"; };
     flake-utils = { url = "github:numtide/flake-utils"; };
     sops-nix = {
@@ -13,7 +13,7 @@
     };
     pre-commit-hooks = { url = "github:cachix/git-hooks.nix"; };
     nix-bitcoin = {
-      url = "github:fort-nix/nix-bitcoin/nixos-24.11";
+      url = "github:fort-nix/nix-bitcoin/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };

@@ -2,7 +2,7 @@
 let inherit (inputs) nixpkgs nixpkgs-unstable;
 in {
   time.timeZone = "UTC";
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   virtualisation = {
     docker = {
