@@ -1,4 +1,10 @@
-{ pkgs, config, username, lib, ... }:
+{
+  pkgs,
+  config,
+  username,
+  lib,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs; [ monero-cli ];

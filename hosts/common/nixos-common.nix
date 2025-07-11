@@ -1,6 +1,14 @@
-{ pkgs, unstablePkgs, lib, inputs, ... }:
-let inherit (inputs) nixpkgs nixpkgs-unstable;
-in {
+{
+  pkgs,
+  unstablePkgs,
+  lib,
+  inputs,
+  ...
+}:
+let
+  inherit (inputs) nixpkgs nixpkgs-unstable;
+in
+{
   time.timeZone = "UTC";
   system.stateVersion = "25.05";
 
@@ -16,7 +24,10 @@ in {
 
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       warn-dirty = false;
       # 500mb buffer
       download-buffer-size = 500000000;

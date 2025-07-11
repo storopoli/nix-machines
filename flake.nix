@@ -1,8 +1,14 @@
 {
   inputs = {
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.05"; };
-    nixpkgs-unstable = { url = "github:nixos/nixpkgs/nixos-unstable"; };
-    flake-utils = { url = "github:numtide/flake-utils"; };
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-25.05";
+    };
+    nixpkgs-unstable = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,7 +17,9 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pre-commit-hooks = { url = "github:cachix/git-hooks.nix"; };
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+    };
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,9 +31,12 @@
     };
   };
 
-  outputs = { self, ... }@inputs:
-    let libx = import ./lib { inherit inputs; };
-    in {
+  outputs =
+    { self, ... }@inputs:
+    let
+      libx = import ./lib { inherit inputs; };
+    in
+    {
       # Define nixosConfigurations before calling "eachSystem" from flake-utils;
       #
       # https://www.reddit.com/r/NixOS/comments/12aykwj/comment/jev7ghc
@@ -70,29 +81,31 @@
           ];
         };
       };
-    } // inputs.flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
+    }
+    // inputs.flake-utils.lib.eachSystem [ "x86_64-linux" ] (
+      system:
       let
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
-      in {
+      in
+      {
         checks = {
           nix-sanity-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = pkgs.lib.fileset.toSource {
               root = ./.;
-              fileset =
-                pkgs.lib.fileset.unions [ ./lib ./flake.nix ./flake.lock ];
+              fileset = pkgs.lib.fileset.unions [
+                ./lib
+                ./flake.nix
+                ./flake.lock
+              ];
             };
             hooks = {
-              nixfmt-rfc-style = {
-                enable = true;
+              nixfmt-rfc-style.enable = true;
 
-              };
-              statix = {
-                enable = true;
+              statix.enable = true;
 
-              };
               flake-checker = {
                 enable = true;
                 args = [
@@ -117,8 +130,11 @@
             nixos-rebuild
             disko
             nil
+            nixfmt-rfc-style
           ];
           shellHook = ''
+            inherit (self.checks.${system}.git-hooks-check) shellHook;
+
             export TERM=xterm
             echo "Welcome to home-server devshell!"
             echo "Available tools:"
@@ -131,5 +147,6 @@
             alias lg=lazygit
           '';
         };
-      });
+      }
+    );
 }

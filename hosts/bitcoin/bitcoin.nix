@@ -100,9 +100,7 @@
         LND = {
           TLS_CERT_PATH = "${config.services.lnd.certPath}";
           MACAROON_PATH = "/run/lnd/mempool.macaroon";
-          REST_API_URL = "https://${toString config.services.lnd.restAddress}:${
-              toString config.services.lnd.restPort
-            }";
+          REST_API_URL = "https://${toString config.services.lnd.restAddress}:${toString config.services.lnd.restPort}";
         };
       };
     };
@@ -116,8 +114,7 @@
       certificate.extraIPs = [ "0.0.0.0" ];
       macaroons.mempool = {
         inherit (config.services.mempool) user;
-        permissions = ''
-          {"entity":"info","action":"read"},{"entity":"onchain","action":"read"},{"entity":"offchain","action":"read"},{"entity":"address","action":"read"},{"entity":"message","action":"read"},{"entity":"peers","action":"read"},{"entity":"signer","action":"read"},{"entity":"invoices","action":"read"},{"entity":"macaroon","action":"read"}'';
+        permissions = ''{"entity":"info","action":"read"},{"entity":"onchain","action":"read"},{"entity":"offchain","action":"read"},{"entity":"address","action":"read"},{"entity":"message","action":"read"},{"entity":"peers","action":"read"},{"entity":"signer","action":"read"},{"entity":"invoices","action":"read"},{"entity":"macaroon","action":"read"}'';
       };
     };
   };

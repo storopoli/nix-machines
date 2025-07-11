@@ -1,3 +1,8 @@
-{ module, inputs, ... }: {
-  imports = [ ./disko.nix ./hardware-configuration.nix ./${module}.nix ];
+{ module, inputs, ... }:
+{
+  imports = [
+    ./disko.nix
+    ./hardware-configuration.nix
+    ./${module}.nix
+  ];
 }
