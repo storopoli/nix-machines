@@ -120,8 +120,7 @@
           buildInputs = with pkgs; [
             git
             just
-            vim
-            evil-helix
+            helix
             lazygit
             age
             age-plugin-yubikey
