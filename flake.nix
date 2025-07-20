@@ -141,7 +141,7 @@
             echo "- just: $(just --version)"
             echo "- sops: $(sops --version)"
             echo "- age: $(age --version)"
-            echo "- evil-helix $(hx --version)"
+            echo "- helix $(hx --version)"
             echo "- lazygit $(lazygit --version)"
             alias lg=lazygit
           '';
