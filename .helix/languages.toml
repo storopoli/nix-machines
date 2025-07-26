@@ -2,3 +2,14 @@
 name = "nix"
 formatter = {command = "nixfmt"}
 auto-format = true
+
+[language-server.yaml-language-server.config.yaml.format]
+enable = true
+
+[language-server.yaml-language-server.config.yaml.schemas]
+# kubernetes = "/*.yaml"
+# "https://json.schemastore.org/github-action.json" = "/.github/**/actions.yml"
+"https://json.schemastore.org/github-workflow.json" = "/.github/workflows/*.{yml,yaml}"
+
+[language-server.yaml-language-server.config.yaml.schemaStore]
+url = "https://json.schemastore.org/package.json"

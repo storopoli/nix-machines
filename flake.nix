@@ -17,7 +17,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pre-commit-hooks = {
+    git-hooks = {
       url = "github:cachix/git-hooks.nix";
     };
     nix-bitcoin = {
@@ -37,7 +37,7 @@
       libx = import ./lib { inherit inputs; };
     in
     {
-      # Define nixosConfigurations before calling "eachSystem" from flake-utils;
+      # Define nixosConfigurations before calling "eachDefaultSystem" from flake-utils;
       #
       # https://www.reddit.com/r/NixOS/comments/12aykwj/comment/jev7ghc
       nixosConfigurations = {
@@ -82,7 +82,7 @@
         };
       };
     }
-    // inputs.flake-utils.lib.eachSystem [ "x86_64-linux" ] (
+    // inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import inputs.nixpkgs {
@@ -92,7 +92,7 @@
       in
       {
         checks = {
-          nix-sanity-check = inputs.pre-commit-hooks.lib.${system}.run {
+          nix-sanity-check = inputs.git-hooks.lib.${system}.run {
             src = pkgs.lib.fileset.toSource {
               root = ./.;
               fileset = pkgs.lib.fileset.unions [
@@ -117,34 +117,40 @@
           };
         };
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            git
-            just
-            helix
-            lazygit
-            age
-            age-plugin-yubikey
-            sops
-            gnupg
-            nixos-rebuild
-            disko
-            nil
-            nixfmt-rfc-style
-          ];
-          shellHook = ''
-            inherit (self.checks.${system}.git-hooks-check) shellHook;
-
-            export TERM=xterm
-            echo "Welcome to home-server devshell!"
-            echo "Available tools:"
-            echo "- git: $(git --version)"
-            echo "- just: $(just --version)"
-            echo "- sops: $(sops --version)"
-            echo "- age: $(age --version)"
-            echo "- helix $(hx --version)"
-            echo "- lazygit $(lazygit --version)"
-            alias lg=lazygit
-          '';
+          buildInputs =
+            with pkgs;
+            [
+              git
+              just
+              helix
+              lazygit
+              age
+              age-plugin-yubikey
+              sops
+              gnupg
+              nixos-rebuild
+              nil
+              statix
+              nixfmt-rfc-style
+              yaml-language-server
+            ]
+            ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+              disko
+            ];
+          shellHook =
+            self.checks.${system}.nix-sanity-check.shellHook
+            + ''
+              export TERM=xterm
+              echo "Welcome to home-server devshell!"
+              echo "Available tools:"
+              echo "- git: $(git --version)"
+              echo "- just: $(just --version)"
+              echo "- sops: $(sops --version --check-for-updates)"
+              echo "- age: $(age --version)"
+              echo "- helix $(hx --version)"
+              echo "- lazygit $(lazygit --version)"
+              alias lg=lazygit
+            '';
         };
       }
     );
