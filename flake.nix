@@ -118,8 +118,6 @@
             hooks = {
               nixfmt-rfc-style.enable = true;
 
-              statix.enable = true;
-
               flake-checker = {
                 enable = true;
                 args = [
@@ -144,7 +142,6 @@
               gnupg
               nixos-rebuild
               nil
-              statix
               nixfmt-rfc-style
               yaml-language-server
             ]
