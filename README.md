@@ -11,6 +11,12 @@ Or you need to add reverse proxy configs to your NixOS deployments.
 
 ## Hosts
 
+I have 1 host configured as a personal computer:
+
+- `desktop`: Nvidia-GPU gaming and programming desktop.
+  For Steam games don't forget to prepend the executables with `gamemoderun %command%`
+  in the launch options.
+
 I have 3 hosts configured as hardened secure servers:
 
 - `bitcoin`: a bitcoin full node with [`nix-bitcoin`](https://nixbitcoin.org)

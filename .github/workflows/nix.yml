@@ -34,9 +34,9 @@ jobs:
     strategy:
       matrix:
         include:
-          # - os: ubuntu-latest
-          #   os-name: "Gaming Desktop"
-          #   flake-attr: nixosConfigurations.desktop.config.system.build.toplevel
+          - os: ubuntu-latest
+            os-name: "Gaming Desktop"
+            flake-attr: nixosConfigurations.desktop.config.system.build.toplevel
           # - os: macos-latest
           #   os-name: "macOS Apple Silicon"
           #   flake-attr: darwinConfigurations.macbook.config.system.build.toplevel
