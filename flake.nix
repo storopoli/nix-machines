@@ -9,10 +9,6 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +47,6 @@
 
           extraModules = [
             inputs.nix-bitcoin.nixosModules.default
-            inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko
 
             (inputs.nix-bitcoin + "/modules/presets/secure-node.nix")
@@ -62,7 +57,6 @@
           hostname = "monero";
           username = "user";
           extraModules = [
-            inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko
           ];
         };
@@ -71,7 +65,6 @@
           hostname = "matrix";
           username = "user";
           extraModules = [
-            inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko
           ];
         };
@@ -80,7 +73,6 @@
           hostname = "git";
           username = "user";
           extraModules = [
-            inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko
           ];
         };
@@ -89,7 +81,6 @@
           hostname = "desktop";
           username = "user";
           extraModules = [
-            inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko
             inputs.home-manager.nixosModules.home-manager
           ];
@@ -111,6 +102,7 @@
               root = ./.;
               fileset = pkgs.lib.fileset.unions [
                 ./lib
+                ./hosts
                 ./flake.nix
                 ./flake.lock
               ];
@@ -138,7 +130,6 @@
               lazygit
               age
               age-plugin-yubikey
-              sops
               gnupg
               nixos-rebuild
               nil
@@ -156,7 +147,6 @@
               echo "Available tools:"
               echo "- git: $(git --version)"
               echo "- just: $(just --version)"
-              echo "- sops: $(sops --version --check-for-updates)"
               echo "- age: $(age --version)"
               echo "- helix $(hx --version)"
               echo "- lazygit $(lazygit --version)"

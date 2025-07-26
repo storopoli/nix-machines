@@ -803,8 +803,7 @@
         "home-manager": "home-manager",
         "nix-bitcoin": "nix-bitcoin",
         "nixpkgs": "nixpkgs_6",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "sops-nix": "sops-nix"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
     "rust-analyzer-src": {

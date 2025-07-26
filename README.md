@@ -48,6 +48,20 @@ For example, to deploy the configs to the `bitcoin` host, you can run:
 just install bitcoin
 ```
 
+## Tailscale
+
+By default [`tailscale`](https://tailscale.com) is enabled for all hosts.
+Uncomment the
+
+```nix
+# authKeyFile = /tmp/tailscale.key;
+```
+
+in the `lib/tailscale.nix` file.
+
+It will read a key from `/tmp/tailscale.key` so make sure to create this file
+and add your tailnet authorization key.
+
 ## Automated disk partitioning
 
 I'm using the `disko` tool to partition the disks.
@@ -62,29 +76,8 @@ For example, to partition the disk for the `bitcoin` host, you can run:
 just disko bitcoin
 ```
 
-## `sops`
 
-Currently, I'm using `sops` to manage secrets.
-The only secret I have is the tailscale auth key,
-which can be found in `secrets/tailscale.yaml`.
 
-To use it, you need to:
-
-1. As `root`, copy your age keys, or generate new ones, to `/var/lib/sops/age/keys.txt`
-   adjusting permissions to `0600`:
-
-   ```bash
-   mkdir -p /var/lib/sops/age
-   age-keygen -o /var/lib/sops/age/keys.txt
-   chown root:root /var/lib/sops/age/keys.txt
-   chmod 600 /var/lib/sops/age/keys.txt
-   ```
-
-2. You can test that it works by decrypting a file:
-
-   ```bash
-   SOPS_AGE_KEY_FILE=/var/lib/sops/age/keys.txt sops -d secrets/tailscale.yaml
-   ```
 
 ## LICENSE
 
