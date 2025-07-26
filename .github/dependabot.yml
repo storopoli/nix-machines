@@ -1,0 +1,18 @@
+# Set update schedule for GitHub Actions
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    # Check for updates to GitHub Actions every week
+    schedule:
+      interval: "weekly"
+    # Group all updates into a single PR
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    open-pull-requests-limit: 10
+
