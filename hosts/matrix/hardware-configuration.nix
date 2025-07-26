@@ -23,6 +23,12 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  # Bootloader
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

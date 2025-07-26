@@ -57,7 +57,7 @@
   # Desktop packages
   environment.systemPackages = with pkgs; [
     # System utilities
-    curl
+    tpm2-tss
 
     # Nvidia
     cudaPackages.cudatoolkit
@@ -71,9 +71,8 @@
   # Enable NetworkManager
   networking.networkmanager.enable = true;
 
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # zram swap
+  zramSwap.enable = true;
 
   # Home Manager configuration
   home-manager = {

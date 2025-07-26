@@ -1,14 +1,20 @@
 {
+  config,
+  disks ? [ "/dev/nvme0n1" ],
+  ...
+}:
+
+{
   disko.devices = {
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = builtins.elemAt disks 0;
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              size = "512M";
+              size = "1G";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -24,14 +30,37 @@
               content = {
                 type = "luks";
                 name = "cryptroot";
-                passwordFile = "/tmp/secret.key";
+                askPassword = true;
+                # passwordFile = "/tmp/luks.key";
                 settings = {
                   allowDiscards = true;
                 };
                 content = {
-                  type = "filesystem";
-                  format = "ext4";
-                  mountpoint = "/";
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                  };
                 };
               };
             };

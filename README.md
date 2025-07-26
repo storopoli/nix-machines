@@ -76,8 +76,25 @@ For example, to partition the disk for the `bitcoin` host, you can run:
 just disko bitcoin
 ```
 
+If you are setting up the `desktop` host,
+it uses a LUKS-encrypted Btrfs partition scheme.
+Uncomment the
 
+```nix
+# passwordFile = "/tmp/luks.key";
+```
 
+in the `hosts/desktop/disko.nix` file.
+
+The LUKS password is read from a file in `/tmp/luks.key` so make sure to create this file
+and add your LUKS password to it.
+
+Additionally, you might want to enable [TPM2 LUKS unlock](https://discourse.nixos.org/t/full-disk-encryption-tpm2/29454),
+you can run:
+
+```sh
+systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0 /dev/<my encrypted device
+```
 
 ## LICENSE
 

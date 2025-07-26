@@ -17,6 +17,12 @@
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
+    # Bootloader
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
     initrd = {
       availableKernelModules = [
         "xhci_pci"
@@ -29,6 +35,7 @@
       ];
       kernelModules = [ ];
       verbose = false;
+      systemd.enable = true; # needed for TPM2 LUKS unlock
     };
 
     supportedFilesystems = [
