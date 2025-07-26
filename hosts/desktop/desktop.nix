@@ -99,6 +99,6 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = import ./home.nix { inherit config pkgs username; };
+    users.${username} = import ../common/home-manager { inherit config pkgs username; };
   };
 }

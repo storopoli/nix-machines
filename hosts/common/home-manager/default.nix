@@ -6,6 +6,17 @@
 }:
 
 {
+
+  imports = [
+    # common home-manager configs
+    ./cli
+    ./shell
+    ./linux
+    ./helix.nix
+    # ./ghostty.nix # TODO: fix in 25.11
+    ./gaming.nix
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
@@ -14,20 +25,42 @@
   # Follow the same stateVersion as the system
   home.stateVersion = config.system.stateVersion;
 
-  # Gaming and desktop packages
+  # Common user packages
   home.packages = with pkgs; [
     # System utilities
+    curl
+    coreutils
+    exfat
+    zstd
 
-    # Gaming
-    bottles
-    mangohud
-    protonup
+    # dev
+    typst
+    just
+    presenterm
+    claude-code
+
+    # Opsec
+    brave
+    keepassxc
+    cryptomator
+    age
+    age-plugin-yubikey
+    sops
+    protonvpn-gui
+    tor-browser-bundle-bin
+    signal-desktop
+    transmission_4
+
+    # bitcoin
+    sparrow
+
+    # media
+    ffmpeg
+    obs-studio
+
+    # Secure Boot
+    sbctl
   ];
-
-  # Steam compatibility
-  home.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\\\${HOME}/.steam/root/compatibilitytools.d";
-  };
 
   dconf = {
     enable = true;
