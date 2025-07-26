@@ -75,10 +75,13 @@
     isNormalUser = true;
     description = "${username}";
     extraGroups = [
-      "networkmanager"
       "wheel"
+      "networkmanager"
       "docker"
       "gamemode"
+      "libvirtd"
+      "video"
+      "audio"
     ];
   };
 
