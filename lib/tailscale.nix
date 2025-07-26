@@ -17,20 +17,6 @@
 
   services.tailscale = {
     enable = true;
-    authKeyFile = config.sops.secrets.tailscale.path;
+    # authKeyFile = /tmp/tailscale.key;
   };
-
-  # Configure sops
-  sops = {
-    age.keyFile = "/var/lib/sops/age/keys.txt";
-
-    defaultSopsFile = ../secrets/tailscale.yaml;
-
-    secrets.tailscale = {
-      owner = username;
-      inherit (config.users.users.${username}) group;
-    };
-
-  };
-
 }
