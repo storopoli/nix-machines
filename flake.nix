@@ -29,6 +29,10 @@
       url = "git+https://forgejo.ellis.link/continuwuation/continuwuity";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -78,6 +82,16 @@
           extraModules = [
             inputs.sops-nix.nixosModules.sops
             inputs.disko.nixosModules.disko
+          ];
+        };
+
+        desktop = libx.mkNixos {
+          hostname = "desktop";
+          username = "user";
+          extraModules = [
+            inputs.sops-nix.nixosModules.sops
+            inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.home-manager
           ];
         };
       };
