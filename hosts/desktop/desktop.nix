@@ -31,6 +31,9 @@
     pulse.enable = true;
   };
 
+  # Tor
+  services.tor.client.enable = true;
+
   # Nvidia Configuration
   hardware.graphics = {
     enable = true;
