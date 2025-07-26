@@ -45,7 +45,6 @@
     cryptomator
     age
     age-plugin-yubikey
-    sops
     protonvpn-gui
     tor-browser-bundle-bin
     signal-desktop

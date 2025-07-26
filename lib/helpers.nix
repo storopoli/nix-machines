@@ -27,10 +27,18 @@
         config.allowUnfree = true;
       };
 
-      systemExpression = import ../hosts {
-        inherit pkgs stateVersion inputs;
+      commonExpression = import ../hosts/default.nix {
+        inherit
+          pkgs
+          stateVersion
+          inputs
+          username
+          ;
         module = hostname;
-        inherit username;
+      };
+      systemExpression = import ../hosts/${hostname} {
+        inherit inputs username;
+        module = hostname;
       };
       tailscaleModule = import ./tailscale.nix;
       sshModule = import ./ssh.nix;
@@ -52,6 +60,7 @@
         {
           nixpkgs.config.allowUnfree = true;
         }
+        commonExpression
         systemExpression
         tailscaleModule
         sshModule

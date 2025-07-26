@@ -6,11 +6,6 @@
   ...
 }:
 {
-  imports = [
-    ../common/nixos-common.nix
-    ../common/common-packages.nix
-  ];
-
   # GNOME Desktop Environment
   # TODO: in 25.11 these will change
   #       see <https://wiki.nixos.org/wiki/GNOME>
@@ -84,6 +79,6 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = import ../common/home-manager { inherit config pkgs username; };
+    users.${username} = import ../home-manager { inherit config pkgs username; };
   };
 }
