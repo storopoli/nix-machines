@@ -39,7 +39,6 @@
       inherit system;
       specialArgs = {
         inherit
-          pkgs
           unstablePkgs
           inputs
           system
@@ -49,6 +48,9 @@
           ;
       };
       modules = [
+        {
+          nixpkgs.config.allowUnfree = true;
+        }
         systemExpression
         tailscaleModule
       ] ++ extraModules;
