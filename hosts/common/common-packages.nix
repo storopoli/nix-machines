@@ -3,12 +3,13 @@ let
   inherit (inputs) nixpkgs nixpkgs-unstable;
 in
 {
+  # stable
   environment.systemPackages = with pkgs; [
-    ## stable
     git
     curl
     just
-    vim
+    helix
     doas
   ];
+
 }
