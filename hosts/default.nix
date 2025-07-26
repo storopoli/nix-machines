@@ -24,8 +24,6 @@ in
     doas
   ];
   # userland
-  #home-manager.useGlobalPkgs = true;
-  #home-manager.useUserPackages = true;
   users.users.${username} = {
     isNormalUser = true;
     description = "user";
@@ -36,7 +34,6 @@ in
     ];
     hashedPassword = "$y$j9T$iTXoDEZ5x7aQVXMN7KWT70$CGPkAv13F1Zk8S9PEUrKIMvR34O00A9Lp3KYCuVwaVB";
     packages = with pkgs; [
-      #home-manager
       hello
     ];
   };

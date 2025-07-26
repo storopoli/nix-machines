@@ -31,6 +31,7 @@ in
       warn-dirty = false;
       # 500mb buffer
       download-buffer-size = 500000000;
+      auto-optimise-store = true;
     };
     # Automate garbage collection
     gc = {
