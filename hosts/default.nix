@@ -15,24 +15,32 @@ in
 
   imports = [ (import ./${module} { inherit module inputs; }) ];
 
+  # stable
   environment.systemPackages = with pkgs; [
-    ## stable
     git
     curl
     just
     helix
     doas
   ];
-  # userland
+
+  # root password
+  users.users.root.hashedPassword = "***REMOVED***";
+
+  # Userland
   users.users.${username} = {
     isNormalUser = true;
     description = "user";
     extraGroups = [
-      "networkmanager"
       "wheel"
+      "networkmanager"
       "docker"
+      "gamemode"
+      "libvirtd"
+      "video"
+      "audio"
     ];
-    hashedPassword = "$y$j9T$iTXoDEZ5x7aQVXMN7KWT70$CGPkAv13F1Zk8S9PEUrKIMvR34O00A9Lp3KYCuVwaVB";
+    hashedPassword = "***REMOVED***";
     packages = with pkgs; [
       hello
     ];

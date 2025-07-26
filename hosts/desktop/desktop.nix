@@ -73,21 +73,6 @@
     CUDA_PATH = "${pkgs.cudatoolkit}";
   };
 
-  # User configuration
-  users.users.${username} = {
-    isNormalUser = true;
-    description = "${username}";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      "gamemode"
-      "libvirtd"
-      "video"
-      "audio"
-    ];
-  };
-
   # Enable NetworkManager
   networking.networkmanager.enable = true;
 
