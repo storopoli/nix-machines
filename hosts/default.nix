@@ -44,16 +44,8 @@ in
       MaxRetentionSec=36h
     '';
     qemuGuest.enable = true;
-    openssh = {
-      enable = true;
-      settings = {
-        PasswordAuthentication = false;
-        PermitRootLogin = "yes";
-      };
-    };
     xserver = {
       enable = false;
-      #videoDrivers = [ "nvidia" ];
     };
   };
   virtualisation = {
@@ -93,20 +85,6 @@ in
   # System localization
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
-  users.users.root = {
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKU4O0J7gdU1+0/IoVZUtajfmWGGNmA3TFXTsbnQfpwt"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJxv4Hr9OPL1ZMx+jVm2vp4kjJIJVGVIkpnfBO3+Zr8"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG83q6Dr8kaTFt9nIFN6gaXujSeMGWtRyejTcqFvGDAF"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrqm5G5d/AVqhGhaE20iRzLc1u6fySR9ul2e9RbQVio"
-      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIDv682q7hmMYG2iBpgg9fI5TOJbAx/9P1K2KjsL7q16HAAAABHNzaDo="
-      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEMt3wUpLy0Kx7876EO7CUMGj7BKNeF9wLZPOSR2p4JtAAAABHNzaDo="
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGIhKrCL5QLSi8cRUVvf1uAQiEJwc7Ew8TFgjdtvnSqX"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPJKBilUg02Tv3rOOxlOVBl1eUMpEpCgTSahQhBY/XTU"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM3YtfEbv02sDCJmRIOH8hlhEF93/Ory6IE2OKCkhAk+"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEN7VdD0bF+/Y6dYT+7xoqbWAgTXYaR1pTRcjenw2Px4"
-    ];
-  };
   # Hardware configuration
   hardware = {
     graphics = {

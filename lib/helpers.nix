@@ -33,6 +33,7 @@
         inherit username;
       };
       tailscaleModule = import ./tailscale.nix;
+      sshModule = import ./ssh.nix;
 
     in
     inputs.nixpkgs.lib.nixosSystem {
@@ -53,6 +54,7 @@
         }
         systemExpression
         tailscaleModule
+        sshModule
       ] ++ extraModules;
     };
 }
