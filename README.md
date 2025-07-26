@@ -1,6 +1,6 @@
-# Home Server
+# Nix Machines
 
-This is my home server configs in NixOS.
+This is my personal configs in NixOS.
 It uses Tailscale to connect the hosts to my Tailscale network.
 
 Note you would probably want to protect your IP with a reverse proxy
