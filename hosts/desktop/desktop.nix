@@ -56,11 +56,19 @@
   };
   programs.gamemode.enable = true;
 
-  # Gaming packages
+  # Desktop packages
   environment.systemPackages = with pkgs; [
     # System utilities
     curl
+
+    # Nvidia
+    cudaPackages.cudatoolkit
+    cudaPackages.cudnn
   ];
+
+  environment.variables = {
+    CUDA_PATH = "${pkgs.cudatoolkit}";
+  };
 
   # User configuration
   users.users.${username} = {
