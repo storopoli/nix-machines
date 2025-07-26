@@ -1,15 +1,28 @@
 {
+  config,
+  disks ? [ "/dev/sda" ],
+  ...
+}:
+
+{
   disko.devices = {
     disk = {
       sda = {
-        device = "/dev/sda";
+        device = builtins.elemAt disks 0;
         type = "disk";
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02";
+            ESP = {
+              size = "512M";
+              type = "EF00";
+              name = "ESP";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
             };
             root = {
               size = "100%";
@@ -23,5 +36,10 @@
         };
       };
     };
+  };
+
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
   };
 }

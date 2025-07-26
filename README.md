@@ -45,7 +45,10 @@ just install bitcoin
 ## Automated disk partitioning
 
 I'm using the `disko` tool to partition the disks.
-Every host has a `disko.nix` file that describes the disk layout.
+Every host has a `disko.nix` file that describes the disk layout with parameterized disk configuration.
+
+Each host's `disko.nix` accepts a `disks` parameter with sensible defaults (e.g., `[ "/dev/sda" ]`).
+You can customize the disk devices by passing different values when needed.
 
 For example, to partition the disk for the `bitcoin` host, you can run:
 

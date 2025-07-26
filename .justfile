@@ -6,7 +6,7 @@ default:
 
 # List all hosts
 list-hosts:
-  @ls hosts/nixos
+  @ls hosts/ | grep -v common | grep -v default.nix
 
 # Install the NixOS configuration for a specific host
 install *host:
@@ -18,7 +18,7 @@ update *host: update-flake-inputs reclaim-storage
 
 # Automated disk partitioning with disko
 disko *host:
-  nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko hosts/{{host}}/disko.nix
+  sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount hosts/{{host}}/disko.nix
 
 # Show Bitcoin service status
 bitcoin-status:
