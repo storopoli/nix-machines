@@ -1,6 +1,33 @@
 # lib/helper.nix
 { inputs, ... }:
 {
+  mkDarwin =
+    {
+      hostname,
+      username ? "user",
+      system ? "aarch64-darwin",
+      extraModules ? [ ],
+    }:
+    inputs.nix-darwin.lib.darwinSystem {
+      inherit system;
+      specialArgs = {
+        inherit username;
+      };
+      modules = [
+        ../hosts/${hostname}
+        inputs.home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${username} = import ../hosts/home-manager;
+          home-manager.extraSpecialArgs = {
+            inherit username;
+          };
+        }
+      ]
+      ++ extraModules;
+    };
+
   mkNixos =
     {
       hostname,
@@ -64,6 +91,7 @@
         systemExpression
         tailscaleModule
         sshModule
-      ] ++ extraModules;
+      ]
+      ++ extraModules;
     };
 }
