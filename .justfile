@@ -8,11 +8,11 @@ default:
 list-hosts:
   @ls hosts/ | grep -v common | grep -v default.nix
 
-# Install the NixOS configuration for a specific host (run after disko)
+# Install the NixOS configuration for a specific host (run after `disko`)
 install *host:
   sudo nixos-install --root /mnt --no-root-passwd --flake .#{{host}}
 
-# Install with impure flag if restricted mode issues occur (run after disko)
+# Install with impure flag if restricted mode issues occur (run after `disko`)
 install-impure *host:
   sudo nixos-install --root /mnt --no-root-passwd --impure --flake .#{{host}}
 
@@ -20,7 +20,15 @@ install-impure *host:
 update *host: update-flake-inputs reclaim-storage
   doas nixos-rebuild boot --flake .#{{host}}
 
-# Automated disk partitioning with disko
+# Initial setup for macOS with `nix-darwin` (first time only)
+setup-darwin *host:
+  darwin-rebuild switch --flake .#{{host}}
+
+# Update the macOS configuration with `nix-darwin`
+update-darwin *host: update-flake-inputs reclaim-storage
+  darwin-rebuild switch --flake .#{{host}}
+
+# Automated disk partitioning with `disko`
 disko *host:
   sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount hosts/{{host}}/disko.nix
 
