@@ -13,13 +13,14 @@ It uses Tailscale to connect the hosts to my Tailscale network.
 
 ## Hosts
 
-I have 1 host configured as a personal computer:
+Personal computers:
 
 - `desktop`: Nvidia-GPU gaming and programming desktop.
   For Steam games don't forget to prepend the executables with `gamemoderun %command%`
   in the launch options.
+- `macbook`: macOS configuration with home-manager integration.
 
-I have 3 hosts configured as hardened secure servers:
+Hardened secure servers:
 
 - `bitcoin`: a bitcoin full node with [`nix-bitcoin`](https://nixbitcoin.org)
 - `monero`: a monero full node.
@@ -33,15 +34,18 @@ I have configured several `just` commands to deploy the configs to the hosts.
 ```bash
 $ just
 Available recipes:
-    bitcoin-logs        # Show Bitcoin service logs since last boot
-    bitcoin-status      # Show Bitcoin service status
-    default             # List all commands
-    disko *host         # Automated disk partitioning with disko
-    install *host       # Install the NixOS configuration for a specific host
-    list-hosts          # List all hosts
-    reclaim-storage     # Reclaim storage
-    update *host        # Update the NixOS flake inputs and rebuild the host
-    update-flake-inputs # Update flake inputs
+    bitcoin-logs         # Show Bitcoin service logs since last boot
+    bitcoin-status       # Show Bitcoin service status
+    default              # List all commands
+    disko *host          # Automated disk partitioning with `disko`
+    install *host        # Install the NixOS configuration for a specific host (run after `disko`)
+    install-impure *host # Install with impure flag if restricted mode issues occur (run after `disko`)
+    list-hosts           # List all hosts
+    reclaim-storage      # Reclaim storage
+    setup-darwin *host   # Initial setup for macOS with `nix-darwin` (first time only)
+    update *host         # Update the NixOS flake inputs and rebuild the host
+    update-darwin *host  # Update the macOS configuration with `nix-darwin`
+    update-flake-inputs  # Update flake inputs
 ```
 
 For a **fresh installation** on the `bitcoin` host, you would run:
@@ -56,6 +60,34 @@ For **updating an existing system**, use:
 ```bash
 just update bitcoin
 ```
+
+## macOS Setup
+
+For the `macbook` host (macOS with `nix-darwin`),
+the deployment process is different:
+
+1. **Install Nix** (if not already installed):
+
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+   ```
+
+2. **Build and activate the configuration**:
+
+   ```bash
+   just setup-darwin macbook
+   ```
+
+3. **For updates**:
+
+   ```bash
+   just update-darwin macbook
+   ```
+
+The macOS configuration includes:
+- **nix-darwin** for system-level configuration
+- **home-manager** integration for user-level packages and settings
+- Cross-platform home-manager configuration that conditionally loads Linux-specific packages and settings
 
 ## Tailscale
 
