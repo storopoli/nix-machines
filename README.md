@@ -3,11 +3,13 @@
 This is my personal configs in NixOS.
 It uses Tailscale to connect the hosts to my Tailscale network.
 
-Note you would probably want to protect your IP with a reverse proxy
-in a VPS somewhere and ending the TLS connection there
-and forwarding the traffic to your home server using something
-like Wireguard or Tailscale.
-Or you need to add reverse proxy configs to your NixOS deployments.
+> [!NOTE]
+> For the server deployments, you would probably want
+> to protect your IP with a reverse proxy
+> in a VPS somewhere and ending the TLS connection there
+> and forwarding the traffic to your home server using something
+> like Wireguard or Tailscale.
+> Or you need to add reverse proxy configs to your NixOS deployments.
 
 ## Hosts
 
@@ -42,10 +44,17 @@ Available recipes:
     update-flake-inputs # Update flake inputs
 ```
 
-For example, to deploy the configs to the `bitcoin` host, you can run:
+For a **fresh installation** on the `bitcoin` host, you would run:
 
 ```bash
-just install bitcoin
+just disko bitcoin   # Partition and mount the disk
+just install bitcoin # Install NixOS to /mnt
+```
+
+For **updating an existing system**, use:
+
+```bash
+just update bitcoin
 ```
 
 ## Tailscale
@@ -63,6 +72,11 @@ It will read a key from `/tmp/tailscale.key` so make sure to create this file
 and add your tailnet authorization key.
 
 ## Automated disk partitioning
+
+> [!WARNING]
+> The `disko` command will **DESTROY** all data on the target disk!
+> Make sure you have backups and are targeting
+> the correct device before running these commands.
 
 I'm using the `disko` tool to partition the disks.
 Every host has a `disko.nix` file that describes the disk layout with parameterized disk configuration.

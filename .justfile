@@ -8,9 +8,13 @@ default:
 list-hosts:
   @ls hosts/ | grep -v common | grep -v default.nix
 
-# Install the NixOS configuration for a specific host
+# Install the NixOS configuration for a specific host (run after disko)
 install *host:
-  sudo nixos-install --no-root-passwd --flake .#{{host}}
+  sudo nixos-install --root /mnt --no-root-passwd --flake .#{{host}}
+
+# Install with impure flag if restricted mode issues occur (run after disko)
+install-impure *host:
+  sudo nixos-install --root /mnt --no-root-passwd --impure --flake .#{{host}}
 
 # Update the NixOS flake inputs and rebuild the host
 update *host: update-flake-inputs reclaim-storage
