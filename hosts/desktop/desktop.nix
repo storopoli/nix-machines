@@ -1,7 +1,7 @@
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   username,
   ...
 }:
@@ -78,6 +78,13 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = import ../home-manager { inherit config pkgs username; };
+    users.${username} = import ../home-manager {
+      inherit
+        config
+        lib
+        pkgs
+        username
+        ;
+    };
   };
 }

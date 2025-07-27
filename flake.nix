@@ -16,6 +16,10 @@
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -86,6 +90,14 @@
           ];
         };
       };
+
+      darwinConfigurations = {
+        macbook = libx.mkDarwin {
+          hostname = "macbook";
+          username = "user";
+          system = "aarch64-darwin";
+        };
+      };
     }
     // inputs.flake-utils.lib.eachDefaultSystem (
       system:
@@ -94,6 +106,7 @@
           inherit system;
           config.allowUnfree = true;
         };
+        isLinux = pkgs.stdenv.isLinux;
       in
       {
         checks = {
@@ -136,22 +149,20 @@
               nixfmt-rfc-style
               yaml-language-server
             ]
-            ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+            ++ pkgs.lib.optionals isLinux [
               disko
             ];
-          shellHook =
-            self.checks.${system}.nix-sanity-check.shellHook
-            + ''
-              export TERM=xterm
-              echo "Welcome to home-server devshell!"
-              echo "Available tools:"
-              echo "- git: $(git --version)"
-              echo "- just: $(just --version)"
-              echo "- age: $(age --version)"
-              echo "- helix $(hx --version)"
-              echo "- lazygit $(lazygit --version)"
-              alias lg=lazygit
-            '';
+          shellHook = self.checks.${system}.nix-sanity-check.shellHook + ''
+            export TERM=xterm
+            echo "Welcome to home-server devshell!"
+            echo "Available tools:"
+            echo "- git: $(git --version)"
+            echo "- just: $(just --version)"
+            echo "- age: $(age --version)"
+            echo "- helix $(hx --version)"
+            echo "- lazygit $(lazygit --version)"
+            alias lg=lazygit
+          '';
         };
       }
     );

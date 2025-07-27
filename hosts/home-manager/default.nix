@@ -1,9 +1,15 @@
 {
   config,
+  lib,
   pkgs,
   username,
   ...
 }:
+
+let
+  isLinux = pkgs.stdenv.isLinux;
+  isDarwin = pkgs.stdenv.isDarwin;
+in
 
 {
 
@@ -11,57 +17,68 @@
     # common home-manager configs
     ./cli
     ./shell
-    ./linux
     ./helix.nix
     # ./ghostty.nix # TODO: fix in 25.11
-    ./gaming.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
-  home.homeDirectory = "/home/${username}";
+  home.homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
 
-  # Follow the same stateVersion as the system
-  home.stateVersion = config.system.stateVersion;
+  # Follow the same stateVersion as the system (NixOS) or set manually (Darwin)
+  home.stateVersion = config.system.stateVersion or "25.05";
 
   # Common user packages
-  home.packages = with pkgs; [
-    # System utilities
-    curl
-    coreutils
-    exfat
-    zstd
+  home.packages =
+    with pkgs;
+    [
+      # System utilities
+      curl
+      coreutils
+      zstd
 
-    # dev
-    typst
-    just
-    presenterm
-    claude-code
+      # dev
+      typst
+      just
+      presenterm
+      claude-code
 
-    # Opsec
-    brave
-    keepassxc
-    cryptomator
-    age
-    age-plugin-yubikey
-    protonvpn-gui
-    tor-browser-bundle-bin
-    signal-desktop
-    transmission_4
+      # Opsec
+      age
+      age-plugin-yubikey
 
-    # bitcoin
-    sparrow
+      # media
+      ffmpeg
+    ]
+    ++ lib.optionals isLinux [
+      # System utilities
+      exfat
 
-    # media
-    ffmpeg
-    obs-studio
+      # Opsec
+      keepassxc
+      brave
+      signal-desktop
+      cryptomator
+      tor
+      torsocks
+      tor-browser-bundle-bin
+      protonvpn-gui # TODO: move to obscura-vpn once Linux support is available
+      transmission_4
 
-    # Secure Boot
-    sbctl
-  ];
+      # bitcoin
+      sparrow
 
-  dconf = {
+      # media
+      obs-studio
+
+      # Gaming
+      bottles
+      mangohud
+      protonup
+    ];
+
+  dconf = lib.mkIf isLinux {
     enable = true;
     settings = {
       # GNOME Dark mode
@@ -75,6 +92,11 @@
         ];
       };
     };
+  };
+
+  # Steam compatibility (Linux only)
+  home.sessionVariables = lib.mkIf pkgs.stdenv.isLinux {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
   };
 
   # Let Home Manager install and manage itself.

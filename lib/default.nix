@@ -1,4 +1,4 @@
 { inputs, ... }:
 {
-  inherit (import ./helpers.nix { inherit inputs; }) mkNixos;
+  inherit (import ./helpers.nix { inherit inputs; }) mkNixos mkDarwin;
 }
