@@ -1,40 +1,43 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   lib,
   ...
 }:
 
 {
+  home.packages = with pkgs; [
+    # LSP
+    marksman
+    nil
+    haskell-language-server
+    bash-language-server
+    fish-lsp
+    vscode-langservers-extracted
+    pyright
+    ruff
+    # rust-analyzer # conflicts with rustup
+    taplo
+    tinymist
+    yaml-language-server
+
+    # Formatter
+    nixfmt-rfc-style
+    fourmolu
+    haskellPackages.cabal-fmt
+    shfmt
+
+    # Debugger
+    lldb # provides lldb-vscode
+  ];
+
   programs.helix = {
     enable = true;
 
     defaultEditor = true;
 
-    extraPackages = with pkgs; [
-      # LSP
-      marksman
-      nil
-      haskell-language-server
-      bash-language-server
-      fish-lsp
-      vscode-langservers-extracted
-      pyright
-      ruff
-      rust-analyzer
-      taplo
-      tinymist
-      yaml-language-server
-
-      # Formatter
-      nixfmt-rfc-style
-      fourmolu
-      haskellPackages.cabal-fmt
-      shfmt
-
-      # Debugger
-      lldb # provides lldb-vscode
-    ];
+    package = pkgs-unstable.helix;
 
     settings = {
       theme = "gruvbox_dark_hard";
