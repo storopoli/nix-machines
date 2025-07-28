@@ -10,6 +10,7 @@
     ./bat.nix
     ./btop.nix
     ./direnv.nix
+    ./eza.nix
     ./fd.nix
     ./fzf.nix
     ./lazygit.nix
