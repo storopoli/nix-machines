@@ -18,7 +18,7 @@ in
     ./cli
     ./shell
     ./helix.nix
-    # ./ghostty.nix # TODO: fix in 25.11
+    ./ghostty.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

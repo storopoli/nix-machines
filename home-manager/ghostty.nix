@@ -1,8 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+
+let
+  isLinux = pkgs.stdenv.isLinux;
+in
 
 {
-  programs.ghostty = {
-    enabled = true;
+  # TODO: ghostty is broken on darwin
+  programs.ghostty = lib.mkIf isLinux {
+    enable = true;
     enableFishIntegration = true;
     settings = {
       shell-integration = "fish";
