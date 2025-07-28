@@ -82,6 +82,7 @@ in
 
       # media
       obs-studio
+      cider-2
 
       # programming
       llvm
