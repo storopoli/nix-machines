@@ -22,7 +22,7 @@ update *host: update-flake-inputs reclaim-storage
 
 # Initial setup for macOS with `nix-darwin` (first time only)
 setup-darwin *host:
-  darwin-rebuild switch --flake .#{{host}}
+  sudo nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake .#{{host}}
 
 # Update the macOS configuration with `nix-darwin`
 update-darwin *host: update-flake-inputs reclaim-storage

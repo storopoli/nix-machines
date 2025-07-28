@@ -8,10 +8,27 @@
       system ? "aarch64-darwin",
       extraModules ? [ ],
     }:
+
+    let
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+
     inputs.nix-darwin.lib.darwinSystem {
       inherit system;
       specialArgs = {
-        inherit username;
+        inherit
+          inputs
+          pkgs
+          pkgs-unstable
+          username
+          ;
       };
       modules = [
         ../hosts/${hostname}
@@ -21,7 +38,7 @@
           home-manager.useUserPackages = true;
           home-manager.users.${username} = import ../home-manager;
           home-manager.extraSpecialArgs = {
-            inherit username;
+            inherit username pkgs-unstable;
           };
         }
       ]
@@ -37,22 +54,19 @@
       extraModules ? [ ],
       disks ? [ "/dev/sda" ],
     }:
-    let
 
+    let
       pkgs = import inputs.nixpkgs {
         inherit system;
-
         config.allowUnfree = true;
+      };
 
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
       };
 
       _assertHostname = pkgs.lib.asserts.assertMsg (hostname == "") "you must specify a hostname!";
-
-      unstablePkgs = import inputs.nixpkgs-unstable {
-        inherit system;
-
-        config.allowUnfree = true;
-      };
 
       commonExpression = import ../hosts/default.nix {
         inherit
@@ -63,20 +77,23 @@
           ;
         module = hostname;
       };
+
       systemExpression = import ../hosts/${hostname} {
         inherit inputs username;
         module = hostname;
       };
-      tailscaleModule = import ./tailscale.nix;
-      sshModule = import ./ssh.nix;
 
+      tailscaleModule = import ./tailscale.nix;
+
+      sshModule = import ./ssh.nix;
     in
+
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
         inherit
-          unstablePkgs
           inputs
+          pkgs-unstable
           system
           hostname
           username

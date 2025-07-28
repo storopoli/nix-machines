@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   username,
   ...
 }:
@@ -78,13 +79,9 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = import ../../home-manager {
-      inherit
-        config
-        lib
-        pkgs
-        username
-        ;
+    users.${username} = import ../../home-manager;
+    extraSpecialArgs = {
+      inherit username pkgs-unstable;
     };
   };
 }

@@ -22,7 +22,7 @@
       no-comments = true;
 
       # Disable greetings
-      no-grettings = true;
+      no-greeting = true;
 
       # Display long key IDs
       keyid-format = "0xlong";
@@ -81,7 +81,7 @@
       # message digest algorithm used when signing a key
       cert-digest-algo = "SHA512";
       s2k-digest-algo = "SHA512";
-      s2k-cypher-algo = "AES256";
+      s2k-cipher-algo = "AES256";
 
       # list of personal compression preferences. When multiple ciphers are supported by
       # all recipients, choose the strongest one

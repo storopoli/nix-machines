@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   username,
   ...
 }:
@@ -37,14 +38,22 @@ in
       curl
       coreutils
       zstd
+      pkg-config
+      zlib
 
       # dev
+      rustup # NOTE: sp1 and risc0 friendly
+      ghc
+      cabal-install
+      stack
+      nodejs
+      sqlite
       typst
       just
       jq
       presenterm
       cargo-cache
-      claude-code
+      pkgs-unstable.claude-code
 
       # Opsec
       age

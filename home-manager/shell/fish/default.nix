@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -7,14 +7,14 @@ let
       ''
         # fish path stuff
         fish_add_path /run/current-system/sw/bin
+        fish_add_path /nix/var/nix/profiles/default/bin
         fish_add_path ~/.nix-profile/bin
-        fish_add_path /etc/profiles/per-user/user/bin
+        fish_add_path /etc/profiles/per-user/${username}/bin
         fish_add_path /opt/homebrew/bin
         fish_add_path ~/.cargo/bin
         fish_add_path ~/.npm-global/bin
         fish_add_path ~/.local/bin
         fish_add_path ~/.cabal/bin
-        fish_add_path ~/.claude/bin
         fish_add_path ~/.sp1/bin
         fish_add_path ~/.risc0/bin
         fish_add_path /opt/homebrew/opt/llvm/bin
@@ -22,10 +22,13 @@ let
     else
       ''
         # fish path stuff
+        fish_add_path /etc/profiles/per-user/${username}/bin
         fish_add_path ~/.cargo/bin
         fish_add_path ~/.npm-global/bin
         fish_add_path ~/.local/bin
         fish_add_path ~/.cabal/bin
+        fish_add_path ~/.sp1/bin
+        fish_add_path ~/.risc0/bin
       '';
 in
 

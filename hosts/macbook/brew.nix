@@ -35,7 +35,6 @@
       "protonvpn"
       "signal"
       "sparrow"
-      "tailscale"
       "tailscale-app"
       "tor-browser"
       "transmission"

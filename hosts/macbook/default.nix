@@ -5,13 +5,18 @@
   ];
 
   # System configuration version
-  system.stateVersion = 5;
+  system.stateVersion = 6;
 
   # Set primary user for homebrew and other user-specific options
   system.primaryUser = username;
 
   # Nix configuration
   nix = {
+
+    # WARN: if Nix was installed with `--determinate`
+    #       you need to disable nix.
+    #       To find you see if you have `/usr/local/bin/determinate-nixd`
+    enable = false;
     settings = {
       experimental-features = [
         "nix-command"

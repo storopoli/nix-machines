@@ -89,6 +89,12 @@ The macOS configuration includes:
 - **home-manager** integration for user-level packages and settings
 - Cross-platform home-manager configuration that conditionally loads Linux-specific packages and settings
 
+> [!NOTE]
+> For macOS to enable `fish` as the default shell you need to:
+>
+> 1. Add `which fish` under nix in `/etc/shells`
+> 1. Then run `chsh -s $(which fish)`
+
 ## Tailscale
 
 By default [`tailscale`](https://tailscale.com) is enabled for all hosts.

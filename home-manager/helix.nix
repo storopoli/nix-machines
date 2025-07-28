@@ -174,7 +174,7 @@
 
     languages = {
       language-server = {
-        haskell-language-server.config = {
+        haskell-language-server.config.haskell = {
           formattingProvider = "fourmolu";
           cabalFormattingProvider = "cabal-fmt";
           plugin = {
