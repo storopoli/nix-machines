@@ -41,6 +41,7 @@ in
       # dev
       typst
       just
+      jq
       presenterm
       claude-code
 
@@ -71,6 +72,11 @@ in
 
       # media
       obs-studio
+
+      # programming
+      llvm
+      python3
+      cargo
 
       # Gaming
       bottles

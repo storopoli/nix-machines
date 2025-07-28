@@ -13,13 +13,33 @@ in
 {
   system.stateVersion = stateVersion;
 
-  # stable
   environment.systemPackages = with pkgs; [
-    git
-    curl
-    just
-    helix
+    # Terminal
     doas
+    tree
+    curl
+    ripgrep
+    fd
+    sd
+    rsync
+    jq
+    just
+    git
+    helix
+
+    # ssh
+    openssh
+    ssh-copy-id
+
+    # age
+    age
+    age-plugin-yubikey
+
+    # archive
+    xz
+    zstd
+    lz4
+    p7zip
   ];
 
   # root password
