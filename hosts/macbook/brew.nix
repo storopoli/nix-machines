@@ -13,6 +13,7 @@
     };
 
     brews = [
+      "llvm"
       "pinentry-mac"
       {
         name = "tor";
@@ -22,14 +23,20 @@
     ];
 
     casks = [
-      "ghostty"
       "android-file-transfer"
+      "brave-browser"
       "cryptomator"
+      "ghostty"
       "iina"
-      "obscura-vpn"
+      "netnewswire"
       "obs"
+      "obscura-vpn"
+      "orbstack"
+      "protonvpn"
       "signal"
       "sparrow"
+      "tailscale"
+      "tailscale-app"
       "tor-browser"
       "transmission"
     ];
