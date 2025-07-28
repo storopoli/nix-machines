@@ -43,6 +43,7 @@ in
       just
       jq
       presenterm
+      cargo-cache
       claude-code
 
       # Opsec
