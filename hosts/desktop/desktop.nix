@@ -30,6 +30,9 @@
   # Tor
   services.tor.client.enable = true;
 
+  # Fish, fuck bash and zsh
+  environment.shells = with pkgs; [ fish ];
+
   # Nvidia Configuration
   hardware.graphics = {
     enable = true;
@@ -69,8 +72,16 @@
     CUDA_PATH = "${pkgs.cudatoolkit}";
   };
 
-  # Enable NetworkManager
-  networking.networkmanager.enable = true;
+  networking = {
+    # Enable NetworkManager
+    networkmanager.enable = true;
+
+    # DNS
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+  };
 
   # zram swap
   zramSwap.enable = true;
