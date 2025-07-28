@@ -106,6 +106,10 @@
           inherit system;
           config.allowUnfree = true;
         };
+        pkgs-unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
         isLinux = pkgs.stdenv.isLinux;
       in
       {
@@ -139,7 +143,7 @@
             [
               git
               just
-              helix
+              pkgs-unstable.helix
               lazygit
               age
               age-plugin-yubikey
