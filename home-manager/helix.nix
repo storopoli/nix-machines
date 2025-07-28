@@ -12,7 +12,27 @@
     defaultEditor = true;
 
     extraPackages = with pkgs; [
-      # debugger
+      # LSP
+      marksman
+      nil
+      haskell-language-server
+      bash-language-server
+      fish-lsp
+      vscode-langservers-extracted
+      pyright
+      ruff
+      rust-analyzer
+      taplo
+      tinymist
+      yaml-language-server
+
+      # Formatter
+      nixfmt-rfc-style
+      fourmolu
+      haskellPackages.cabal-fmt
+      shfmt
+
+      # Debugger
       lldb # provides lldb-vscode
     ];
 
@@ -124,8 +144,10 @@
             "replace_with_yanked"
           ];
           space = {
+            w = ":write";
             q = ":quit";
             Q = ":quit-all!";
+            space = "buffer_picker";
             # Generate permalink for current line
             # o = [":sh echo \"$(git remote get-url origin | sed 's/\\.git$//' | sed 's/git@github\\.com:/https:\\/\\/github\\.com\\//')/blob/$(git rev-parse HEAD)/%{buffer_name}#L%{cursor_line}\" | pbcopy"];
             o = [
@@ -151,20 +173,97 @@
     };
 
     languages = {
-      "yaml-language-server".config = {
-        yaml = {
-          format = {
-            enable = true;
+      language-server = {
+        haskell-language-server.config = {
+          formattingProvider = "fourmolu";
+          cabalFormattingProvider = "cabal-fmt";
+          plugin = {
+            fourmolu.config.external = true;
+            rename.config.crossModule = true;
           };
-          validation = true;
-          schemas = {
-            "kubernetes" = "*.yaml";
-            "https=//raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" = "docker-compose.yaml";
-            "https=//json.schemastore.org/github-workflow.json" = ".github/workflows/*.yaml";
-            "https=//json.schemastore.org/github-action.json" = ".github/actions/*/action.yaml";
+        };
+
+        tinymist.config = {
+          tinymist.formatterMode = "typstyle";
+        };
+
+        yaml-language-server.config = {
+          yaml = {
+            format = {
+              enable = true;
+            };
+            validation = true;
+            schemas = {
+              "kubernetes" = "*.yaml";
+              "https=//raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" =
+                "docker-compose.yaml";
+              "https=//json.schemastore.org/github-workflow.json" = ".github/workflows/*.yaml";
+              "https=//json.schemastore.org/github-action.json" = ".github/actions/*/action.yaml";
+            };
           };
         };
       };
+      language = [
+        {
+          name = "nix";
+          formatter = {
+            command = "nixfmt";
+          };
+          auto-format = true;
+        }
+
+        {
+          name = "haskell";
+          auto-format = true;
+        }
+
+        {
+          name = "toml";
+          formatter = {
+            command = "taplo";
+            args = [
+              "fmt"
+              "-"
+            ];
+          };
+          auto-format = true;
+        }
+
+        {
+          name = "python";
+          language-servers = [
+            "pyright"
+            "ruff"
+          ];
+          formatter = {
+            command = "sh";
+            args = [
+              "-c"
+              "ruff format - | ruff check --select I --fix - "
+            ];
+          };
+          auto-format = true;
+        }
+
+        {
+          name = "bash";
+          formatter = {
+            command = "shfmt";
+            args = [
+              "-i"
+              "2"
+              "-"
+            ];
+          };
+          auto-format = true;
+        }
+
+        {
+          name = "typst";
+          auto-format = true;
+        }
+
+      ];
     };
   };
 }

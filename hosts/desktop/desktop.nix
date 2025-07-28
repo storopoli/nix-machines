@@ -78,7 +78,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = import ../home-manager {
+    users.${username} = import ../../home-manager {
       inherit
         config
         lib

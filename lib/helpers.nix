@@ -19,7 +19,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.${username} = import ../hosts/home-manager;
+          home-manager.users.${username} = import ../home-manager;
           home-manager.extraSpecialArgs = {
             inherit username;
           };
