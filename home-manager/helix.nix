@@ -40,7 +40,7 @@
     package = pkgs-unstable.helix;
 
     settings = {
-      theme = "gruvbox_dark_hard";
+      theme = "gruvbox_dark_hard_transparent";
 
       editor = {
         line-number = "relative";
@@ -172,6 +172,13 @@
             ];
           };
         };
+      };
+    };
+
+    themes = {
+      gruvbox_dark_hard_transparent = {
+        inherits = "gruvbox_dark_hard";
+        "ui.background" = { };
       };
     };
 
