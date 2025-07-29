@@ -126,16 +126,8 @@
       in
       {
         checks = {
-          nix-sanity-check = inputs.git-hooks.lib.${system}.run {
-            src = pkgs.lib.fileset.toSource {
-              root = ./.;
-              fileset = pkgs.lib.fileset.unions [
-                ./lib
-                ./hosts
-                ./flake.nix
-                ./flake.lock
-              ];
-            };
+          pre-commit-check = inputs.git-hooks.lib.${system}.run {
+            src = ./.;
             hooks = {
               nixfmt-rfc-style.enable = true;
 
@@ -162,13 +154,13 @@
               gnupg
               nixos-rebuild
               nil
-              nixfmt-rfc-style
               yaml-language-server
             ]
+            ++ self.checks.${system}.pre-commit-check.enabledPackages
             ++ pkgs.lib.optionals isLinux [
               disko
             ];
-          shellHook = self.checks.${system}.nix-sanity-check.shellHook + ''
+          shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
             export TERM=xterm
             echo "Welcome to home-server devshell!"
             echo "Available tools:"
