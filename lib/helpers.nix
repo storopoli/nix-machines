@@ -18,6 +18,8 @@
         inherit system;
         config.allowUnfree = true;
       };
+      isLinux = pkgs.stdenv.isLinux;
+      isDarwin = pkgs.stdenv.isDarwin;
     in
 
     inputs.nix-darwin.lib.darwinSystem {
@@ -38,7 +40,12 @@
           home-manager.useUserPackages = true;
           home-manager.users.${username} = import ../home-manager;
           home-manager.extraSpecialArgs = {
-            inherit username pkgs-unstable;
+            inherit
+              username
+              pkgs-unstable
+              isLinux
+              isDarwin
+              ;
           };
         }
       ]

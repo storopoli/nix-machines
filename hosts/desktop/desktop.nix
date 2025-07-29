@@ -5,6 +5,12 @@
   username,
   ...
 }:
+
+let
+  isLinux = pkgs.stdenv.isLinux;
+  isDarwin = pkgs.stdenv.isDarwin;
+in
+
 {
   # GNOME Desktop Environment
   # TODO: in 25.11 these will change
@@ -59,7 +65,7 @@
       ];
     };
     extraSpecialArgs = {
-      inherit username pkgs-unstable;
+      inherit username isLinux isDarwin pkgs-unstable;
     };
   };
 }

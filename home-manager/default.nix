@@ -4,13 +4,10 @@
   pkgs,
   pkgs-unstable,
   username,
+  isLinux ? false,
+  isDarwin ? false,
   ...
 }:
-
-let
-  isLinux = pkgs.stdenv.isLinux;
-  isDarwin = pkgs.stdenv.isDarwin;
-in
 
 {
 
@@ -20,6 +17,9 @@ in
     ./shell
     ./helix.nix
     ./ghostty.nix
+  ]
+  ++ lib.optionals isLinux [
+    ./linux
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
