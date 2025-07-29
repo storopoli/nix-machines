@@ -8,6 +8,7 @@
     ../../lib/dns.nix
     ../../lib/audio.nix
     ../../lib/bluetooth.nix
+    ../../lib/airplay.nix
     ../../lib/nvidia.nix
   ];
 }
