@@ -40,6 +40,9 @@ in
       zstd
       pkg-config
       zlib
+      just
+      dust
+      jq
 
       # dev
       rustup # NOTE: sp1 and risc0 friendly
@@ -49,9 +52,6 @@ in
       nodejs
       sqlite
       typst
-      just
-      jq
-      presenterm
       cargo-cache
       pkgs-unstable.claude-code
 
@@ -61,6 +61,7 @@ in
 
       # media
       ffmpeg
+      presenterm
     ]
     ++ lib.optionals isLinux [
       # System utilities
