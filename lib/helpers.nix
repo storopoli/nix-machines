@@ -82,10 +82,6 @@
         inherit inputs username;
         module = hostname;
       };
-
-      tailscaleModule = import ./tailscale.nix;
-
-      sshModule = import ./ssh.nix;
     in
 
     inputs.nixpkgs.lib.nixosSystem {
@@ -106,8 +102,8 @@
         }
         commonExpression
         systemExpression
-        tailscaleModule
-        sshModule
+        (import ./tailscale.nix)
+        (import ./ssh.nix)
       ]
       ++ extraModules;
     };

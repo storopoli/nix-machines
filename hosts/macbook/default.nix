@@ -12,7 +12,6 @@
 
   # Nix configuration
   nix = {
-
     # WARN: if Nix was installed with `--determinate`
     #       you need to disable nix.
     #       To find you see if you have `/usr/local/bin/determinate-nixd`

@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   pkgs-unstable,
@@ -17,70 +16,26 @@
     videoDrivers = [ "nvidia" ];
   };
 
-  # Enable sound
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
   # Tor
   services.tor.client.enable = true;
 
   # Fish, fuck bash and zsh
   environment.shells = with pkgs; [ fish ];
 
-  # Nvidia Configuration
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  # Gaming Configuration
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    gamescopeSession.enable = true;
-  };
-  programs.gamemode.enable = true;
-
-  # Desktop packages
+  # TPM2
   environment.systemPackages = with pkgs; [
-    # System utilities
     tpm2-tss
-
-    # Nvidia
-    cudaPackages.cudatoolkit
-    cudaPackages.cudnn
   ];
 
-  environment.variables = {
-    CUDA_PATH = "${pkgs.cudatoolkit}";
-  };
-
   networking = {
+    # Firewall
+    firewall.enable = true;
+
     # Enable NetworkManager
     networkmanager.enable = true;
 
-    # DNS
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-    ];
+    # WireGuard
+    wireguard.enable = true;
   };
 
   # zram swap

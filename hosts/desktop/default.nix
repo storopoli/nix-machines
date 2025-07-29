@@ -1,9 +1,12 @@
-{ module, inputs, ... }:
+{ module, ... }:
 {
   imports = [
     ./disko.nix
     ./hardware-configuration.nix
-    ./bluetooth.nix
     ./${module}.nix
+    ../../lib/dns.nix
+    ../../lib/audio.nix
+    ../../lib/bluetooth.nix
+    ../../lib/nvidia.nix
   ];
 }
