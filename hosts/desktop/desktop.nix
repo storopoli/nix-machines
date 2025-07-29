@@ -52,7 +52,12 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = import ../../home-manager;
+    users.${username} = {
+      imports = [
+        ../../home-manager
+        ../../home-manager/gaming.nix
+      ];
+    };
     extraSpecialArgs = {
       inherit username pkgs-unstable;
     };

@@ -89,11 +89,6 @@ in
       llvm
       python3
       cargo
-
-      # Gaming
-      bottles
-      mangohud
-      protonup
     ];
 
   dconf = lib.mkIf isLinux {
@@ -110,11 +105,6 @@ in
         ];
       };
     };
-  };
-
-  # Steam compatibility (Linux only)
-  home.sessionVariables = lib.mkIf pkgs.stdenv.isLinux {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
   };
 
   # Let Home Manager install and manage itself.
