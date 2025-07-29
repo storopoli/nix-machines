@@ -40,6 +40,11 @@
     wireguard.enable = true;
   };
 
+  # Fix WiFi speeds
+  boot.extraModprobeConfig = ''
+    options cfg80211 ieee80211_regdom="US"
+  '';
+
   # zram swap
   zramSwap.enable = true;
 
