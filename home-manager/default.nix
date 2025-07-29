@@ -41,6 +41,7 @@ in
       pkg-config
       zlib
       just
+      sd
       dust
       jq
 
