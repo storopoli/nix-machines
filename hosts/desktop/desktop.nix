@@ -20,7 +20,9 @@
   services.tor.client.enable = true;
 
   # Fish, fuck bash and zsh
+  programs.fish.enable = true;
   environment.shells = with pkgs; [ fish ];
+  users.users.${username}.shell = pkgs.fish;
 
   # TPM2
   environment.systemPackages = with pkgs; [
