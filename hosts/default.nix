@@ -94,6 +94,7 @@ in
       download-buffer-size = 500000000;
       auto-optimise-store = true;
     };
+
     # Automate garbage collection
     gc = {
       automatic = true;
@@ -101,7 +102,8 @@ in
       options = "--delete-older-than 5";
     };
   };
-  # Boot configuration
+
+  # Traffic congestion control
   boot = {
     kernelModules = [ "tcp_bbr" ];
     kernel.sysctl = {
@@ -109,9 +111,11 @@ in
       "net.ipv4.tcp_congestion_control" = "bbr";
     };
   };
+
   # System localization
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
+
   # Hardware configuration
   hardware = {
     graphics = {
