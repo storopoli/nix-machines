@@ -48,8 +48,7 @@
               ;
           };
         }
-      ]
-      ++ extraModules;
+      ] ++ extraModules;
     };
 
   mkNixos =
@@ -111,7 +110,6 @@
         systemExpression
         (import ./tailscale.nix)
         (import ./ssh.nix)
-      ]
-      ++ extraModules;
+      ] ++ extraModules;
     };
 }
