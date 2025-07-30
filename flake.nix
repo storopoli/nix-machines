@@ -160,17 +160,19 @@
             ++ pkgs.lib.optionals isLinux [
               disko
             ];
-          shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
-            export TERM=xterm
-            echo "Welcome to home-server devshell!"
-            echo "Available tools:"
-            echo "- git: $(git --version)"
-            echo "- just: $(just --version)"
-            echo "- age: $(age --version)"
-            echo "- helix $(hx --version)"
-            echo "- lazygit $(lazygit --version)"
-            alias lg=lazygit
-          '';
+          shellHook =
+            self.checks.${system}.pre-commit-check.shellHook
+            + ''
+              export TERM=xterm
+              echo "Welcome to home-server devshell!"
+              echo "Available tools:"
+              echo "- git: $(git --version)"
+              echo "- just: $(just --version)"
+              echo "- age: $(age --version)"
+              echo "- helix $(hx --version)"
+              echo "- lazygit $(lazygit --version)"
+              alias lg=lazygit
+            '';
         };
       }
     );

@@ -36,22 +36,23 @@ in
   programs.fish = {
     enable = true;
 
-    interactiveShellInit = ''
-      # Disable greeting
-      set fish_greeting
+    interactiveShellInit =
+      ''
+        # Disable greeting
+        set fish_greeting
 
-      # VI key bindings
-      set fish_key_bindings fish_vi_key_bindings
+        # VI key bindings
+        set fish_key_bindings fish_vi_key_bindings
 
-      # SSH GPG auth
-      set -gx GPG_TTY (tty)
-      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-      gpgconf --launch gpg-agent
+        # SSH GPG auth
+        set -gx GPG_TTY (tty)
+        set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+        gpgconf --launch gpg-agent
 
-      # Theme Gruvbox
-      theme_gruvbox dark hard
-    ''
-    + fishPath;
+        # Theme Gruvbox
+        theme_gruvbox dark hard
+      ''
+      + fishPath;
 
     shellAliases = {
       cat = "bat --style=plain";

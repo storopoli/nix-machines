@@ -65,7 +65,12 @@ in
       ];
     };
     extraSpecialArgs = {
-      inherit username isLinux isDarwin pkgs-unstable;
+      inherit
+        username
+        isLinux
+        isDarwin
+        pkgs-unstable
+        ;
     };
   };
 }
