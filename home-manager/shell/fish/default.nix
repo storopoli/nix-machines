@@ -49,6 +49,16 @@ in
         set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
         gpgconf --launch gpg-agent
 
+        # man bat integration
+        set -x MANPAGER 'sh -c "col -bx | bat --language=man --decorations=never"'
+        set -x MANROFFOPT '-c'
+
+        # TODO: 25.11 will have `programs.fish.binds`
+        # binds
+        bind ctrl-n -M insert down-or-search
+        bind ctrl-p -M insert up-or-search
+        bind ctrl-g -M insert 'git diff' repaint
+
         # Theme Gruvbox
         theme_gruvbox dark hard
       ''
@@ -72,39 +82,33 @@ in
       yta = "yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames";
     };
 
-    functions = {
-      compress = ''tar -czf "$argv[1].tar.gz" "$argv[1]'';
-      webm2mp4 = ''
-          if command -v ffmpeg >/dev/null 2>&1
-              set input_file $argv[1]
-              set output_file (string replace -r '\.webm$' '.mp4' $input_file)
-              ffmpeg -i "$input_file" -c:v libx264 -preset slow -crf 22 -c:a aac -b:a 192k "$output_file"
-        end
-      '';
-      cleanrust = ''
-        if command -v fd >/dev/null 2>&1
-            fd -It d -g target -X rm -rf
-        end
-      '';
-      killport = ''
-        if test (count $argv) -ne 1
-            echo "Usage: killport <PORT>"
-            echo ""
-            echo "Kill the processes running on <PORT>"
-            return 1
-        end
-
-        set PORT $argv[1]
-        lsof -i "tcp:$PORT" | grep -v PID | awk '{print $2}' | xargs kill
-      '';
-    };
+    # TODO: 25.11 will have `programs.fish.binds`
+    # binds = {
+    #   "ctrl-n" = {
+    #     command = "down-or-search";
+    #     mode = "insert";
+    #   };
+    #   "ctrl-p" = {
+    #     command = "up-or-search";
+    #     mode = "insert";
+    #   };
+    #   "ctrl-g" = {
+    #     command = "'git diff' repaint";
+    #     mode = "insert";
+    #   };
+    # };
   };
 
   xdg.configFile = {
-    "fish/functions/flakify.fish".source = ./functions/flakify.fish;
-    "fish/functions/man.fish".source = ./functions/man.fish;
-    "fish/functions/nixify.fish".source = ./functions/nixify.fish;
-    "fish/functions/theme_gruvbox.fish".source = ./functions/theme_gruvbox.fish;
+    "fish/functions/compress.fish".source = ./functions/compress.fish;
+    "fish/functions/killport.fish".source = ./functions/killport.fish;
+    "fish/functions/webm2mp4.fish".source = ./functions/webm2mp4.fish;
     "fish/functions/ytp.fish".source = ./functions/ytp.fish;
+
+    "fish/functions/flakify.fish".source = ./functions/flakify.fish;
+    "fish/functions/nixify.fish".source = ./functions/nixify.fish;
+    "fish/functions/cleanrust.fish".source = ./functions/cleanrust.fish;
+
+    "fish/functions/theme_gruvbox.fish".source = ./functions/theme_gruvbox.fish;
   };
 }
