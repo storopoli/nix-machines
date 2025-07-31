@@ -67,6 +67,7 @@ in
     shellAliases = {
       cat = "bat --style=plain";
       c = "cargo";
+      curl = "curl -fSsL --proto '=https' --tlsv1.3"; # tinfoil-hat
       cd = "z";
       ff = "fzf --preview 'bat --style=numbers --color=always {}'";
       g = "git";
