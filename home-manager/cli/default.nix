@@ -15,7 +15,7 @@
     ./fzf.nix
     ./lazygit.nix
     ./ripgrep.nix
-    ./yazi.nix
+    ./yazi
     ./yt-dlp.nix
     ./zoxide.nix
   ];

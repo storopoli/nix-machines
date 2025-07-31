@@ -1,0 +1,95 @@
+
+#E373CE
+#FFD945
+#FF9700
+#81F900
+#FF3F4F
+#19D1E5
+#528bff
+
+[manager]
+cwd = { fg = "white" }
+
+hovered         = { reversed = true }
+preview_hovered = { reversed = true }
+
+tab_active   = { reversed = true }
+tab_inactive = {}
+tab_width    = 1
+
+# default bg
+count_copied   = { fg = "#1f1f28", bg = "#81F900" }
+count_cut      = { fg = "#1f1f28", bg = "#FF3F4F" }
+count_selected = { fg = "#1f1f28", bg = "#FFD945" }
+
+# Find
+find_keyword  = { bg = "white", fg = "#FF3F4F", bold = true, italic = false, underline = false }
+
+# Border
+border_symbol = "│"
+border_style  = { bg = "#292B30", fg = "#333341" }
+
+[which]
+cols = 2
+separator = " | "
+separator_style = { fg = "#292B30" } 
+mask = { bg = "#16161d" } # dark bg
+rest = { fg = "#727169" } # darkgrey
+cand = { fg = "white" }
+desc = { fg = "#565666" }
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "reset", bg = "#363646" }
+
+# default bg
+mode_normal = { fg = "#1f1f28", bg = "white", bold = true }
+mode_select = { fg = "#1f1f28", bg = "#FF3F4F", bold = true }
+mode_unset  = { fg = "#1f1f28", bg = "#FFD945", bold = true }
+
+progress_label  = { fg = "#19D1E5", bg = "#363646", bold = true }
+progress_normal = { fg = "#363646", bg = "#1f1f28" }
+progress_error  = { fg = "#363646", bg = "#1f1f28" }
+
+permissions_t = { fg = "#81F900" }
+permissions_r = { fg = "#FFD945" }
+permissions_w = { fg = "#FF3F4F" }
+permissions_x = { fg = "#FF9700" }
+permissions_s = { fg = "#19D1E5" }
+
+[input]
+border   = { fg = "#7fb4ca" } # blue
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[completion]
+border   = { fg = "#7fb4ca" } # blue
+active   = { reversed = true }
+inactive = {}
+
+[tasks]
+border  = { fg = "#7fb4ca" } # blue
+title   = {}
+hovered = { fg = "#938aa9" } # magenta
+
+[help]
+on      = { fg = "#7aa89f" } # cyan
+run     = { fg = "#938aa9" } # magenta
+desc    = {}
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#090618", bg = "#dcd7ba" } # white
+
+# files
+[filetype]
+rules = [
+    { mime = "image/*", fg = "#FFD945" },
+    { mime = "{audio,video}/*", fg = "#81F900" },
+    { mime = "application/{,g}zip", fg = "#FF3F4F" },
+    { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#FF3F4F" },
+    { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#0D96DE" },
+    { name = "*", is = "orphan", fg = "#FF3F4F" },
+    { name = "*", is = "exec", fg = "#81F900" },
+    { name = "*/", fg = "#19D1E5"}
+]
