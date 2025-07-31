@@ -17,6 +17,7 @@
       ./cli
       ./shell
       ./helix.nix
+      ./neovim
       ./ghostty.nix
     ]
     ++ lib.optionals isLinux [
