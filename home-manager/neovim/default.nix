@@ -43,6 +43,7 @@
       gruvbox-nvim
       oil-nvim
       mini-pick
+      mini-extra
       nvim-lspconfig
       typst-preview-nvim
     ];
