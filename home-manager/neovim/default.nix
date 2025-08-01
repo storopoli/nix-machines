@@ -41,8 +41,9 @@
 
     plugins = with pkgs.vimPlugins; [
       gruvbox-nvim
-      oil-nvim
       mini-pick
+      mini-extra
+      mini-surround
       nvim-lspconfig
       typst-preview-nvim
     ];

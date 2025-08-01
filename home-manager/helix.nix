@@ -35,7 +35,6 @@
 
   programs.helix = {
     enable = true;
-
     defaultEditor = true;
 
     package = pkgs-unstable.helix;
@@ -226,7 +225,14 @@
             ];
 
             # Make the server aware of Neovim runtime files
-            workspace.library = ''vim.api.nvim_get_runtime_file(""; true)'';
+            workspace = {
+              library = ''vim.api.nvim_get_runtime_file(""; true)'';
+              ignoreDir = [
+                "vscode"
+                ".direnv"
+                "result"
+              ];
+            };
 
             # Do not send telemetry data containing a randomized but unique identifier
             telemetry.enable = false;

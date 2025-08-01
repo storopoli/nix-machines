@@ -107,15 +107,17 @@ vim.api.nvim_create_autocmd("BufRead", {
 -- NOTE: managed by nix
 -- vim.pack.add({
 --     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
---     { src = "https://github.com/stevearc/oil.nvim" },
 --     { src = "https://github.com/echasnovski/mini.pick" },
+--     { src = "https://github.com/echasnovski/mini.extra" },
+--     { src = "https://github.com/echasnovski/mini.surround" },
 --     { src = "https://github.com/neovim/nvim-lspconfig" },
 --     { src = "https://github.com/chomosuke/typst-preview.nvim" },
 -- })
 
 require "mini.pick".setup()
-require "oil".setup()
-require("gruvbox").setup({
+require "mini.extra".setup()
+require "mini.surround".setup()
+require "gruvbox".setup({
   contrast_dark = "hard",
   transparent_mode = true,
 })
@@ -127,11 +129,16 @@ vim.cmd(":hi statusline guibg=NONE")
 -- Pickers
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>")
-vim.keymap.set("n", "<leader>g", ":Pick grep<CR>")
-vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
+vim.keymap.set("n", "<leader>/", ":Pick grep<CR>")
+vim.keymap.set("n", "<leader>?", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>'", ":Pick resume<CR>")
-vim.keymap.set("n", "<leader>e", ":Oil<CR>")
-vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
+vim.keymap.set("n", "<leader>e", ":Pick explorer<CR>")
+vim.keymap.set("n", "<leader>g", ":Pick git_hunks<CR>")
+vim.keymap.set("n", "<leader>s", ':Pick lsp scope="document_symbol"<CR>')
+vim.keymap.set("n", "<leader>S", ':Pick lsp scope="workspace_symbol"<CR>')
+vim.keymap.set("n", "<leader>d", ':Pick diagnostic scope="current"<CR>')
+vim.keymap.set("n", "<leader>D", ':Pick diagnostic scope="all"<CR>')
+-- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
 -- LSP Autocomplete
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -180,7 +187,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- LSPs
 -- Auto-starts LSP when a buffer is opened, based on the lsp-config
 -- `filetypes`, `root_markers`, and `root_dir` fields.
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist" })
+vim.lsp.enable({ "lua_ls", "rust_analyzer", "nil_ls", "tinymist" })
 
 -- Lua
 require("lspconfig").lua_ls.setup {
@@ -201,6 +208,11 @@ require("lspconfig").lua_ls.setup {
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
+        ignoreDir = {
+          '.vscode',
+          '.direnv',
+          'result',
+        },
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
