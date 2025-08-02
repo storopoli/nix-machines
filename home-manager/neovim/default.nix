@@ -32,7 +32,7 @@
 
   programs.neovim = {
     enable = true;
-    defaultEditor = false;
+    defaultEditor = true;
     vimAlias = true;
     viAlias = true;
     vimdiffAlias = true;
