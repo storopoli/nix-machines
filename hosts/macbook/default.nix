@@ -10,6 +10,9 @@
   # Set primary user for homebrew and other user-specific options
   system.primaryUser = username;
 
+  # hostname
+  networking.hostName = "macbook";
+
   # Nix configuration
   nix = {
     # WARN: if Nix was installed with `--determinate`
