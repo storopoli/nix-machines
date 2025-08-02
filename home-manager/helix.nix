@@ -193,9 +193,7 @@
           };
         };
 
-        tinymist.config = {
-          tinymist.formatterMode = "typstyle";
-        };
+        tinymist.config.tinymist.formatterMode = "typstyle";
 
         yaml-language-server.config = {
           yaml = {

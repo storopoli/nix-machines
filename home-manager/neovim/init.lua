@@ -1,6 +1,4 @@
--------------------------------------------------------------------------------
 -- Options
--------------------------------------------------------------------------------
 -- Set highlight on search
 vim.o.hlsearch = false
 vim.o.incsearch = true
@@ -86,6 +84,13 @@ vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y<CR>', { noremap = true, sile
 -- Location list
 vim.keymap.set("n", "]q", "<cmd>cnext<CR>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "[q", "<cmd>cprev<CR>zz", { noremap = true, silent = true })
+vim.api.nvim_create_autocmd("filetype", {
+  pattern = "qf",
+  desc = "loclist keymaps",
+  callback = function()
+    vim.keymap.set("n", "q", "<cmd>quit<CR>", { noremap = true, silent = true })
+  end
+})
 --  Highlight on Yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -103,21 +108,56 @@ vim.api.nvim_create_autocmd("BufRead", {
   pattern = "*",
 })
 
+-- Netrw Customizations
+vim.keymap.set("n", "<C-p>", vim.cmd.Lexplore)
+vim.keymap.set("n", "<C-q>", "<CMD>Lexplore %:h<CR>") -- in the current file's directory
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
+
+vim.api.nvim_create_autocmd("filetype", {
+  pattern = "netrw",
+  desc = "Better mappings for netrw",
+  callback = function()
+    -- edit new file
+    vim.keymap.set("n", "n", "%", { remap = true, buffer = true })
+    -- rename file
+    vim.keymap.set("n", "r", "R", { remap = true, buffer = true })
+    -- back in history
+    vim.keymap.set("n", "H", "u", { remap = true, buffer = true })
+    -- up a directory
+    vim.keymap.set("n", "h", "-^", { remap = true, buffer = true })
+    -- open a directory or a file
+    vim.keymap.set("n", "l", "<CR>", { remap = true, buffer = true })
+    -- toggle the dotfiles
+    vim.keymap.set("n", ".", "gh", { remap = true, buffer = true })
+    -- close the preview window
+    vim.keymap.set("n", "P", "<C-w>z", { remap = true, buffer = true })
+    -- open a file and close netrw
+    vim.keymap.set("n", "L", "<CR><CMD>Lexplore<CR>", { remap = true, buffer = true })
+    -- close netrw using any key that we've opened netrw with
+    vim.keymap.set("n", "<leader>q", "<CMD>Lexplore<CR>", { remap = true, buffer = true })
+    vim.keymap.set("n", "<C-p>", "<CMD>Lexplore<CR>", { remap = true, buffer = true })
+    vim.keymap.set("n", "<C-q>", "<CMD>Lexplore<CR>", { remap = true, buffer = true })
+  end,
+})
+
 -- Plugins
 -- NOTE: managed by nix
 -- vim.pack.add({
---     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
---     { src = "https://github.com/echasnovski/mini.pick" },
---     { src = "https://github.com/echasnovski/mini.extra" },
---     { src = "https://github.com/echasnovski/mini.surround" },
---     { src = "https://github.com/neovim/nvim-lspconfig" },
---     { src = "https://github.com/chomosuke/typst-preview.nvim" },
+--   { src = "https://github.com/ellisonleao/gruvbox.nvim" },
+--   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+--   { src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
+--   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
+--   { src = "https://github.com/echasnovski/mini.pick" },
+--   { src = "https://github.com/echasnovski/mini.extra" },
+--   { src = "https://github.com/echasnovski/mini.surround" },
+--   { src = "https://github.com/neovim/nvim-lspconfig" },
+--   { src = "https://github.com/lewis6991/gitsigns.nvim" },
+--   { src = "https://github.com/chomosuke/typst-preview.nvim" },
 -- })
 
-require "mini.pick".setup()
-require "mini.extra".setup()
-require "mini.surround".setup()
-require "gruvbox".setup({
+require("gruvbox").setup({
   contrast_dark = "hard",
   transparent_mode = true,
 })
@@ -126,8 +166,126 @@ vim.o.background = "dark"
 vim.cmd.colorscheme("gruvbox")
 vim.cmd(":hi statusline guibg=NONE")
 
+-- treesitter
+require("nvim-treesitter.configs").setup({
+  ensure_installed = {},
+  highlight = {
+    enable = true,
+  },
+  sync_install = false,
+  auto_install = false,
+  ignore_install = {},
+  -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+  -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+  -- Using this option may slow down your editor, and you may see some duplicate highlights.
+  -- Instead of true it can also be a list of languages
+  additional_vim_regex_highlighting = false,
+
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<c-space>",
+      node_incremental = "<c-space>",
+      scope_incremental = "<c-s>",
+      node_decremental = "<M-space>",
+    },
+  },
+
+  -- Indentation based on treesitter for the = operator.
+  indent = {
+    enable = true
+  },
+
+  -- textobjects
+  textobjects = {
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        -- You can also use captures from other query groups like `locals.scm`
+        ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+      },
+      -- You can choose the select mode (default is charwise 'v')
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * method: eg 'v' or 'o'
+      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+      -- mapping query_strings to modes.
+      selection_modes = {
+        ["@parameter.outer"] = "v",         -- charwise
+        ["@function.outer"] = "V",          -- linewise
+        ["@class.outer"] = "<c-v>",         -- blockwise
+      },
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true or false
+      include_surrounding_whitespace = true,
+    },
+  },
+  move = {
+    enable = true,
+    set_jumps = true,     -- whether to set jumps in the jumplist
+    goto_next_start = {
+      ["]m"] = "@function.outer",
+      ["]]"] = { query = "@class.outer", desc = "Next class start" },
+
+      -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
+      ["]o"] = "@loop.*",
+      -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+      --
+      -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+      -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+      ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+      ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+    },
+    goto_next_end = {
+      ["]M"] = "@function.outer",
+      ["]["] = "@class.outer",
+    },
+    goto_previous_start = {
+      ["[m"] = "@function.outer",
+      ["[["] = "@class.outer",
+    },
+    goto_previous_end = {
+      ["[M"] = "@function.outer",
+      ["[]"] = "@class.outer",
+    },
+  },
+})
+-- treesitter based folding
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.wo.foldminlines = 500
+-- treesitter context
+vim.cmd("hi TreesitterContextBottom gui=underline guisp=Grey")
+vim.cmd("hi TreesitterContextLineNumberBottom gui=underline guisp=Grey")
+vim.keymap.set("n", "[c", function()
+  require("treesitter-context").go_to_context(vim.v.count1)
+end, { silent = true })
+
 -- Pickers
-vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
+require("mini.pick").setup {}
+require("mini.extra").setup {}
+require("mini.surround").setup {}
+vim.keymap.set("n", "<leader>f", ":Pick git_files<CR>")
+vim.keymap.set("n", "<leader>F", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>")
 vim.keymap.set("n", "<leader>/", ":Pick grep<CR>")
 vim.keymap.set("n", "<leader>?", ":Pick help<CR>")
@@ -139,6 +297,74 @@ vim.keymap.set("n", "<leader>S", ':Pick lsp scope="workspace_symbol"<CR>')
 vim.keymap.set("n", "<leader>d", ':Pick diagnostic scope="current"<CR>')
 vim.keymap.set("n", "<leader>D", ':Pick diagnostic scope="all"<CR>')
 -- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
+
+-- Toggle loclist
+vim.keymap.set("n", "<leader>p", function()
+  vim.diagnostic.setloclist({ open = true })
+  local window = vim.api.nvim_get_current_win()
+  vim.cmd.lwindow()                      -- open+focus loclist if has entries, else close -- this is the magic toggle command
+  vim.api.nvim_set_current_win(window)   -- restore focus to window you were editing (delete this if you want to stay in loclist)
+end, { buffer = bufnr })
+
+-- gitsigns
+require("gitsigns").setup({
+  on_attach = function(bufnr)
+    local gitsigns = require("gitsigns")
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map("n", "]g", function()
+      if vim.wo.diff then
+        vim.cmd.normal({ "]g", bang = true })
+      else
+        gitsigns.nav_hunk("next")
+      end
+    end)
+    map("n", "[g", function()
+      if vim.wo.diff then
+        vim.cmd.normal({ "[g", bang = true })
+      else
+        gitsigns.nav_hunk("prev")
+      end
+    end)
+
+    -- Actions
+    map("n", "<leader>hs", gitsigns.stage_hunk)
+    map("n", "<leader>hr", gitsigns.reset_hunk)
+    map("v", "<leader>hs", function()
+      gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end)
+    map("v", "<leader>hr", function()
+      gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end)
+    map("n", "<leader>hS", gitsigns.stage_buffer)
+    map("n", "<leader>hR", gitsigns.reset_buffer)
+    map("n", "<leader>hp", gitsigns.preview_hunk)
+    map("n", "<leader>hi", gitsigns.preview_hunk_inline)
+    map("n", "<leader>hb", function()
+      gitsigns.blame_line({ full = true })
+    end)
+    map("n", "<leader>hB", gitsigns.blame)
+    map("n", "<leader>hd", gitsigns.diffthis)
+    map("n", "<leader>hD", function()
+      gitsigns.diffthis("~")
+    end)
+    map("n", "<leader>hQ", function() gitsigns.setqflist("all") end)
+    map("n", "<leader>hq", gitsigns.setqflist)
+
+    -- Toggles
+    map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
+    map("n", "<leader>tw", gitsigns.toggle_word_diff)
+
+    -- Text object
+    map({ "o", "x" }, "ih", gitsigns.select_hunk)
+  end
+})
 
 -- LSP Autocomplete
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -156,7 +382,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gd", vim.lsp.buf.declaration, { buffer = ev.buf, desc = "Goto Definition" })
     vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = ev.buf, desc = "Goto References" })
     vim.keymap.set("n", "gD", vim.lsp.buf.implementation, { buffer = ev.buf, desc = "Goto Implementation" })
-    vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, { buffer = ev.buf, desc = "Code format" })
+    vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, { buffer = ev.buf, desc = "Code format" })
 
     -- The following autocommand is used to enable inlay hints in your
     -- code, if the language server you are using supports them
@@ -187,32 +413,57 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- LSPs
 -- Auto-starts LSP when a buffer is opened, based on the lsp-config
 -- `filetypes`, `root_markers`, and `root_dir` fields.
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "nil_ls", "tinymist" })
+vim.lsp.enable({
+  "lua_ls",
+  "hls",
+  "rust_analyzer",
+  "nil_ls",
+  "taplo",
+  "yamlls",
+  "tinymist",
+  "marksman",
+  "bashls",
+  "fish_lsp",
+  "cssls",
+  "eslint",
+  "html",
+  "jsonls",
+  "pyright",
+  "ruff",
+})
 
 -- Lua
-require("lspconfig").lua_ls.setup {
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       runtime = {
-        -- Tell the language server which version of Lua you're using
+        -- Tell the language server which version of Lua you"re using
         -- (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
+        version = "LuaJIT",
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
         globals = {
-          'vim',
-          'require'
+          "vim",
+          "require"
         },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
         ignoreDir = {
-          '.vscode',
-          '.direnv',
-          'result',
+          ".vscode",
+          ".direnv",
+          "result",
         },
+      },
+      format = {
+        enable = true,
+        -- NOTE: the value should be String!
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = "2",
+        }
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -220,4 +471,62 @@ require("lspconfig").lua_ls.setup {
       },
     },
   },
-}
+})
+
+-- Haskell
+vim.lsp.config("hls", {
+  filetypes = { "haskell", "lhaskell", "cabal" },
+  settings = {
+    haskell = {
+      formattingProvider = "fourmolu",
+      cabalFormattingProvider = "cabal-fmt",
+      plugin = {
+        fourmolu = {
+          config = {
+            external = true,
+          },
+        },
+        rename = {
+          config = {
+            crossModule = true
+          }
+        }
+      }
+    },
+  },
+})
+
+-- Nix
+vim.lsp.config("nil_ls", {
+  settings = {
+    ["nil"] = {
+      formatting = { command = { "nixfmt" } }
+    },
+  }
+})
+
+-- YAML
+vim.lsp.config("yamlls", {
+  settings = {
+    yaml = {
+      format = {
+        enable = true,
+      },
+      validation = true,
+      schemas = {
+        ["kubernetes"] = "*.yaml",
+        ["https=//raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
+        "docker-compose.yaml",
+        ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*",
+        ["https=//json.schemastore.org/github-action.json"] = ".github/actions/*/action.yaml",
+      },
+    },
+  }
+})
+
+-- Typst
+vim.lsp.config("tinymist", {
+  settings = {
+    formatterMode = "typstyle",
+  }
+})

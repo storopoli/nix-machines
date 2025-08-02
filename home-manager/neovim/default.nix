@@ -39,12 +39,16 @@
 
     package = pkgs-unstable.neovim-unwrapped;
 
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs-unstable.vimPlugins; [
       gruvbox-nvim
+      nvim-treesitter.withAllGrammars
+      nvim-treesitter-context
+      nvim-treesitter-textobjects
       mini-pick
       mini-extra
       mini-surround
       nvim-lspconfig
+      gitsigns-nvim
       typst-preview-nvim
     ];
 
