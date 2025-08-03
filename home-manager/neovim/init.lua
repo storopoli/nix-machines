@@ -152,6 +152,7 @@ vim.api.nvim_create_autocmd("filetype", {
 --   { src = "https://github.com/echasnovski/mini.pick" },
 --   { src = "https://github.com/echasnovski/mini.extra" },
 --   { src = "https://github.com/echasnovski/mini.surround" },
+--   { src = "https://github.com/echasnovski/mini.pairs" },
 --   { src = "https://github.com/neovim/nvim-lspconfig" },
 --   { src = "https://github.com/lewis6991/gitsigns.nvim" },
 --   { src = "https://github.com/chomosuke/typst-preview.nvim" },
@@ -223,9 +224,9 @@ require("nvim-treesitter.configs").setup({
       -- and should return the mode ('v', 'V', or '<c-v>') or a table
       -- mapping query_strings to modes.
       selection_modes = {
-        ["@parameter.outer"] = "v",         -- charwise
-        ["@function.outer"] = "V",          -- linewise
-        ["@class.outer"] = "<c-v>",         -- blockwise
+        ["@parameter.outer"] = "v", -- charwise
+        ["@function.outer"] = "V",  -- linewise
+        ["@class.outer"] = "<c-v>", -- blockwise
       },
       -- If you set this to `true` (default is `false`) then any textobject is
       -- extended to include preceding or succeeding whitespace. Succeeding
@@ -241,7 +242,7 @@ require("nvim-treesitter.configs").setup({
   },
   move = {
     enable = true,
-    set_jumps = true,     -- whether to set jumps in the jumplist
+    set_jumps = true, -- whether to set jumps in the jumplist
     goto_next_start = {
       ["]m"] = "@function.outer",
       ["]]"] = { query = "@class.outer", desc = "Next class start" },
@@ -283,7 +284,6 @@ end, { silent = true })
 -- Pickers
 require("mini.pick").setup {}
 require("mini.extra").setup {}
-require("mini.surround").setup {}
 vim.keymap.set("n", "<leader>f", ":Pick git_files<CR>")
 vim.keymap.set("n", "<leader>F", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>")
@@ -302,9 +302,13 @@ vim.keymap.set("n", "<leader>D", ':Pick diagnostic scope="all"<CR>')
 vim.keymap.set("n", "<leader>p", function()
   vim.diagnostic.setloclist({ open = true })
   local window = vim.api.nvim_get_current_win()
-  vim.cmd.lwindow()                      -- open+focus loclist if has entries, else close -- this is the magic toggle command
-  vim.api.nvim_set_current_win(window)   -- restore focus to window you were editing (delete this if you want to stay in loclist)
+  vim.cmd.lwindow()                    -- open+focus loclist if has entries, else close -- this is the magic toggle command
+  vim.api.nvim_set_current_win(window) -- restore focus to window you were editing (delete this if you want to stay in loclist)
 end, { buffer = bufnr })
+
+-- misc
+require("mini.surround").setup {}
+require("mini.pairs").setup {}
 
 -- gitsigns
 require("gitsigns").setup({

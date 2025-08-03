@@ -47,6 +47,7 @@
       mini-pick
       mini-extra
       mini-surround
+      mini-pairs
       nvim-lspconfig
       gitsigns-nvim
       typst-preview-nvim
