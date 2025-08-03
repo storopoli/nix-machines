@@ -158,11 +158,13 @@
             ++ pkgs.lib.optionals isLinux [
               disko
             ];
-          shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
-            export TERM=xterm
-            echo "Welcome to home-server devshell!"
-            alias lg=lazygit
-          '';
+          shellHook =
+            self.checks.${system}.pre-commit-check.shellHook
+            + ''
+              export TERM=xterm
+              echo "Welcome to home-server devshell!"
+              alias lg=lazygit
+            '';
         };
       }
     );

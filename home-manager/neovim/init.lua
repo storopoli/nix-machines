@@ -156,6 +156,7 @@ vim.api.nvim_create_autocmd("filetype", {
 --   { src = "https://github.com/neovim/nvim-lspconfig" },
 --   { src = "https://github.com/lewis6991/gitsigns.nvim" },
 --   { src = "https://github.com/chomosuke/typst-preview.nvim" },
+--   { src = "https://github.com/zbirenbaum/copilot.lua" },
 -- })
 
 require("gruvbox").setup({
@@ -534,3 +535,17 @@ vim.lsp.config("tinymist", {
     formatterMode = "typstyle",
   }
 })
+
+-- Copilot integration
+require("copilot").setup {
+  filetypes = {
+    markdown = true, -- overrides default
+    sh = function()
+      if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), "^%.env.*") then
+        -- disable for .env files
+        return false
+      end
+      return true
+    end,
+  },
+}

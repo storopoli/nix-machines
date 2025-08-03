@@ -51,6 +51,7 @@
       nvim-lspconfig
       gitsigns-nvim
       typst-preview-nvim
+      copilot-lua
     ];
 
     extraLuaConfig = lib.readFile ./init.lua;
