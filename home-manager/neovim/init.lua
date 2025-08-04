@@ -285,6 +285,18 @@ end, { silent = true })
 -- Pickers
 require("mini.pick").setup {}
 require("mini.extra").setup {}
+
+local mini_cwd = function()
+  local MiniExtraExplorer = require("mini.extra").pickers.explorer
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  -- check if buf_name is a valid file system path
+  if vim.fn.filereadable(buf_name) == 1 then
+    MiniExtraExplorer({ cwd = vim.fs.dirname(buf_name) })
+  else
+    MiniExtraExplorer()
+  end
+end
+
 vim.keymap.set("n", "<leader>f", ":Pick git_files<CR>")
 vim.keymap.set("n", "<leader>F", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>")
@@ -292,6 +304,7 @@ vim.keymap.set("n", "<leader>/", ":Pick grep<CR>")
 vim.keymap.set("n", "<leader>?", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>'", ":Pick resume<CR>")
 vim.keymap.set("n", "<leader>e", ":Pick explorer<CR>")
+vim.keymap.set("n", "<leader>E", mini_cwd)
 vim.keymap.set("n", "<leader>g", ":Pick git_hunks<CR>")
 vim.keymap.set("n", "<leader>s", ':Pick lsp scope="document_symbol"<CR>')
 vim.keymap.set("n", "<leader>S", ':Pick lsp scope="workspace_symbol"<CR>')
