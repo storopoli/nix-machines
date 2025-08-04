@@ -491,6 +491,22 @@ vim.lsp.config("lua_ls", {
   },
 })
 
+-- Rust
+vim.lsp.config("rust_analyzer", {
+  settings = {
+    ["rust-analyzer"] = {
+      procMacro = {
+        enable = true,
+        ignored = {
+          ["napi-derive"] = { "napi" },
+          ["async-recursion"] = { "async_recursion" },
+          ["async-trait"] = { "async_trait" },
+        },
+      },
+    }
+  }
+})
+
 -- Haskell
 vim.lsp.config("hls", {
   filetypes = { "haskell", "lhaskell", "cabal" },
