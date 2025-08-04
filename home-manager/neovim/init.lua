@@ -384,6 +384,9 @@ require("gitsigns").setup({
   end
 })
 
+-- LSP Diagnostics
+vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
+
 -- LSP Autocomplete
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
@@ -414,8 +417,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end)
     end
 
-    -- Enable line diagnostics but only in the current line
-    vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
     -- Setup autoformat for this buffer if client supports it
     if client and client.server_capabilities.documentFormattingProvider then
       vim.api.nvim_create_autocmd("BufWritePre", {
