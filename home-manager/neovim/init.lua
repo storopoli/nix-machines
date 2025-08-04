@@ -23,7 +23,7 @@ vim.o.breakindent = true
 -- Better undo history
 vim.o.swapfile = false
 vim.o.backup = false
-vim.o.undodir = vim.fn.stdpath("data") .. "undo"
+vim.o.undodir = vim.fn.stdpath("data") .. "/undo"
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -80,7 +80,7 @@ vim.keymap.set("n", "<leader>w", "<CMD>w<CR>", { silent = true })
 vim.keymap.set("n", "<leader>q", "<CMD>q<CR>", { silent = true })
 vim.keymap.set("n", "<leader>Q", "<CMD>qa!<CR>", { silent = true })
 -- Global Yank
-vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y<CR>', { noremap = true, silent = true })
+vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { noremap = true, silent = true })
 -- Location list
 vim.keymap.set("n", "]q", "<cmd>cnext<CR>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "[q", "<cmd>cprev<CR>zz", { noremap = true, silent = true })
@@ -169,8 +169,8 @@ vim.cmd.colorscheme("gruvbox")
 vim.cmd(":hi statusline guibg=NONE")
 
 -- treesitter
+---@diagnostic disable-next-line: missing-fields
 require("nvim-treesitter.configs").setup({
-  ensure_installed = {},
   highlight = {
     enable = true,
   },
@@ -318,7 +318,7 @@ vim.keymap.set("n", "<leader>p", function()
   local window = vim.api.nvim_get_current_win()
   vim.cmd.lwindow()                    -- open+focus loclist if has entries, else close -- this is the magic toggle command
   vim.api.nvim_set_current_win(window) -- restore focus to window you were editing (delete this if you want to stay in loclist)
-end, { buffer = bufnr })
+end)
 
 -- misc
 require("mini.surround").setup {}
@@ -392,7 +392,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client:supports_method("textDocument/completion") then
+    if client and client.server_capabilities.completionProvider then
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
     end
 
@@ -407,7 +407,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- The following autocommand is used to enable inlay hints in your
     -- code, if the language server you are using supports them
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
       -- Enable it by default
       vim.lsp.inlay_hint.enable(true)
