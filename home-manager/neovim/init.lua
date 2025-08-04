@@ -416,17 +416,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Enable line diagnostics but only in the current line
     vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
+    -- Setup autoformat for this buffer if client supports it
+    if client and client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = ev.buf,
+        callback = function()
+          vim.lsp.buf.format { async = false }
+        end
+      })
+    end
   end,
 })
 vim.cmd("set completeopt+=noselect")
-
--- LSP Autoformat
-vim.api.nvim_create_autocmd("BufWritePre", {
-  buffer = buffer,
-  callback = function()
-    vim.lsp.buf.format { async = false }
-  end
-})
 
 -- LSPs
 -- Auto-starts LSP when a buffer is opened, based on the lsp-config
