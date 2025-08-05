@@ -79,6 +79,14 @@ vim.keymap.set("n", "<leader>w", "<CMD>w<CR>", { silent = true })
 -- Easy Quit
 vim.keymap.set("n", "<leader>q", "<CMD>q<CR>", { silent = true })
 vim.keymap.set("n", "<leader>Q", "<CMD>qa!<CR>", { silent = true })
+-- Terminal
+vim.keymap.set("n", "<leader>t", "<CMD>split | wincmd j | terminal env INSIDE_NEOVIM=1 fish<CR>i", { silent = true })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { silent = true })
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    vim.keymap.set("n", "q", "<CMD>q<CR>", { buffer = true, silent = true })
+  end
+})
 -- Global Yank
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { noremap = true, silent = true })
 -- Location list
