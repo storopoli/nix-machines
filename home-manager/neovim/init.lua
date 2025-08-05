@@ -64,16 +64,15 @@ vim.keymap.set("n", "<leader>R", "<CMD>nohlsearch<Bar>diffupdate<Bar>normal! <C-
 -- J/K to move up/down visual lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
--- Remap for dealing with word wrap
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
--- Move lines
 vim.keymap.set("n", "<A-j>", "<CMD>m .+1<CR>==")
 vim.keymap.set("n", "<A-k>", "<CMD>m .-2<CR>==")
 vim.keymap.set("i", "<A-j>", "<ESC><CMD>m .+1<CR>==gi")
 vim.keymap.set("i", "<A-k>", "<ESC><CMD>m .-2<CR>==gi")
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
+-- Remap for dealing with word wrap
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 -- Easy save
 vim.keymap.set("n", "<leader>w", "<CMD>w<CR>", { silent = true })
 -- Easy Quit
@@ -404,20 +403,20 @@ local register_picker = function()
   MiniPick.start({ source = source })
 end
 
-vim.keymap.set("n", "<leader>f", ":Pick git_files<CR>")
-vim.keymap.set("n", "<leader>F", ":Pick files<CR>")
+vim.keymap.set("n", "<leader>f", "<CMD>Pick git_files<CR>")
+vim.keymap.set("n", "<leader>F", "<CMD>Pick files<CR>")
 vim.keymap.set("n", "<leader>b", buffer_picker)
 vim.keymap.set("n", "<leader>r", register_picker)
-vim.keymap.set("n", "<leader>/", ":Pick grep<CR>")
-vim.keymap.set("n", "<leader>?", ":Pick help<CR>")
-vim.keymap.set("n", "<leader>'", ":Pick resume<CR>")
-vim.keymap.set("n", "<leader>e", ":Pick explorer<CR>")
+vim.keymap.set("n", "<leader>/", "<CMD>Pick grep<CR>")
+vim.keymap.set("n", "<leader>?", "<CMD>Pick help<CR>")
+vim.keymap.set("n", "<leader>'", "<CMD>Pick resume<CR>")
+vim.keymap.set("n", "<leader>e", "<CMD>Pick explorer<CR>")
 vim.keymap.set("n", "<leader>E", mini_cwd)
-vim.keymap.set("n", "<leader>g", ":Pick git_hunks<CR>")
-vim.keymap.set("n", "<leader>s", ':Pick lsp scope="document_symbol"<CR>')
-vim.keymap.set("n", "<leader>S", ':Pick lsp scope="workspace_symbol"<CR>')
-vim.keymap.set("n", "<leader>d", ':Pick diagnostic scope="current"<CR>')
-vim.keymap.set("n", "<leader>D", ':Pick diagnostic scope="all"<CR>')
+vim.keymap.set("n", "<leader>G", "<CMD>Pick git_hunks<CR>")
+vim.keymap.set("n", "<leader>s", '<CMD>Pick lsp scope="document_symbol"<CR>')
+vim.keymap.set("n", "<leader>S", '<CMD>Pick lsp scope="workspace_symbol"<CR>')
+vim.keymap.set("n", "<leader>d", '<CMD>Pick diagnostic scope="current"<CR>')
+vim.keymap.set("n", "<leader>D", '<CMD>Pick diagnostic scope="all"<CR>')
 
 -- misc
 require("mini.surround").setup {}
@@ -435,16 +434,16 @@ require("gitsigns").setup({
     end
 
     -- Navigation
-    map("n", "]g", function()
+    map("n", "]h", function()
       if vim.wo.diff then
-        vim.cmd.normal({ "]g", bang = true })
+        vim.cmd.normal({ "]h", bang = true })
       else
         gitsigns.nav_hunk("next")
       end
     end)
-    map("n", "[g", function()
+    map("n", "[h", function()
       if vim.wo.diff then
-        vim.cmd.normal({ "[g", bang = true })
+        vim.cmd.normal({ "[h", bang = true })
       else
         gitsigns.nav_hunk("prev")
       end
@@ -463,9 +462,7 @@ require("gitsigns").setup({
     map("n", "<leader>hR", gitsigns.reset_buffer)
     map("n", "<leader>hp", gitsigns.preview_hunk)
     map("n", "<leader>hi", gitsigns.preview_hunk_inline)
-    map("n", "<leader>hb", function()
-      gitsigns.blame_line({ full = true })
-    end)
+    map("n", "<leader>hb", gitsigns.blame_line)
     map("n", "<leader>hB", gitsigns.blame)
     map("n", "<leader>hd", gitsigns.diffthis)
     map("n", "<leader>hD", function()
