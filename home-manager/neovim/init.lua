@@ -401,7 +401,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client and client.server_capabilities.completionProvider then
+      vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+      -- Overload ctrl+n which defaults to keywords in current file (<C-x><C-n>)
+      vim.keymap.set("i", "<C-n>", vim.lsp.completion.get, { noremap = true, silent = true })
     end
 
     -- Keybinds
@@ -460,7 +463,7 @@ vim.lsp.enable({
 })
 
 -- Lua
-vim.lsp.config("lua_ls", {
+vim.lsp.config.lua_ls = {
   settings = {
     Lua = {
       runtime = {
@@ -479,6 +482,11 @@ vim.lsp.config("lua_ls", {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
         ignoreDir = {
+          ".git",
+          "node_modules",
+          "target",
+          "deps",
+          ".cache",
           ".vscode",
           ".direnv",
           "result",
@@ -498,10 +506,10 @@ vim.lsp.config("lua_ls", {
       },
     },
   },
-})
+}
 
 -- Rust
-vim.lsp.config("rust_analyzer", {
+vim.lsp.config.rust_analyzer = {
   settings = {
     ["rust-analyzer"] = {
       procMacro = {
@@ -509,15 +517,15 @@ vim.lsp.config("rust_analyzer", {
         ignored = {
           ["napi-derive"] = { "napi" },
           ["async-recursion"] = { "async_recursion" },
-          ["async-trait"] = { "async_trait" },
+          ["async-trait"] = vim.NIL,
         },
       },
     }
   }
-})
+}
 
 -- Haskell
-vim.lsp.config("hls", {
+vim.lsp.config.hls = {
   filetypes = { "haskell", "lhaskell", "cabal" },
   settings = {
     haskell = {
@@ -537,19 +545,19 @@ vim.lsp.config("hls", {
       }
     },
   },
-})
+}
 
 -- Nix
-vim.lsp.config("nil_ls", {
+vim.lsp.config.nil_ls = {
   settings = {
     ["nil"] = {
       formatting = { command = { "nixfmt" } }
     },
   }
-})
+}
 
 -- YAML
-vim.lsp.config("yamlls", {
+vim.lsp.config.yamlls = {
   settings = {
     yaml = {
       format = {
@@ -565,14 +573,14 @@ vim.lsp.config("yamlls", {
       },
     },
   }
-})
+}
 
 -- Typst
-vim.lsp.config("tinymist", {
+vim.lsp.config.tinymist = {
   settings = {
     formatterMode = "typstyle",
   }
-})
+}
 
 -- Copilot integration
 require("copilot").setup {
