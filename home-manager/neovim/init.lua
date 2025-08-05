@@ -89,9 +89,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 -- Global Yank
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { noremap = true, silent = true })
--- Location list
+-- Location/Quickfix list
 vim.keymap.set("n", "]q", "<cmd>cnext<CR>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "[q", "<cmd>cprev<CR>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "]l", "<cmd>lnext<CR>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "[l", "<cmd>lprev<CR>zz", { noremap = true, silent = true })
 vim.api.nvim_create_autocmd("filetype", {
   pattern = "qf",
   desc = "loclist keymaps",
@@ -99,6 +101,34 @@ vim.api.nvim_create_autocmd("filetype", {
     vim.keymap.set("n", "q", "<cmd>quit<CR>", { noremap = true, silent = true })
   end
 })
+-- Auto close quickfix/loclist if they're the only windows left
+vim.api.nvim_create_autocmd("WinClosed", {
+  desc = "Close quickfix/loclist if only remaining windows",
+  callback = function()
+    vim.schedule(function()
+      local wins = vim.api.nvim_tabpage_list_wins(0)
+      local only_qf = true
+      for _, win in ipairs(wins) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.api.nvim_get_option_value("buftype", { buf = buf }) ~= "quickfix" then
+          only_qf = false
+          break
+        end
+      end
+      if only_qf and #wins > 0 then
+        vim.cmd.qall()
+      end
+    end)
+  end
+})
+vim.keymap.set("n", "<leader>p", function()
+  if vim.bo.filetype == "qf" then
+    vim.cmd.cclose()
+  else
+    vim.cmd.copen()
+  end
+end)
+
 --  Highlight on Yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -291,7 +321,11 @@ vim.keymap.set("n", "[c", function()
 end, { silent = true })
 
 -- Pickers
-require("mini.pick").setup {}
+require("mini.pick").setup({
+  mappings = {
+    choose_marked = "<C-q>",
+  }
+})
 require("mini.extra").setup {}
 
 local mini_cwd = function()
@@ -318,15 +352,6 @@ vim.keymap.set("n", "<leader>s", ':Pick lsp scope="document_symbol"<CR>')
 vim.keymap.set("n", "<leader>S", ':Pick lsp scope="workspace_symbol"<CR>')
 vim.keymap.set("n", "<leader>d", ':Pick diagnostic scope="current"<CR>')
 vim.keymap.set("n", "<leader>D", ':Pick diagnostic scope="all"<CR>')
--- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
-
--- Toggle loclist
-vim.keymap.set("n", "<leader>p", function()
-  vim.diagnostic.setloclist({ open = true })
-  local window = vim.api.nvim_get_current_win()
-  vim.cmd.lwindow()                    -- open+focus loclist if has entries, else close -- this is the magic toggle command
-  vim.api.nvim_set_current_win(window) -- restore focus to window you were editing (delete this if you want to stay in loclist)
-end)
 
 -- misc
 require("mini.surround").setup {}
