@@ -49,6 +49,7 @@
       mini-surround
       mini-pairs
       nvim-lspconfig
+      vim-fugitive
       gitsigns-nvim
       typst-preview-nvim
       copilot-lua
