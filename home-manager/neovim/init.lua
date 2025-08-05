@@ -160,6 +160,8 @@ vim.api.nvim_create_autocmd("filetype", {
     vim.keymap.set("n", "n", "%", { remap = true, buffer = true })
     -- rename file
     vim.keymap.set("n", "r", "R", { remap = true, buffer = true })
+    -- delete file/dir
+    vim.keymap.set("n", "d", "D", { remap = true, buffer = true })
     -- back in history
     vim.keymap.set("n", "H", "u", { remap = true, buffer = true })
     -- up a directory
