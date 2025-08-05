@@ -328,6 +328,7 @@ require("mini.pick").setup({
 })
 require("mini.extra").setup {}
 
+-- File explorer in current dir
 local mini_cwd = function()
   local MiniExtraExplorer = require("mini.extra").pickers.explorer
   local buf_name = vim.api.nvim_buf_get_name(0)
@@ -339,9 +340,19 @@ local mini_cwd = function()
   end
 end
 
+-- Buffer delete with <C-d>
+local buffer_picker = function()
+  local MiniPick = require("mini.pick")
+  local wipeout_cur = function()
+    vim.api.nvim_buf_delete(MiniPick.get_picker_matches().current.bufnr, {})
+  end
+  local buffer_mappings = { wipeout = { char = "<C-d>", func = wipeout_cur } }
+  MiniPick.builtin.buffers(nil, { mappings = buffer_mappings })
+end
+
 vim.keymap.set("n", "<leader>f", ":Pick git_files<CR>")
 vim.keymap.set("n", "<leader>F", ":Pick files<CR>")
-vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>")
+vim.keymap.set("n", "<leader>b", buffer_picker)
 vim.keymap.set("n", "<leader>/", ":Pick grep<CR>")
 vim.keymap.set("n", "<leader>?", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>'", ":Pick resume<CR>")
