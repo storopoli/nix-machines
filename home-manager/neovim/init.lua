@@ -89,15 +89,16 @@ vim.api.nvim_create_autocmd("TermOpen", {
 -- Global Yank
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { noremap = true, silent = true })
 -- Location/Quickfix list
-vim.keymap.set("n", "]q", "<cmd>cnext<CR>zz", { noremap = true, silent = true })
-vim.keymap.set("n", "[q", "<cmd>cprev<CR>zz", { noremap = true, silent = true })
-vim.keymap.set("n", "]l", "<cmd>lnext<CR>zz", { noremap = true, silent = true })
-vim.keymap.set("n", "[l", "<cmd>lprev<CR>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "]q", "<CMD>cnext<CR>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "[q", "<CMD>cprev<CR>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "]l", "<CMD>lnext<CR>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "[l", "<CMD>lprev<CR>zz", { noremap = true, silent = true })
 vim.api.nvim_create_autocmd("filetype", {
   pattern = "qf",
   desc = "loclist keymaps",
   callback = function()
-    vim.keymap.set("n", "q", "<cmd>quit<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "q", "<CMD>quit<CR>", { buffer = true, noremap = true, silent = true })
+    vim.keymap.set("n", "<C-p>", "k", { buffer = true, noremap = true, silent = true })
   end
 })
 -- Auto close quickfix/loclist if they're the only windows left
