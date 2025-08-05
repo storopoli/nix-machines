@@ -51,6 +51,7 @@
       nvim-lspconfig
       vim-fugitive
       gitsigns-nvim
+      lualine-nvim
       typst-preview-nvim
       copilot-lua
     ];

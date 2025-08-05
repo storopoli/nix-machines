@@ -193,6 +193,7 @@ vim.api.nvim_create_autocmd("filetype", {
 --   { src = "https://github.com/neovim/nvim-lspconfig" },
 --   { src = "https://github.com/tpope/vim-fugitive" },
 --   { src = "https://github.com/lewis6991/gitsigns.nvim" },
+--   { src = "https://github.com/nvim-lualine/lualine.nvim" },
 --   { src = "https://github.com/chomosuke/typst-preview.nvim" },
 --   { src = "https://github.com/zbirenbaum/copilot.lua" },
 -- })
@@ -422,6 +423,7 @@ vim.keymap.set("n", "<leader>D", '<CMD>Pick diagnostic scope="all"<CR>')
 -- misc
 require("mini.surround").setup {}
 require("mini.pairs").setup {}
+require("lualine").setup {}
 
 -- fugitive
 local pre_commit_check = function()
