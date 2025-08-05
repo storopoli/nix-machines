@@ -42,4 +42,5 @@
       "transmission"
     ];
   };
+  environment.variables.HOMEBREW_DOWNLOAD_CONCURRENCY = "auto";
 }
