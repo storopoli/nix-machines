@@ -129,6 +129,7 @@
           pre-commit-check = inputs.git-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
+              # Nix
               nixfmt-rfc-style.enable = true;
 
               flake-checker = {
@@ -138,6 +139,9 @@
                   "false" # don't check for nixpkgs
                 ];
               };
+
+              # Lua
+              luacheck.enable = true;
             };
           };
         };
