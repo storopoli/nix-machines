@@ -350,9 +350,64 @@ local buffer_picker = function()
   MiniPick.builtin.buffers(nil, { mappings = buffer_mappings })
 end
 
+-- Register pick
+local register_picker = function()
+  local MiniPick = require("mini.pick")
+
+  -- Get all registers
+  local registers = {}
+  local reg_names = {
+    '"', "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    "+", "*", "/", ":", ".", "%", "#", "=", "-"
+  }
+
+  for _, reg in ipairs(reg_names) do
+    local content = vim.fn.getreg(reg)
+    if content and content ~= "" then
+      -- Truncate long content for display
+      local display_content = content:gsub("\n", "\\n"):sub(1, 100)
+      if #content > 100 then
+        display_content = display_content .. "..."
+      end
+      table.insert(registers, {
+        text = string.format("[%s] %s", reg, display_content),
+        register = reg,
+        content = content
+      })
+    end
+  end
+
+  local source = {
+    items = registers,
+    name = "Registers",
+    choose = function(item)
+      if item then
+        -- Get the target window and paste there
+        local target_win = MiniPick.get_picker_state().windows.target
+        vim.api.nvim_win_call(target_win, function()
+          local lines = vim.split(item.content, "\n")
+          vim.api.nvim_put(lines, vim.fn.getregtype(item.register), true, true)
+        end)
+      end
+    end,
+    preview = function(buf_id, item)
+      if item then
+        local lines = vim.split(item.content, "\n")
+        vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+        vim.api.nvim_set_option_value("filetype", "text", { buf = buf_id })
+      end
+    end
+  }
+
+  MiniPick.start({ source = source })
+end
+
 vim.keymap.set("n", "<leader>f", ":Pick git_files<CR>")
 vim.keymap.set("n", "<leader>F", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>b", buffer_picker)
+vim.keymap.set("n", "<leader>r", register_picker)
 vim.keymap.set("n", "<leader>/", ":Pick grep<CR>")
 vim.keymap.set("n", "<leader>?", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>'", ":Pick resume<CR>")
