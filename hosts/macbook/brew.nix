@@ -22,6 +22,8 @@
       "torsocks"
     ];
 
+    caskArgs.require_sha = true;
+
     casks = [
       "android-file-transfer"
       "brave-browser"
