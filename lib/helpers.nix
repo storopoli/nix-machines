@@ -36,11 +36,15 @@
         ../hosts/${hostname}
         inputs.home-manager.darwinModules.home-manager
         {
+          nixpkgs.config.allowUnfree = true;
+        }
+        {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.${username} = import ../home-manager;
           home-manager.extraSpecialArgs = {
             inherit
+              inputs
               username
               pkgs-unstable
               isLinux
