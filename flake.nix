@@ -166,7 +166,7 @@
             self.checks.${system}.pre-commit-check.shellHook
             + ''
               export TERM=xterm
-              echo "Welcome to home-server devshell!"
+              echo "Welcome to nix-machines devshell!"
               alias lg=lazygit
             '';
         };
