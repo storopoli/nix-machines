@@ -1,37 +1,46 @@
 {
   inputs = {
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
-    };
-    nixpkgs-unstable = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
-    };
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    flake-utils.url = "github:numtide/flake-utils";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-    };
+
+    git-hooks.url = "github:cachix/git-hooks.nix";
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
+
     continuwuity = {
       url = "git+https://forgejo.ellis.link/continuwuation/continuwuity";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    neovix = {
+      url = "github:storopoli/neovix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.git-hooks.follows = "git-hooks";
+      inputs.flake-parts.follows = "flake-parts";
     };
   };
 
@@ -122,6 +131,7 @@
           inherit system;
           config.allowUnfree = true;
         };
+        neovix = inputs.neovix.packages.${system}.default;
         isLinux = pkgs.stdenv.isLinux;
       in
       {
@@ -152,6 +162,7 @@
               git
               just
               vim
+              neovix
               lazygit
               age
               age-plugin-yubikey

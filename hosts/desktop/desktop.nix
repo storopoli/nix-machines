@@ -2,6 +2,7 @@
   lib,
   pkgs,
   pkgs-unstable,
+  inputs,
   username,
   ...
 }:
@@ -66,6 +67,7 @@ in
     };
     extraSpecialArgs = {
       inherit
+        inputs
         username
         isLinux
         isDarwin
