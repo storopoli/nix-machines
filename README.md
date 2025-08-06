@@ -51,9 +51,20 @@ Available recipes:
 For a **fresh installation** on the `bitcoin` host, you would run:
 
 ```bash
-just disko bitcoin   # Partition and mount the disk
-just install bitcoin # Install NixOS to /mnt
+just disko bitcoin        # Partition and mount the disk  
+just generate-config      # Generate hardware configuration
+just install bitcoin      # Install NixOS to /mnt
 ```
+
+> [!IMPORTANT]
+> The `generate-config` step is crucial - it creates the hardware configuration
+> without filesystem conflicts since disko handles the filesystem setup.
+>
+> [!WARNING]
+> The generated hardware configuration may conflict with the existing host-specific
+> hardware configuration. Review `/mnt/etc/nixos/hardware-configuration.nix` and
+> `hosts/{host}/hardware-configuration.nix` to determine which settings to keep
+> for your actual hardware.
 
 For **updating an existing system**, use:
 

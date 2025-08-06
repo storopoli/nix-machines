@@ -32,6 +32,10 @@ update-darwin *host: update-flake-inputs reclaim-storage
 disko *host:
   sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount hosts/{{host}}/disko.nix
 
+# Generate NixOS hardware configuration (run after `disko`, before `install`)
+generate-config:
+  sudo nixos-generate-config --no-filesystems --root /mnt
+
 # Show Bitcoin service status
 bitcoin-status:
   systemctl status bitcoind
