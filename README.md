@@ -34,18 +34,26 @@ I have configured several `just` commands to deploy the configs to the hosts.
 ```bash
 $ just
 Available recipes:
+    [bitcoin]
     bitcoin-logs         # Show Bitcoin service logs since last boot
     bitcoin-status       # Show Bitcoin service status
-    default              # List all commands
+
+    [install]
     disko *host          # Automated disk partitioning with `disko`
-    install *host        # Install the NixOS configuration for a specific host (run after `disko`)
+    generate-config      # Generate NixOS hardware configuration (run after `disko`, before `install`)
+    install *host        # Install NixOS configuration for a specific host (run after `disko`)
     install-impure *host # Install with impure flag if restricted mode issues occur (run after `disko`)
-    list-hosts           # List all hosts
-    reclaim-storage      # Reclaim storage
     setup-darwin *host   # Initial setup for macOS with `nix-darwin` (first time only)
-    update *host         # Update the NixOS flake inputs and rebuild the host
-    update-darwin *host  # Update the macOS configuration with `nix-darwin`
-    update-flake-inputs  # Update flake inputs
+
+    [maintenance]
+    reclaim-storage      # Reclaim storage by removing old generations
+    update *host         # Update NixOS flake inputs and rebuild the host
+    update-darwin *host  # Update macOS configuration with `nix-darwin`
+    update-flake-inputs  # Update flake inputs to latest versions
+
+    [misc]
+    default              # List all commands
+    list-hosts           # List all available hosts in the hosts/ directory
 ```
 
 For a **fresh installation** on the `bitcoin` host, you would run:
