@@ -10,5 +10,6 @@
     ../../lib/bluetooth.nix
     ../../lib/airplay.nix
     ../../lib/nvidia.nix
+    ../../lib/gaming.nix
   ];
 }
