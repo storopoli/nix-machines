@@ -38,7 +38,7 @@
 
     neovix = {
       url = "github:storopoli/neovix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.git-hooks.follows = "git-hooks";
       inputs.flake-parts.follows = "flake-parts";
     };

@@ -641,16 +641,16 @@
           "git-hooks"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-unstable"
         ],
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1754505240,
-        "narHash": "sha256-37Bnexl7L9K/xIvuRiwKVn1gx5oOmd8X1Q82ylWza6U=",
+        "lastModified": 1754562876,
+        "narHash": "sha256-CLzbjXM4mtYFaw6Bl4uKqxHF6iapTQNJh+y9Ple86iE=",
         "owner": "storopoli",
         "repo": "neovix",
-        "rev": "7c8e649aa2636a52d7efa32fe07f507d0829549f",
+        "rev": "d5782b4aa1a218d344f16868dce1333fe79add01",
         "type": "github"
       },
       "original": {
