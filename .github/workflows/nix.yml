@@ -42,7 +42,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Nix
-        uses: DeterminateSystems/determinate-nix-action@2b7bca919ce8854111c6f9135091ddf5eea8e0eb # v3.8.2
+        uses: DeterminateSystems/determinate-nix-action@379b47b8e270e906339a489d56466ccfd2f69d8c # v3.8.5
 
       - name: Cache Nix store
         uses: nix-community/cache-nix-action@135667ec418502fa5a3598af6fb9eb733888ce6a # v6.1.3
@@ -104,7 +104,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Nix
-        uses: DeterminateSystems/determinate-nix-action@2b7bca919ce8854111c6f9135091ddf5eea8e0eb # v3.8.2
+        uses: DeterminateSystems/determinate-nix-action@379b47b8e270e906339a489d56466ccfd2f69d8c # v3.8.5
 
       - name: Cache Nix store
         uses: nix-community/cache-nix-action@135667ec418502fa5a3598af6fb9eb733888ce6a # v6.1.3
