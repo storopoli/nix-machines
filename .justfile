@@ -10,6 +10,11 @@ default:
 list-hosts:
   @ls hosts/ | grep -v common | grep -v default.nix
 
+# Format all Nix files
+[group('misc')]
+format:
+  nix fmt
+
 # Update NixOS flake inputs and rebuild the host
 [group('maintenance')]
 update *host: update-flake-inputs reclaim-storage

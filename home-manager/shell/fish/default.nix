@@ -36,37 +36,36 @@ in
   programs.fish = {
     enable = true;
 
-    interactiveShellInit =
-      ''
-        # Disable greeting
-        set fish_greeting
+    interactiveShellInit = ''
+      # Disable greeting
+      set fish_greeting
 
-        # VI key bindings
-        if set -q INSIDE_NEOVIM
-            set fish_key_bindings fish_default_key_bindings
-        else
-            set fish_key_bindings fish_vi_key_bindings
-        end
+      # VI key bindings
+      if set -q INSIDE_NEOVIM
+          set fish_key_bindings fish_default_key_bindings
+      else
+          set fish_key_bindings fish_vi_key_bindings
+      end
 
-        # SSH GPG auth
-        set -gx GPG_TTY (tty)
-        set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-        gpgconf --launch gpg-agent
+      # SSH GPG auth
+      set -gx GPG_TTY (tty)
+      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
 
-        # man bat integration
-        set -x MANPAGER 'sh -c "col -bx | bat --language=man --decorations=never"'
-        set -x MANROFFOPT '-c'
+      # man bat integration
+      set -x MANPAGER 'sh -c "col -bx | bat --language=man --decorations=never"'
+      set -x MANROFFOPT '-c'
 
-        # TODO: 25.11 will have `programs.fish.binds`
-        # binds
-        bind ctrl-n -M insert down-or-search
-        bind ctrl-p -M insert up-or-search
-        bind ctrl-g -M insert 'git diff' repaint
+      # TODO: 25.11 will have `programs.fish.binds`
+      # binds
+      bind ctrl-n -M insert down-or-search
+      bind ctrl-p -M insert up-or-search
+      bind ctrl-g -M insert 'git diff' repaint
 
-        # Theme Gruvbox
-        theme_gruvbox dark hard
-      ''
-      + fishPath;
+      # Theme Gruvbox
+      theme_gruvbox dark hard
+    ''
+    + fishPath;
 
     shellAliases = {
       cat = "bat --style=plain";

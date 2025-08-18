@@ -140,7 +140,12 @@
             src = ./.;
             hooks = {
               # Nix
-              nixfmt-rfc-style.enable = true;
+              # TODO: change to nixfmt-tree when git-hooks supports it
+              nixfmt-rfc-style = {
+                enable = true;
+                package = pkgs-unstable.nixfmt-tree;
+                entry = "${pkgs-unstable.nixfmt-tree}/bin/treefmt";
+              };
 
               flake-checker = {
                 enable = true;
@@ -155,6 +160,8 @@
             };
           };
         };
+        formatter = pkgs-unstable.nixfmt-tree;
+
         devShells.default = pkgs.mkShell {
           buildInputs =
             with pkgs;
@@ -163,26 +170,24 @@
               just
               vim
               neovix
-              lazygit
+              pkgs-unstable.lazygit
               age
               age-plugin-yubikey
               gnupg
               nixos-rebuild
               pkgs-unstable.nil
               pkgs-unstable.nixd
-              pkgs-unstable.nixfmt-rfc-style
+              pkgs-unstable.nixfmt-tree
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
             ++ pkgs.lib.optionals isLinux [
               disko
             ];
-          shellHook =
-            self.checks.${system}.pre-commit-check.shellHook
-            + ''
-              export TERM=xterm
-              echo "Welcome to nix-machines devshell!"
-              alias lg=lazygit
-            '';
+          shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
+            export TERM=xterm
+            echo "Welcome to nix-machines devshell!"
+            alias lg=lazygit
+          '';
         };
       }
     );
