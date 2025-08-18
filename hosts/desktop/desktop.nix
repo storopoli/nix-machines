@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   pkgs-unstable,
   inputs,
@@ -10,6 +9,7 @@
 let
   isLinux = pkgs.stdenv.isLinux;
   isDarwin = pkgs.stdenv.isDarwin;
+  nix-colors = inputs.nix-colors;
 in
 
 {
@@ -62,7 +62,10 @@ in
         isLinux
         isDarwin
         pkgs-unstable
+        nix-colors
         ;
+      gnome = false;
+      hyprland = true;
     };
   };
 }

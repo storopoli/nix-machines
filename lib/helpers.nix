@@ -1,5 +1,12 @@
 # lib/helper.nix
-{ inputs, ... }:
+{
+  inputs,
+  ...
+}:
+
+let
+  nix-colors = inputs.nix-colors;
+in
 {
   mkDarwin =
     {
@@ -49,7 +56,10 @@
               pkgs-unstable
               isLinux
               isDarwin
+              nix-colors
               ;
+            gnome = false;
+            hyprland = false;
           };
         }
       ]
