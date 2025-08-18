@@ -7,6 +7,7 @@
   isLinux ? false,
   isDarwin ? false,
   gnome ? false,
+  hyprland ? false,
   ...
 }:
 
@@ -26,6 +27,9 @@
   ]
   ++ lib.optionals gnome [
     ./gnome.nix
+  ]
+  ++ lib.optionals hyprland [
+    ./linux/hyprland
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
