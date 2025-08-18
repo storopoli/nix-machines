@@ -168,6 +168,9 @@
               age-plugin-yubikey
               gnupg
               nixos-rebuild
+              pkgs-unstable.nil
+              pkgs-unstable.nixd
+              pkgs-unstable.nixfmt-rfc-style
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
             ++ pkgs.lib.optionals isLinux [
