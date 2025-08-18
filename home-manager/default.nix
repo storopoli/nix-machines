@@ -11,18 +11,18 @@
 
 {
 
-  imports =
-    [
-      # common home-manager configs
-      ./cli
-      ./shell
-      ./helix.nix
-      ./neovim.nix
-      ./ghostty.nix
-    ]
-    ++ lib.optionals isLinux [
-      ./linux
-    ];
+  imports = [
+    # common home-manager configs
+    ./cli
+    ./shell
+    ./helix.nix
+    ./neovim.nix
+    ./ghostty.nix
+    ./zed.nix
+  ]
+  ++ lib.optionals isLinux [
+    ./linux
+  ];
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
