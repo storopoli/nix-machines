@@ -12,11 +12,18 @@
     ./bindings.nix
     ./looknfeel.nix
     ./windows.nix
+    ./hyprlock.nix
   ];
 
-  home.file.".local/bin" = {
-    source = ../../../bin;
-    recursive = true;
+  home.file = {
+    ".local/bin" = {
+      source = ../../../bin;
+      recursive = true;
+    };
+    ".wallpaper" = {
+      source = ../../../wallpapers;
+      recursive = true;
+    };
   };
 
   # Hyprland polkit agent
