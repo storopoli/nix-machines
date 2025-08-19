@@ -15,6 +15,7 @@
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./mako.nix
   ];
 
   home.file = {
