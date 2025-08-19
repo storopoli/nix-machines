@@ -1,21 +1,23 @@
 {
-  lib,
+
   pkgs,
   pkgs-unstable,
   ...
 }:
 
 let
+  # ghostty is broken on darwin, but ghostty-bin works
   isLinux = pkgs.stdenv.isLinux;
+  package = if isLinux then pkgs-unstable.ghostty else pkgs-unstable.ghostty-bin;
 in
 
 {
-  # TODO: ghostty is broken on darwin
-  programs.ghostty = lib.mkIf isLinux {
+  programs.ghostty = {
+    inherit package;
     enable = true;
-    package = pkgs-unstable.ghostty;
     enableFishIntegration = true;
     settings = {
+      command = "${pkgs-unstable.fish}/bin/fish";
       shell-integration = "fish";
       theme = "GruvboxDarkHard";
       font-feature = [
