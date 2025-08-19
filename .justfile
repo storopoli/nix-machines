@@ -69,3 +69,13 @@ update-flake-inputs:
 [group('maintenance')]
 reclaim-storage:
   nix-collect-garbage -d
+
+# Test Desktop build
+[group('test')]
+test-desktop:
+  nix build --dry-run -L '.#nixosConfigurations.desktop.config.system.build.toplevel'
+
+# Test Macbook build
+[group('test')]
+test-macbook:
+  nix build --dry-run -L '.#darwinConfigurations.macbook.config.system.build.toplevel'
