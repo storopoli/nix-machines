@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   username,
   ...
 }:
@@ -39,6 +40,7 @@ in
 {
   programs.fish = {
     enable = true;
+    package = pkgs-unstable.fish; # 3.6.1
 
     interactiveShellInit = ''
       # Disable greeting
