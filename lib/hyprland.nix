@@ -1,5 +1,4 @@
 {
-  pkgs,
   pkgs-unstable,
   username,
   ...
@@ -29,12 +28,13 @@ in
 
   # System packages for Hyprland ecosystem
   environment.systemPackages =
-    with pkgs;
+    with pkgs-unstable;
     [
       libnotify
       nautilus
       blueberry
       clipse
+      vlc
 
       # GTK themes and icons
       adwaita-icon-theme
