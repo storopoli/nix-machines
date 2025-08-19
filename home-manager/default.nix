@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   username,
   isLinux ? false,
   isDarwin ? false,
@@ -65,7 +64,7 @@
       sqlite
       typst
       cargo-cache
-      pkgs-unstable.claude-code
+      claude-code
 
       # Opsec
       age
@@ -73,28 +72,28 @@
 
       # media
       ffmpeg
-      pkgs-unstable.presenterm
+      presenterm
     ]
     ++ lib.optionals isLinux [
       # System utilities
       exfat
 
       # Opsec
-      pkgs-unstable.keepassxc
-      pkgs-unstable.signal-desktop
-      pkgs-unstable.cryptomator
+      keepassxc
+      signal-desktop
+      cryptomator
       tor
       torsocks
-      pkgs-unstable.tor-browser-bundle-bin
-      pkgs-unstable.protonvpn-gui # TODO: move to obscura-vpn once Linux support is available
+      tor-browser-bundle-bin
+      protonvpn-gui # TODO: move to obscura-vpn once Linux support is available
       transmission_4
 
       # bitcoin
-      pkgs-unstable.sparrow
+      sparrow
 
       # media
       obs-studio
-      pkgs-unstable.cider-2
+      cider-2
 
       # programming
       llvm

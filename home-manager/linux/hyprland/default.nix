@@ -1,5 +1,4 @@
 {
-  pkgs-unstable,
   ...
 }:
 
@@ -36,7 +35,6 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs-unstable.hyprland;
     settings = {
       # Default applications
       "$terminal" = "ghostty";

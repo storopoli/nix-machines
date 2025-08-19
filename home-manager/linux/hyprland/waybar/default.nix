@@ -1,7 +1,6 @@
 {
   inputs,
   nix-colors,
-  pkgs-unstable,
   ...
 }:
 
@@ -34,7 +33,6 @@ in
 
   programs.waybar = {
     enable = true;
-    package = pkgs-unstable.waybar;
     settings = [
       {
         layer = "top";

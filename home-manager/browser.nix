@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -12,11 +11,9 @@ in
 {
   programs.chromium = lib.mkIf isLinux {
     enable = true;
-    package = pkgs-unstable.brave;
-
     commandLineArgs = [ "--ozone-platform=wayland" ];
 
-    dictionaries = with pkgs-unstable; [
+    dictionaries = with pkgs; [
       hunspellDictsChromium.en_US
     ];
 
