@@ -14,6 +14,7 @@
     ./windows.nix
     ./hypridle.nix
     ./hyprlock.nix
+    ./hyprpaper.nix
   ];
 
   home.file = {
