@@ -1,0 +1,15 @@
+disabled = []
+nix_version = "2.4"
+ignore = [
+    ".direnv",
+    ".env",
+    ".envrc",
+    ".claude",
+    ".zed",
+    ".helix",
+    ".git",
+    ".gitignore",
+    "flake.lock",
+    ".justfile",
+    ".editorconfig",
+]
