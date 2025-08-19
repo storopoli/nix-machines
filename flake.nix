@@ -141,7 +141,6 @@
                 package = pkgs.nixfmt-tree;
                 entry = "${pkgs.nixfmt-tree}/bin/treefmt";
               };
-
               flake-checker = {
                 enable = true;
                 args = [
@@ -173,6 +172,7 @@
               nil
               nixd
               nixfmt-tree
+              statix
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
             ++ pkgs.lib.optionals isLinux [
