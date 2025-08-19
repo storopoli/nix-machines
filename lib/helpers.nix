@@ -77,8 +77,6 @@
         config.allowUnfree = true;
       };
 
-      _assertHostname = pkgs.lib.asserts.assertMsg (hostname == "") "you must specify a hostname!";
-
       commonExpression = import ../hosts/default.nix {
         inherit
           pkgs
