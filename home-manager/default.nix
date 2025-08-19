@@ -6,6 +6,7 @@
   username,
   isLinux ? false,
   isDarwin ? false,
+  gnome ? false,
   ...
 }:
 
@@ -22,6 +23,9 @@
   ]
   ++ lib.optionals isLinux [
     ./linux
+  ]
+  ++ lib.optionals gnome [
+    ./gnome.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -93,22 +97,6 @@
       python3
       cargo
     ];
-
-  dconf = lib.mkIf isLinux {
-    enable = true;
-    settings = {
-      # GNOME Dark mode
-      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
-      # Better video display
-      "org/gnome/mutter" = {
-        experimental-features = [
-          "scale-monitor-framebuffer" # Enables fractional scaling (125% 150% 175%)
-          "variable-refresh-rate" # Enables Variable Refresh Rate (VRR) on compatible displays
-          "xwayland-native-scaling" # Scales Xwayland applications to look crisp on HiDPI screens
-        ];
-      };
-    };
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
