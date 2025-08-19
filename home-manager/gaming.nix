@@ -1,11 +1,11 @@
 {
-  pkgs,
+  pkgs-unstable,
   ...
 }:
 
 {
   # Gaming packages
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     # Gaming
     bottles
     mangohud
