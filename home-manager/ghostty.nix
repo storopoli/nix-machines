@@ -1,6 +1,7 @@
 {
-  pkgs,
   lib,
+  pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -12,6 +13,7 @@ in
   # TODO: ghostty is broken on darwin
   programs.ghostty = lib.mkIf isLinux {
     enable = true;
+    package = pkgs-unstable.ghostty;
     enableFishIntegration = true;
     settings = {
       shell-integration = "fish";
@@ -43,6 +45,8 @@ in
         "super+ctrl+j=resize_split:down,10"
         "super+ctrl+k=resize_split:up,10"
 
+        # Claude
+        "shift+enter=text:\\n"
       ];
     };
   };
