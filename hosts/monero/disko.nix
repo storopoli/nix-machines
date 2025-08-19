@@ -1,5 +1,4 @@
 {
-  config,
   disks ? [ "/dev/sda" ],
   ...
 }:

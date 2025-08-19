@@ -1,15 +1,11 @@
 # Some common expressions between systems, one can call this expression as it was "configuration.nix".
 {
   pkgs,
-  module, # Should be any of the derivations, [ "bitcoin", "monero", "matrix"].
   stateVersion,
   username,
-  inputs,
   ...
 }:
-let
-  _assertModule = pkgs.lib.asserts.assertMsg (module == "") "you must specify a hostname!";
-in
+
 {
   system.stateVersion = stateVersion;
 

@@ -1,4 +1,8 @@
-{ pkgs, username, ... }:
+{
+  pkgs,
+  username,
+  ...
+}:
 {
   imports = [
     ./brew.nix
@@ -31,6 +35,7 @@
   # System packages
   environment.systemPackages = with pkgs; [
     # darwin specific packages
+    hello
   ];
 
   # Allow unfree packages

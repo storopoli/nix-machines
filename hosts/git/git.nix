@@ -1,10 +1,4 @@
-{
-  pkgs,
-  config,
-  username,
-  lib,
-  ...
-}:
+{ ... }:
 
 {
   config.services.forgejo = {
