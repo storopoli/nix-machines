@@ -1,6 +1,5 @@
 {
   nix-colors,
-  pkgs-unstable,
   ...
 }:
 
@@ -92,7 +91,6 @@ in
 
   programs.wofi = {
     enable = true;
-    package = pkgs-unstable.wofi;
     settings = {
       width = 600;
       height = 350;

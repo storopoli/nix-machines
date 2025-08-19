@@ -1,6 +1,5 @@
 {
   nix-colors,
-  pkgs-unstable,
   ...
 }:
 
@@ -17,7 +16,6 @@ in
 {
   services.mako = {
     enable = true;
-    package = pkgs-unstable.mako;
 
     settings = {
       inherit

@@ -1,8 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -16,14 +14,13 @@
     git-hooks.url = "github:cachix/git-hooks.nix";
 
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-bitcoin = {
-      url = "github:fort-nix/nix-bitcoin/nixos-25.05";
+      url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
 
     continuwuity = {
@@ -32,7 +29,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -40,7 +37,7 @@
 
     neovix = {
       url = "github:storopoli/neovix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.git-hooks.follows = "git-hooks";
       inputs.flake-parts.follows = "flake-parts";
     };
@@ -129,10 +126,6 @@
           inherit system;
           config.allowUnfree = true;
         };
-        pkgs-unstable = import inputs.nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
         neovix = inputs.neovix.packages.${system}.default;
         isLinux = pkgs.stdenv.isLinux;
       in
@@ -145,8 +138,8 @@
               # TODO: change to nixfmt-tree when git-hooks supports it
               nixfmt-rfc-style = {
                 enable = true;
-                package = pkgs-unstable.nixfmt-tree;
-                entry = "${pkgs-unstable.nixfmt-tree}/bin/treefmt";
+                package = pkgs.nixfmt-tree;
+                entry = "${pkgs.nixfmt-tree}/bin/treefmt";
               };
 
               flake-checker = {
@@ -162,7 +155,7 @@
             };
           };
         };
-        formatter = pkgs-unstable.nixfmt-tree;
+        formatter = pkgs.nixfmt-tree;
 
         devShells.default = pkgs.mkShell {
           buildInputs =
@@ -172,14 +165,14 @@
               just
               vim
               neovix
-              pkgs-unstable.lazygit
+              lazygit
               age
               age-plugin-yubikey
               gnupg
               nixos-rebuild
-              pkgs-unstable.nil
-              pkgs-unstable.nixd
-              pkgs-unstable.nixfmt-tree
+              nil
+              nixd
+              nixfmt-tree
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
             ++ pkgs.lib.optionals isLinux [

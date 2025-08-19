@@ -1,12 +1,12 @@
 {
-  pkgs-unstable,
+  pkgs,
   username,
   ...
 }:
 
 let
   # Essential Hyprland packages - cannot be excluded
-  hyprlandPackages = with pkgs-unstable; [
+  hyprlandPackages = with pkgs; [
     hyprshot
     hyprpicker
     hyprsunset
@@ -22,13 +22,13 @@ in
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    package = pkgs-unstable.hyprland;
-    portalPackage = pkgs-unstable.xdg-desktop-portal-hyprland;
+    package = pkgs.hyprland;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
 
   # System packages for Hyprland ecosystem
   environment.systemPackages =
-    with pkgs-unstable;
+    with pkgs;
     [
       libnotify
       nautilus
@@ -48,7 +48,7 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs-unstable.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
           user = username;
         };
       };
@@ -59,7 +59,7 @@ in
   security.polkit.enable = true;
 
   # Fonts
-  fonts.packages = with pkgs-unstable; [
+  fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
     font-awesome

@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -34,8 +33,6 @@
   programs.helix = {
     enable = true;
     defaultEditor = false;
-
-    package = pkgs-unstable.helix;
 
     settings = {
       theme = "gruvbox_dark_hard_transparent";

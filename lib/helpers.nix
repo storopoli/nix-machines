@@ -21,10 +21,6 @@ in
         inherit system;
         config.allowUnfree = true;
       };
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
       isLinux = pkgs.stdenv.isLinux;
       isDarwin = pkgs.stdenv.isDarwin;
     in
@@ -35,7 +31,6 @@ in
         inherit
           inputs
           pkgs
-          pkgs-unstable
           username
           ;
       };
@@ -53,7 +48,7 @@ in
             inherit
               inputs
               username
-              pkgs-unstable
+              pkgs
               isLinux
               isDarwin
               nix-colors
@@ -82,11 +77,6 @@ in
         config.allowUnfree = true;
       };
 
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
       commonExpression = import ../hosts/default.nix {
         inherit
           pkgs
@@ -108,7 +98,7 @@ in
       specialArgs = {
         inherit
           inputs
-          pkgs-unstable
+          pkgs
           system
           hostname
           username

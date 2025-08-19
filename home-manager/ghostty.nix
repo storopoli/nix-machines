@@ -1,14 +1,13 @@
 {
 
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
 let
   # ghostty is broken on darwin, but ghostty-bin works
   isLinux = pkgs.stdenv.isLinux;
-  package = if isLinux then pkgs-unstable.ghostty else pkgs-unstable.ghostty-bin;
+  package = if isLinux then pkgs.ghostty else pkgs.ghostty-bin;
 in
 
 {
@@ -17,7 +16,7 @@ in
     enable = true;
     enableFishIntegration = true;
     settings = {
-      command = "${pkgs-unstable.fish}/bin/fish";
+      command = "${pkgs.fish}/bin/fish";
       shell-integration = "fish";
       theme = "GruvboxDarkHard";
       font-feature = [

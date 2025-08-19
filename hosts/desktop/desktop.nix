@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgs-unstable,
   inputs,
   username,
   ...
@@ -61,7 +60,7 @@ in
         username
         isLinux
         isDarwin
-        pkgs-unstable
+        pkgs
         nix-colors
         ;
       gnome = false;
