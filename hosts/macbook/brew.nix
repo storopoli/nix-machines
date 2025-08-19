@@ -28,7 +28,6 @@
       "android-file-transfer"
       "brave-browser"
       "cryptomator"
-      "ghostty"
       "iina"
       "netnewswire"
       "obs"
