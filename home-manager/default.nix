@@ -73,28 +73,28 @@
 
       # media
       ffmpeg
-      presenterm
+      pkgs-unstable.presenterm
     ]
     ++ lib.optionals isLinux [
       # System utilities
       exfat
 
       # Opsec
-      keepassxc
-      signal-desktop
-      cryptomator
+      pkgs-unstable.keepassxc
+      pkgs-unstable.signal-desktop
+      pkgs-unstable.cryptomator
       tor
       torsocks
-      tor-browser-bundle-bin
-      protonvpn-gui # TODO: move to obscura-vpn once Linux support is available
+      pkgs-unstable.tor-browser-bundle-bin
+      pkgs-unstable.protonvpn-gui # TODO: move to obscura-vpn once Linux support is available
       transmission_4
 
       # bitcoin
-      sparrow
+      pkgs-unstable.sparrow
 
       # media
       obs-studio
-      cider-2
+      pkgs-unstable.cider-2
 
       # programming
       llvm
