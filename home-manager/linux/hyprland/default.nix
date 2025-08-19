@@ -16,6 +16,7 @@
     ./hyprlock.nix
     ./hyprpaper.nix
     ./mako.nix
+    ./wofi.nix
   ];
 
   home.file = {
