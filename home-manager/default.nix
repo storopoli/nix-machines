@@ -21,6 +21,7 @@
     ./neovim.nix
     ./ghostty.nix
     ./zed.nix
+    ./browser.nix
   ]
   ++ lib.optionals isLinux [
     ./linux
@@ -80,7 +81,6 @@
 
       # Opsec
       keepassxc
-      brave
       signal-desktop
       cryptomator
       tor
