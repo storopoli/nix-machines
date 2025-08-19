@@ -12,6 +12,7 @@
     ./bindings.nix
     ./looknfeel.nix
     ./windows.nix
+    ./hypridle.nix
     ./hyprlock.nix
   ];
 
