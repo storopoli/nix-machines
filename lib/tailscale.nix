@@ -1,5 +1,8 @@
 # Module that holds all tailscale related config
-{ config, ... }:
+{
+  config,
+  ...
+}:
 {
   networking = {
     # MagicDNS

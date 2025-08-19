@@ -1,5 +1,4 @@
 {
-  config,
   disks ? [ "/dev/nvme0n1" ],
   ...
 }:

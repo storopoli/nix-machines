@@ -1,5 +1,8 @@
 # <https://wiki.nixos.org/wiki/Doas>
-{ username, ... }:
+{
+  username,
+  ...
+}:
 
 {
   security.doas.enable = true;

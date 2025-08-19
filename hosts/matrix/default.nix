@@ -1,4 +1,4 @@
-{ module, inputs, ... }:
+{ module, ... }:
 {
   imports = [
     ./disko.nix

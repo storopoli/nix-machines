@@ -1,4 +1,7 @@
-{ pkgs-unstable, ... }:
+{
+  pkgs-unstable,
+  ...
+}:
 
 {
   programs.zed-editor = {
