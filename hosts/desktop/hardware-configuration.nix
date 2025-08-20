@@ -19,8 +19,17 @@
 
     # Bootloader
     loader = {
-      systemd-boot.enable = true;
+      # Lanzaboote currently replaces the systemd-boot module.
+      # This setting is usually set to true in configuration.nix
+      # generated at installation time. So we force it to false
+      # for now.
+      systemd-boot.enable = lib.mkForce false;
       efi.canTouchEfiVariables = true;
+    };
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
     };
 
     initrd = {
@@ -35,7 +44,7 @@
       ];
       kernelModules = [ ];
       verbose = false;
-      systemd.enable = true; # needed for TPM2 LUKS unlock
+      systemd.enable = true; # needed for TPM2 LUKS unlock and for lanzaboote
     };
 
     supportedFilesystems = [

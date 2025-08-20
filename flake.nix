@@ -18,6 +18,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -107,6 +112,7 @@
           extraModules = [
             inputs.disko.nixosModules.disko
             inputs.home-manager.nixosModules.home-manager
+            inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };
       };

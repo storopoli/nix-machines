@@ -59,7 +59,7 @@ Available recipes:
 For a **fresh installation** on the `bitcoin` host, you would run:
 
 ```bash
-just disko bitcoin        # Partition and mount the disk  
+just disko bitcoin        # Partition and mount the disk
 just generate-config      # Generate hardware configuration
 just install bitcoin      # Install NixOS to /mnt
 ```
@@ -166,6 +166,15 @@ you can run:
 ```sh
 systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0 /dev/<my encrypted device
 ```
+
+## Secure Boot
+
+Some hosts have the capability to use Secure Boot.
+Secure Boot is provided by the [`nix-community/lanzaboote`](https://github.com/nix-community/lanzaboote).
+Check the [`QUICKSTART.md`](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md)
+to activate Secure Boot on your hosts
+
+Currently, only the `desktop` host has Secure Boot enabled.
 
 ## LICENSE
 
