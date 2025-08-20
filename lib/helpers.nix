@@ -30,7 +30,6 @@ in
       specialArgs = {
         inherit
           inputs
-          pkgs
           username
           ;
       };
@@ -48,7 +47,6 @@ in
             inherit
               inputs
               username
-              pkgs
               isLinux
               isDarwin
               nix-colors
@@ -98,7 +96,6 @@ in
       specialArgs = {
         inherit
           inputs
-          pkgs
           system
           hostname
           username
