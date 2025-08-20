@@ -760,11 +760,11 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1754562876,
-        "narHash": "sha256-CLzbjXM4mtYFaw6Bl4uKqxHF6iapTQNJh+y9Ple86iE=",
+        "lastModified": 1755714587,
+        "narHash": "sha256-uxxtuYAdEhuYx5Z0QZbHDtVsFJ5tl8jYy6vtez/JOYM=",
         "owner": "storopoli",
         "repo": "neovix",
-        "rev": "d5782b4aa1a218d344f16868dce1333fe79add01",
+        "rev": "2cd6cddbbcd48ce31481cc22f8d00cdd752ec752",
         "type": "github"
       },
       "original": {
