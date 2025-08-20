@@ -20,9 +20,10 @@ in
   environment.shells = with pkgs; [ fish ];
   users.users.${username}.shell = pkgs.fish;
 
-  # TPM2
+  # TPM2 and lanzaboote
   environment.systemPackages = with pkgs; [
     tpm2-tss
+    sbctl
   ];
 
   networking = {
