@@ -28,7 +28,10 @@
         "nix-command"
         "flakes"
       ];
-      trusted-users = [ "@admin" ];
+      trusted-users = [
+        "@admin"
+        "${username}"
+      ];
     };
   };
 

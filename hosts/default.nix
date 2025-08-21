@@ -86,6 +86,10 @@
         "flakes"
       ];
       warn-dirty = false;
+      trusted-users = [
+        "@wheel"
+        "${username}"
+      ];
       # 500mb buffer
       download-buffer-size = 500000000;
       auto-optimise-store = true;
