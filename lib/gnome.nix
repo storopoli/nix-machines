@@ -1,16 +1,34 @@
 {
-  lib,
+  pkgs,
   ...
 }:
 
 {
-  # GNOME Desktop Environment
-  # TODO: in 25.11 these will change
-  #       see <https://wiki.nixos.org/wiki/GNOME>
-  services.xserver = {
-    enable = lib.mkForce true;
-    displayManager.gdm.enable = lib.mkForce true;
-    desktopManager.gnome.enable = lib.mkForce true;
+  services = {
+    # GNOME Desktop Environment
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+
+    # NVIDIA support
     videoDrivers = [ "nvidia" ];
+
+    # minimal gnome
+    gnome = {
+      core-apps.enable = false;
+      core-developer-tools.enable = false;
+      games.enable = false;
+    };
+
+    environment.systemPackages = with pkgs; [
+      nautilus
+      loupe
+      snapshot
+    ];
+
+    environment.gnome.excludePackages = with pkgs; [
+      gnome-tour
+      gnome-user-docs
+      geary
+    ];
   };
 }
