@@ -64,8 +64,8 @@ in
         pkgs
         nix-colors
         ;
-      gnome = false;
-      hyprland = true;
+      gnome = true;
+      hyprland = false;
     };
   };
 }
