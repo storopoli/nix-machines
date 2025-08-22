@@ -152,6 +152,9 @@
 
               # Lua
               luacheck.enable = true;
+
+              # Tin-foil hat
+              zizmor.enable = true;
             };
           };
         };
