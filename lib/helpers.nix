@@ -1,6 +1,7 @@
 # lib/helper.nix
 {
   inputs,
+  lib,
   ...
 }:
 
@@ -64,9 +65,25 @@ in
       hostname,
       username ? "user",
       system ? "x86_64-linux",
+      # This option defines the first version of NixOS you have installed on this particular machine
+      # WARN: DON'T CHANGE THIS VALUE ONCE YOU SET IT
       stateVersion ? "25.05",
       extraModules ? [ ],
       disks ? [ "/dev/sda" ],
+      # Desktop environments
+      gnome ? false,
+      hyprland ? false,
+      # Hardware options
+      nvidia ? false,
+      audio ? false,
+      bluetooth ? false,
+      # Feature options
+      gaming ? false,
+      virtualisation ? false,
+      dns ? false,
+      airplay ? false,
+      # Home manager integration
+      homeManager ? true,
     }:
 
     let
@@ -74,6 +91,8 @@ in
         inherit system;
         config.allowUnfree = true;
       };
+      isLinux = pkgs.stdenv.isLinux;
+      isDarwin = pkgs.stdenv.isDarwin;
 
       commonExpression = import ../hosts/default.nix {
         inherit
@@ -89,6 +108,39 @@ in
         inherit inputs username;
         module = hostname;
       };
+
+      # Conditional modules based on options
+      conditionalModules =
+        lib.optionals gnome [ (import ./gnome.nix) ]
+        ++ lib.optionals hyprland [ (import ./hyprland.nix) ]
+        ++ lib.optionals nvidia [ (import ./nvidia.nix) ]
+        ++ lib.optionals audio [ (import ./audio.nix) ]
+        ++ lib.optionals bluetooth [ (import ./bluetooth.nix) ]
+        ++ lib.optionals gaming [ (import ./gaming.nix) ]
+        ++ lib.optionals virtualisation [ (import ./virtualisation.nix) ]
+        ++ lib.optionals dns [ (import ./dns.nix) ]
+        ++ lib.optionals airplay [ (import ./airplay.nix) ];
+
+      # Home manager module (optional)
+      homeManagerModules = lib.optionals homeManager [
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${username} = import ../home-manager;
+          home-manager.extraSpecialArgs = {
+            inherit
+              inputs
+              username
+              isLinux
+              isDarwin
+              gnome
+              hyprland
+              nix-colors
+              ;
+          };
+        }
+      ];
     in
 
     inputs.nixpkgs.lib.nixosSystem {
@@ -111,6 +163,8 @@ in
         (import ./tailscale.nix)
         (import ./ssh.nix)
       ]
+      ++ conditionalModules
+      ++ homeManagerModules
       ++ extraModules;
     };
 }

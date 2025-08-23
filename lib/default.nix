@@ -3,5 +3,12 @@
   ...
 }:
 {
-  inherit (import ./helpers.nix { inherit inputs; }) mkNixos mkDarwin;
+  inherit
+    (import ./helpers.nix {
+      inherit inputs;
+      lib = inputs.nixpkgs.lib;
+    })
+    mkNixos
+    mkDarwin
+    ;
 }
