@@ -14,7 +14,11 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
+    # requires kernel >=6.3
+    kernelParams = [ "amd_pstate=active" ];
+
     kernelModules = [ "kvm-amd" ];
+
     extraModulePackages = [ ];
 
     # Bootloader

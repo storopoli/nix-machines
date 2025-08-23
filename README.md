@@ -15,6 +15,7 @@ It uses Tailscale to connect the hosts to my Tailscale network.
 
 Personal computers:
 
+- `framework`: Framework Desktop.
 - `desktop`: Nvidia-GPU gaming and programming desktop.
   For Steam games don't forget to prepend the executables with `gamemoderun %command%`
   in the launch options.
@@ -24,7 +25,7 @@ Hardened secure servers:
 
 - `bitcoin`: a bitcoin full node with [`nix-bitcoin`](https://nixbitcoin.org)
 - `monero`: a monero full node.
-- `matrix`: a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity)
+- `matrix`: a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity).
 - `git`: a [`forgejo`](https://forgejo.org) server.
 
 ## To deploy
@@ -147,8 +148,8 @@ For example, to partition the disk for the `bitcoin` host, you can run:
 just disko bitcoin
 ```
 
-If you are setting up the `desktop` host,
-it uses a LUKS-encrypted Btrfs partition scheme.
+If you are setting up `framework` or `desktop` hosts,
+they use a LUKS-encrypted Btrfs partition scheme.
 Uncomment the
 
 ```nix
@@ -159,12 +160,13 @@ in the `hosts/desktop/disko.nix` file.
 
 The LUKS password is read from a file in `/tmp/luks.key` so make sure to create this file
 and add your LUKS password to it.
+You can leave it empty if you want to be prompted for the password during installation.
 
 Additionally, you might want to enable [TPM2 LUKS unlock](https://discourse.nixos.org/t/full-disk-encryption-tpm2/29454),
 you can run:
 
 ```sh
-systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0 /dev/<my encrypted device
+systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0 /dev/<my encrypted device>
 ```
 
 ## Secure Boot
@@ -174,7 +176,7 @@ Secure Boot is provided by the [`nix-community/lanzaboote`](https://github.com/n
 Check the [`QUICKSTART.md`](https://github.com/nix-community/lanzaboote/blob/master/docs/QUICK_START.md)
 to activate Secure Boot on your hosts
 
-Currently, only the `desktop` host has Secure Boot enabled.
+Currently, only `framework` and `desktop` hosts have Secure Boot enabled.
 
 ## LICENSE
 

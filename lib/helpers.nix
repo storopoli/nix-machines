@@ -76,6 +76,7 @@ in
       hyprland ? false,
       # Hardware options
       nvidia ? false,
+      amdgpu ? false,
       audio ? false,
       bluetooth ? false,
       # Feature options
@@ -116,6 +117,7 @@ in
         lib.optionals gnome [ (import ./gnome.nix { inherit pkgs lib nvidia; }) ]
         ++ lib.optionals hyprland [ (import ./hyprland.nix { inherit lib pkgs nvidia; }) ]
         ++ lib.optionals nvidia [ (import ./nvidia.nix) ]
+        ++ lib.optionals amdgpu [ (import ./amdgpu.nix) ]
         ++ lib.optionals audio [ (import ./audio.nix) ]
         ++ lib.optionals bluetooth [ (import ./bluetooth.nix) ]
         ++ lib.optionals gaming [ (import ./gaming.nix) ]
