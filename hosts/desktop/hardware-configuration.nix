@@ -66,6 +66,9 @@
     };
 
     thermald.enable = true;
+
+    # SSD
+    fstrim.enable = true;
   };
 
   zramSwap.enable = true;
