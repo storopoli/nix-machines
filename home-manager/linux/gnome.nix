@@ -1,11 +1,7 @@
-{
-  lib,
-  isLinux ? false,
-  ...
-}:
+{ ... }:
 
 {
-  dconf = lib.mkIf isLinux {
+  dconf = {
     enable = true;
     settings = {
       # GNOME Dark mode

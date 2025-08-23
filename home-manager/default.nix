@@ -24,10 +24,10 @@
     ./browser.nix
   ]
   ++ lib.optionals isLinux [
-    ./linux
+    ./linux/mold.nix
   ]
   ++ lib.optionals gnome [
-    ./gnome.nix
+    ./linux/gnome.nix
   ]
   ++ lib.optionals hyprland [
     (import ./linux/hyprland { inherit lib nvidia; })
