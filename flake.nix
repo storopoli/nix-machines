@@ -68,6 +68,7 @@
         bitcoin = libx.mkNixos {
           hostname = "bitcoin";
           username = "user";
+          homeManager = false;
 
           extraModules = [
             inputs.nix-bitcoin.nixosModules.default
@@ -80,6 +81,7 @@
         monero = libx.mkNixos {
           hostname = "monero";
           username = "user";
+          homeManager = false;
           extraModules = [
             inputs.disko.nixosModules.disko
           ];
@@ -88,6 +90,7 @@
         matrix = libx.mkNixos {
           hostname = "matrix";
           username = "user";
+          homeManager = false;
           extraModules = [
             inputs.disko.nixosModules.disko
           ];
@@ -96,6 +99,7 @@
         git = libx.mkNixos {
           hostname = "git";
           username = "user";
+          homeManager = false;
           extraModules = [
             inputs.disko.nixosModules.disko
           ];
@@ -104,9 +108,17 @@
         desktop = libx.mkNixos {
           hostname = "desktop";
           username = "user";
+          gnome = false;
+          hyprland = true;
+          nvidia = true;
+          audio = true;
+          bluetooth = true;
+          gaming = true;
+          virtualisation = true;
+          dns = true;
+          airplay = true;
           extraModules = [
             inputs.disko.nixosModules.disko
-            inputs.home-manager.nixosModules.home-manager
             inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };

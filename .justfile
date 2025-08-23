@@ -48,7 +48,7 @@ install-impure *host:
 # Initial setup for macOS with `nix-darwin` (first time only)
 [group('install')]
 setup-darwin *host:
-  sudo nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake .#{{host}}
+  sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#{{host}}
 
 # Show Bitcoin service status
 [group('bitcoin')]
