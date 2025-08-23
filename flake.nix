@@ -111,6 +111,27 @@
             inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };
+
+        # Framework Desktop
+        framework = libx.mkNixos {
+          hostname = "framework";
+          username = "user";
+          gnome = false;
+          hyprland = true;
+          homeManager = true;
+          nvidia = false;
+          amdgpu = true;
+          audio = true;
+          bluetooth = true;
+          virtualisation = true;
+          doas = true;
+          dns = true;
+          airplay = true;
+          gaming = true;
+          extraModules = [
+            inputs.lanzaboote.nixosModules.lanzaboote
+          ];
+        };
       };
 
       darwinConfigurations = {
