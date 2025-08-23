@@ -1,5 +1,7 @@
 {
   pkgs,
+  lib,
+  nvidia ? false,
   ...
 }:
 
@@ -9,9 +11,6 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
-    # NVIDIA support
-    videoDrivers = [ "nvidia" ];
-
     # minimal gnome
     gnome = {
       core-apps.enable = false;
@@ -19,16 +18,21 @@
       games.enable = false;
     };
 
-    environment.systemPackages = with pkgs; [
-      nautilus
-      loupe
-      snapshot
-    ];
-
-    environment.gnome.excludePackages = with pkgs; [
-      gnome-tour
-      gnome-user-docs
-      geary
-    ];
+  }
+  // lib.optionalAttrs nvidia {
+    # NVIDIA support
+    xserver.videoDrivers = [ "nvidia" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    nautilus
+    loupe
+    snapshot
+  ];
+
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    gnome-user-docs
+    geary
+  ];
 }
