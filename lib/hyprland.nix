@@ -1,6 +1,5 @@
 {
   pkgs,
-  username,
   ...
 }:
 
@@ -21,9 +20,9 @@ in
   # Enable Hyprland
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
     xwayland.enable = true;
     package = pkgs.hyprland;
-    portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
 
   # System packages for Hyprland ecosystem
@@ -48,8 +47,7 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-          user = username;
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
         };
       };
     };
