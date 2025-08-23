@@ -1,5 +1,8 @@
 {
+  lib,
   pkgs,
+  hyprland ? false,
+  gnome ? false,
   ...
 }:
 
@@ -113,11 +116,15 @@
     F46DFA972751E36823457138030656AA7AD3DE17 0
   '';
 
-  services.gpg-agent = {
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableSshSupport = true;
-    defaultCacheTtl = 60;
-    maxCacheTtl = 120;
-  };
+  services.gpg-agent = lib.mkMerge [
+    {
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      enableSshSupport = true;
+      defaultCacheTtl = 60;
+      maxCacheTtl = 120;
+    }
+    (lib.mkIf hyprland { pinentry.package = pkgs.pinentry-gtk2; })
+    (lib.mkIf gnome { pinentry.package = pkgs.pinentry-gnome3; })
+  ];
 }
