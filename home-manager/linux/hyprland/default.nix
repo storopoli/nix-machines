@@ -1,11 +1,13 @@
 {
+  lib,
+  nvidia ? false,
   ...
 }:
 
 {
   imports = [
     ./fonts.nix
-    ./envs.nix
+    (import ./envs.nix { inherit lib nvidia; })
     ./autostart.nix
     ./input.nix
     ./bindings.nix

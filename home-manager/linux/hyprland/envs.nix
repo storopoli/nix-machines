@@ -1,12 +1,12 @@
-{ ... }:
+{
+  lib,
+  nvidia ? false,
+  ...
+}:
 
 {
   wayland.windowManager.hyprland.settings = {
     env = [
-      "LIBVA_DRIVER_NAME,nvidia"
-      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-      "NVD_BACKEND,direct"
-      "WLR_NO_HARDWARE_CURSORS,1"
       "NIXOS_OZONE_WL,1"
       "QT_QPA_PLATFORM,wayland"
       "GDK_BACKEND,wayland,x11"
@@ -42,6 +42,12 @@
 
       # GTK theme
       "GTK_THEME,Adwaita:dark"
+    ]
+    ++ lib.optionals nvidia [
+      "LIBVA_DRIVER_NAME,nvidia"
+      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+      "NVD_BACKEND,direct"
+      "WLR_NO_HARDWARE_CURSORS,1"
     ];
 
     xwayland = {

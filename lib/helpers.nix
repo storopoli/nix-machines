@@ -136,6 +136,7 @@ in
               isDarwin
               gnome
               hyprland
+              nvidia
               nix-colors
               ;
           };

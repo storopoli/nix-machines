@@ -7,6 +7,7 @@
   isDarwin ? false,
   gnome ? false,
   hyprland ? false,
+  nvidia ? false,
   ...
 }:
 
@@ -29,7 +30,7 @@
     ./gnome.nix
   ]
   ++ lib.optionals hyprland [
-    ./linux/hyprland
+    (import ./linux/hyprland { inherit lib nvidia; })
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
