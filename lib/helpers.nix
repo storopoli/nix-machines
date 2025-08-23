@@ -112,7 +112,7 @@ in
       # Conditional modules based on options
       conditionalModules =
         lib.optionals gnome [ (import ./gnome.nix { inherit pkgs lib nvidia; }) ]
-        ++ lib.optionals hyprland [ (import ./hyprland.nix) ]
+        ++ lib.optionals hyprland [ (import ./hyprland.nix { inherit lib pkgs nvidia; }) ]
         ++ lib.optionals nvidia [ (import ./nvidia.nix) ]
         ++ lib.optionals audio [ (import ./audio.nix) ]
         ++ lib.optionals bluetooth [ (import ./bluetooth.nix) ]

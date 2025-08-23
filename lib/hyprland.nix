@@ -1,5 +1,7 @@
 {
+  lib,
   pkgs,
+  nvidia ? false,
   ...
 }:
 
@@ -65,21 +67,25 @@ in
   ];
 
   # Environment variables for Wayland
-  environment.sessionVariables = {
-    # Nvidia-specific variables for Wayland
-    WLR_NO_HARDWARE_CURSORS = "1"; # Nvidia compatibility
-    LIBVA_DRIVER_NAME = "nvidia";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    NVD_BACKEND = "direct";
+  environment.sessionVariables = lib.mkMerge [
+    {
+      # General Wayland variables
+      NIXOS_OZONE_WL = "1"; # Enable Wayland for Chromium/Electron apps
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      QT_QPA_PLATFORM = "wayland";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      GDK_BACKEND = "wayland,x11";
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_DESKTOP = "Hyprland";
+      XDG_SESSION_TYPE = "wayland";
+    }
+    (lib.mkIf nvidia {
+      # Nvidia-specific variables for Wayland
+      WLR_NO_HARDWARE_CURSORS = "1"; # Nvidia compatibility
+      LIBVA_DRIVER_NAME = "nvidia";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      NVD_BACKEND = "direct";
 
-    # General Wayland variables
-    NIXOS_OZONE_WL = "1"; # Enable Wayland for Chromium/Electron apps
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
-    QT_QPA_PLATFORM = "wayland";
-    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    GDK_BACKEND = "wayland,x11";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    XDG_SESSION_DESKTOP = "Hyprland";
-    XDG_SESSION_TYPE = "wayland";
-  };
+    })
+  ];
 }
