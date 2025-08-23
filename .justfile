@@ -75,6 +75,11 @@ reclaim-storage:
 test-desktop:
   nix build --dry-run -L '.#nixosConfigurations.desktop.config.system.build.toplevel'
 
+# Test Framework build
+[group('test')]
+test-framework:
+  nix build --dry-run -L '.#nixosConfigurations.framework.config.system.build.toplevel'
+
 # Test Macbook build
 [group('test')]
 test-macbook:
