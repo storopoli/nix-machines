@@ -99,7 +99,6 @@
       # programming
       llvm
       python3
-      cargo
     ];
 
   # Let Home Manager install and manage itself.
