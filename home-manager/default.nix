@@ -8,6 +8,7 @@
   gnome ? false,
   hyprland ? false,
   nvidia ? false,
+  gaming ? false,
   ...
 }:
 
@@ -31,6 +32,9 @@
   ]
   ++ lib.optionals hyprland [
     (import ./linux/hyprland { inherit lib nvidia; })
+  ]
+  ++ lib.optionals gaming [
+    ./gaming.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

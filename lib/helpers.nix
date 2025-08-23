@@ -54,6 +54,7 @@ in
               ;
             gnome = false;
             hyprland = false;
+            gaming = false;
           };
         }
       ]
@@ -78,12 +79,13 @@ in
       audio ? false,
       bluetooth ? false,
       # Feature options
-      gaming ? false,
-      virtualisation ? false,
-      dns ? false,
+      virtualisation ? true,
+      dns ? true,
+      doas ? true,
       airplay ? false,
+      gaming ? false,
       # Home manager integration
-      homeManager ? true,
+      homeManager ? false,
     }:
 
     let
@@ -119,6 +121,7 @@ in
         ++ lib.optionals gaming [ (import ./gaming.nix) ]
         ++ lib.optionals virtualisation [ (import ./virtualisation.nix) ]
         ++ lib.optionals dns [ (import ./dns.nix) ]
+        ++ lib.optionals doas [ (import ./doas.nix) ]
         ++ lib.optionals airplay [ (import ./airplay.nix) ];
 
       # Home manager module (optional)
@@ -138,6 +141,7 @@ in
               hyprland
               nvidia
               nix-colors
+              gaming
               ;
           };
         }
@@ -161,6 +165,7 @@ in
         }
         commonExpression
         systemExpression
+        inputs.disko.nixosModules.disko
         (import ./tailscale.nix)
         (import ./ssh.nix)
       ]

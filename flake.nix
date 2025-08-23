@@ -81,28 +81,16 @@
         monero = libx.mkNixos {
           hostname = "monero";
           username = "user";
-          homeManager = false;
-          extraModules = [
-            inputs.disko.nixosModules.disko
-          ];
         };
 
         matrix = libx.mkNixos {
           hostname = "matrix";
           username = "user";
-          homeManager = false;
-          extraModules = [
-            inputs.disko.nixosModules.disko
-          ];
         };
 
         git = libx.mkNixos {
           hostname = "git";
           username = "user";
-          homeManager = false;
-          extraModules = [
-            inputs.disko.nixosModules.disko
-          ];
         };
 
         desktop = libx.mkNixos {
@@ -110,15 +98,16 @@
           username = "user";
           gnome = false;
           hyprland = true;
+          homeManager = true;
           nvidia = true;
           audio = true;
           bluetooth = true;
-          gaming = true;
           virtualisation = true;
+          doas = true;
           dns = true;
           airplay = true;
+          gaming = true;
           extraModules = [
-            inputs.disko.nixosModules.disko
             inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };

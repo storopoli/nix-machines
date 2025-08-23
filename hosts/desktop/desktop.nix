@@ -1,15 +1,8 @@
 {
   pkgs,
-  inputs,
   username,
   ...
 }:
-
-let
-  isLinux = pkgs.stdenv.isLinux;
-  isDarwin = pkgs.stdenv.isDarwin;
-  nix-colors = inputs.nix-colors;
-in
 
 {
   # Tor
@@ -44,28 +37,4 @@ in
 
   # zram swap
   zramSwap.enable = true;
-
-  # Home Manager configuration
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.${username} = {
-      imports = [
-        ../../home-manager
-        ../../home-manager/gaming.nix
-      ];
-    };
-    extraSpecialArgs = {
-      inherit
-        inputs
-        username
-        isLinux
-        isDarwin
-        pkgs
-        nix-colors
-        ;
-      gnome = true;
-      hyprland = false;
-    };
-  };
 }
