@@ -77,6 +77,9 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
+            os-name: "Framework Desktop"
+            flake-attr: nixosConfigurations.framework.config.system.build.toplevel
+          - os: ubuntu-latest
             os-name: "Gaming Desktop"
             flake-attr: nixosConfigurations.desktop.config.system.build.toplevel
           - os: macos-latest
