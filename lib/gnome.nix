@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  nvidia ? false,
   ...
 }:
 
@@ -18,10 +16,6 @@
       games.enable = false;
     };
 
-  }
-  // lib.optionalAttrs nvidia {
-    # NVIDIA support
-    xserver.videoDrivers = [ "nvidia" ];
   };
 
   environment.systemPackages = with pkgs; [

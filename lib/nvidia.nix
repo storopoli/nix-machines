@@ -17,6 +17,8 @@
         nvidia-vaapi-driver
         vaapiVdpau
         nvtopPackages.nvidia
+        vulkan-tools # `vulkaninfo`, `vkcube`
+        glxinfo # sanity check OpenGL
       ];
     };
     nvidia = {
@@ -28,6 +30,7 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
+  services.xserver.videoDrivers = [ "nvidia" ];
   environment.variables = {
     NVD_BACKEND = "direct";
     LIBVA_DRIVER_NAME = "nvidia";
