@@ -69,7 +69,6 @@
       sqlite
       typst
       cargo-cache
-      claude-code
 
       # Opsec
       age

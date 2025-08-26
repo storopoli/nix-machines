@@ -4,6 +4,7 @@
   imports = [
     ./bat.nix
     ./btop.nix
+    ./claude.nix
     ./direnv.nix
     ./eza.nix
     ./fd.nix
