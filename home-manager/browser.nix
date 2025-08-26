@@ -22,6 +22,7 @@ in
 
     extensions = [
       { id = "ghmbeldphafepmbegfdlkpapadhbakde"; } # Proton Pass
+      { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
     ];
   };
 }
