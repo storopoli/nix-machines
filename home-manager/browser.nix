@@ -21,7 +21,7 @@ in
     ];
 
     extensions = [
-      { id = "pejdijmoenmkgeppbflobdenhhabjlaj"; } # iCloud Passwords
+      { id = "ghmbeldphafepmbegfdlkpapadhbakde"; } # Proton Pass
     ];
   };
 }
