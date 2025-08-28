@@ -3,8 +3,11 @@
 {
   programs.ssh = {
     enable = true;
-    forwardAgent = true;
+    enableDefaultConfig = false;
     matchBlocks = {
+      "*" = {
+        forwardAgent = true;
+      };
       github = {
         hostname = "github.com";
         forwardX11 = false;
