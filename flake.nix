@@ -189,7 +189,7 @@
               git
               just
               vim
-              neovix
+              helix
               lazygit
               age
               age-plugin-yubikey
@@ -197,7 +197,13 @@
               nixos-rebuild
               nil
               nixd
-              nixfmt-tree
+              bash-language-server
+              fish-lsp
+              yaml-language-server
+              taplo
+              marksman
+              nixfmt-rfc-style
+              shfmt
               statix
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
@@ -206,6 +212,7 @@
             ];
           shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
             export TERM=xterm
+            export EDITOR=hx
             echo "Welcome to nix-machines devshell!"
             alias lg=lazygit
           '';

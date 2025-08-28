@@ -19,9 +19,9 @@
     ./cli
     ./shell
     ./helix.nix
-    ./neovim.nix
+    # ./neovim.nix
     ./ghostty.nix
-    ./zed.nix
+    # ./zed.nix
     ./browser.nix
   ]
   ++ lib.optionals isLinux [

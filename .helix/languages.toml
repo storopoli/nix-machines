@@ -1,15 +1,30 @@
 [[language]]
 name = "nix"
-formatter = {command = "nixfmt"}
+formatter = { command = "nixfmt" }
 auto-format = true
+
+[[language]]
+name = "bash"
+formatter = { command = "shfmt", args = ["-i", "2", "-"] }
+auto-format = true
+
+[[language]]
+name = "toml"
+formatter = { args = ["fmt", "-"], command = "taplo" }
+auto-format = true
+
+
+[language-server.yaml-language-server.config.yaml]
+validation = true
 
 [language-server.yaml-language-server.config.yaml.format]
 enable = true
 
 [language-server.yaml-language-server.config.yaml.schemas]
-# kubernetes = "/*.yaml"
-# "https://json.schemastore.org/github-action.json" = "/.github/**/actions.yml"
-"https://json.schemastore.org/github-workflow.json" = "/.github/workflows/*.{yml,yaml}"
+"https=//json.schemastore.org/github-action.json" = ".github/actions/*/action.yaml"
+"https=//json.schemastore.org/github-workflow.json" = ".github/workflows/*.yaml"
+"https=//raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" = "docker-compose.yaml"
+kubernetes = "*.yaml"
 
 [language-server.yaml-language-server.config.yaml.schemaStore]
 url = "https://json.schemastore.org/package.json"

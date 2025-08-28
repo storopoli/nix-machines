@@ -8,6 +8,7 @@
     # LSP
     marksman
     nil
+    nixd
     haskell-language-server
     bash-language-server
     fish-lsp
@@ -32,7 +33,7 @@
 
   programs.helix = {
     enable = true;
-    defaultEditor = false;
+    defaultEditor = true;
 
     settings = {
       theme = "gruvbox_dark_hard_transparent";

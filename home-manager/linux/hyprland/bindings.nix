@@ -11,7 +11,7 @@
       "$mainMod, E, exec, $fileManager"
       "$mainMod, B, exec, $browser"
       "$mainMod, M, exec, $music"
-      "$mainMod, N, exec, $terminal -e nvim"
+      "$mainMod, N, exec, $terminal -e $EDITOR"
       "$mainMod, T, exec, $terminal -e btop"
       "$mainMod, D, exec, $terminal -e lazydocker"
       "$mainMod, G, exec, $messenger"
