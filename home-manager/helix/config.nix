@@ -109,16 +109,14 @@
           ];
           # yazi integration: https://github.com/helix-editor/helix/discussions/12934
           C-y = [
-            ":sh rm -f /tmp/files2open"
+            ":sh rm -f /tmp/unique-file"
             ":set mouse false"
-            '':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/files2open''
+            '':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/unique-file''
+            '':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty''
+            '':open %sh{cat /tmp/unique-file}''
             ":redraw"
+            ":set mouse false"
             ":set mouse true"
-            ":open /tmp/files2open"
-            "select_all"
-            "split_selection_on_newline"
-            "goto_file"
-            ":buffer-close! /tmp/files2open"
           ];
           # Swap lines up and down
           A-j = [
