@@ -147,6 +147,10 @@
             q = ":quit";
             Q = ":quit-all!";
             space = "buffer_picker";
+            # Git blame
+            G = ":open %sh{blame_file_pretty %{buffer_name} %{cursor_line}}";
+            H = ":run-shell-command git_hunk %{buffer_name} %{cursor_line} 3";
+            B = ":run-shell-command blame_line_pretty %{buffer_name} %{cursor_line}";
             # Generate permalink for current line
             # o = [":sh echo \"$(git remote get-url origin | sed 's/\\.git$//' | sed 's/git@github\\.com:/https:\\/\\/github\\.com\\//')/blob/$(git rev-parse HEAD)/%{buffer_name}#L%{cursor_line}\" | pbcopy"];
             o = [

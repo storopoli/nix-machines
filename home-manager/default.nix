@@ -18,7 +18,7 @@
     # common home-manager configs
     ./cli
     ./shell
-    ./helix.nix
+    ./helix
     # ./neovim.nix
     ./ghostty.nix
     # ./zed.nix
