@@ -38,12 +38,12 @@ generate-config:
 # Install NixOS configuration for a specific host (run after `disko`)
 [group('install')]
 install *host:
-  sudo nixos-install --root /mnt --no-root-passwd --flake .#{{host}}
+  sudo nixos-install --root /mnt --no-root-passwd --option download-buffer-size 524288000 --flake .#{{host}}
 
 # Install with impure flag if restricted mode issues occur (run after `disko`)
 [group('install')]
 install-impure *host:
-  sudo nixos-install --root /mnt --no-root-passwd --impure --flake .#{{host}}
+  sudo nixos-install --root /mnt --no-root-passwd --option download-buffer-size 524288000 --impure --flake .#{{host}}
 
 # Initial setup for macOS with `nix-darwin` (first time only)
 [group('install')]

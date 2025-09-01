@@ -14,6 +14,7 @@
     "ata_piix"
     "uhci_hcd"
     "virtio_pci"
+    "virtio_blk"
     "virtio_scsi"
     "sd_mod"
     "sr_mod"
