@@ -1,7 +1,10 @@
-{ ... }:
+{
+  username,
+  ...
+}:
 
 let
-  wallpaper_path = "~/.wallpapers/gruvbox-dark-blue.webp";
+  wallpaper_path = "/home/${username}/.wallpapers/gruvbox-dark-blue.webp";
 in
 
 {

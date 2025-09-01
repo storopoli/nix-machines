@@ -6,25 +6,42 @@
       # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
       "suppressevent maximize, class:.*"
 
-      # Force chromium into a tile to deal with --app bug
-      "tile, class:^(chromium)$"
+      # Browser types
+      "tag +chromium-based-browser, class:([cC]hrom(e|ium)|[bB]rave-browser|Microsoft-edge|Vivaldi-stable)"
+      "tag +firefox-based-browser, class:(Firefox|zen|librewolf)"
+
+      # Just dash of transparency
+      "opacity 0.97 0.9, class:.*"
+
+      # Force chromium-based browsers into a tile to deal with --app bug
+      "tile, tag:chromium-based-browser"
+
+      # Only a subtle opacity change, but not for video sites
+      "opacity 0.97 0.9, tag:chromium-based-browser"
+      "opacity 0.97 0.9, tag:firefox-based-browser"
+
+      # Some video sites should never have opacity applied to them
+      "opacity 1.0 1.0, initialTitle:(youtube\.com_/|app\.zoom\.us_/wc/home)"
 
       # Settings management
       "float, class:^(org.pulseaudio.pavucontrol|blueberry.py)$"
 
+      # Clipboard manager
+      "float, class:clipse"
+
       # Float Steam, fullscreen RetroArch
-      "float, class:^(steam)$"
+      "float, class:steam"
+      "center, class:steam, title:Steam"
+      "opacity 1 1, class:steam"
+      "size 1100 700, class:steam, title:Steam"
+      "size 460 800, class:steam, title:Friends List"
+      "idleinhibit fullscreen, class:steam"
       "fullscreen, class:^(com.libretro.RetroArch)$"
 
-      # Just dash of transparency
-      "opacity 0.97 0.9, class:.*"
-      # Normal chrome Youtube tabs
-      "opacity 1 1, class:^(chromium|google-chrome|google-chrome-unstable|brave-browser)$, title:.*Youtube.*"
-      "opacity 1 0.97, class:^(chromium|google-chrome|google-chrome-unstable|brave-browser)$"
-      "opacity 0.97 0.9, initialClass:^(chrome-.*-Default)$ # web apps"
-      "opacity 0.97 0.9, initialClass:^(brave-browser-.*-Default)$ # web apps"
-      "opacity 1 1, initialClass:^(chrome-youtube.*-Default)$ # Youtube"
-      "opacity 1 1, initialClass:^(brave-browser-youtube.*-Default)$ # Youtube"
+      # Fullscreen screensaver
+      "fullscreen, class:Screensaver"
+
+      # OBS and Steam no transparency
       "opacity 1 1, class:^(zoom|vlc|org.kde.kdenlive|com.obsproject.Studio)$"
       "opacity 1 1, class:^(com.libretro.RetroArch|steam)$"
 
@@ -39,8 +56,11 @@
 
     layerrule = [
       # Proper background blur for wofi
-      "blur,wofi"
-      "blur,waybar"
+      "blur, wofi"
+      "blur, waybar"
+
+      # Remove 1px border around hyprshot screenshots
+      "noanim, selection"
     ];
   };
 }

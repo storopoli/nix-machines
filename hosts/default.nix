@@ -69,7 +69,11 @@
     xserver = {
       enable = false;
     };
+
+    # smartcard support
+    pcscd.enable = true;
   };
+
   virtualisation = {
     docker = {
       enable = true;
@@ -79,6 +83,7 @@
       };
     };
   };
+
   nix = {
     settings = {
       experimental-features = [

@@ -7,6 +7,7 @@
 {
   security.doas.enable = true;
   security.sudo.enable = false;
+  environment.shellAliases.sudo = "doas";
   security.doas.extraRules = [
     {
       users = [ "${username}" ];

@@ -2,8 +2,5 @@
 
 {
   hardware.bluetooth.enable = true;
-  services = {
-    blueman.enable = true;
-    pcscd.enable = true; # smartcard support
-  };
+  services.blueman.enable = true;
 }

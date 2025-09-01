@@ -15,10 +15,20 @@ list-hosts:
 format:
   nix fmt
 
+# Fix `doas` permissions when deploying from a normal user
+[group('misc')]
+fix-doas-permission:
+  doas git config --global --add safe.directory $(pwd)
+
 # Update NixOS flake inputs and rebuild the host
 [group('maintenance')]
 update *host: update-flake-inputs reclaim-storage
   doas nixos-rebuild boot --flake .#{{host}}
+
+# Rebuild the host
+[group('maintenance')]
+rebuild *host:
+  doas nixos-rebuild switch --flake .#{{host}}
 
 # Update macOS configuration with `nix-darwin`
 [group('maintenance')]

@@ -26,7 +26,7 @@
       source = ../../../bin;
       recursive = true;
     };
-    ".wallpaper" = {
+    ".wallpapers" = {
       source = ../../../wallpapers;
       recursive = true;
     };
@@ -41,8 +41,9 @@
       # Default applications
       "$terminal" = "ghostty";
       "$fileManager" = "nautilus --new-window";
-      "$browser" = "brave-browser --new-window --ozone-platform=wayland";
-      "$music" = "Cider";
+      "$browser" = "brave --new-window --ozone-platform=wayland";
+      "$editor" = "hx";
+      "$music" = "cider-2";
       "$messenger" = "signal-desktop";
       "$webapp" = "$browser --app"; # https://support.brave.app/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave
 

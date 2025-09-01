@@ -47,6 +47,7 @@ Available recipes:
     setup-darwin *host   # Initial setup for macOS with `nix-darwin` (first time only)
 
     [maintenance]
+    rebuild *host        # Rebuild the host
     reclaim-storage      # Reclaim storage by removing old generations
     update *host         # Update NixOS flake inputs and rebuild the host
     update-darwin *host  # Update macOS configuration with `nix-darwin`
@@ -54,7 +55,14 @@ Available recipes:
 
     [misc]
     default              # List all commands
+    fix-doas-permission  # Fix `doas` permissions when deploying from a normal user
+    format               # Format all Nix files
     list-hosts           # List all available hosts in the hosts/ directory
+
+    [test]
+    test-desktop         # Test Desktop build
+    test-framework       # Test Framework build
+    test-macbook         # Test Macbook build
 ```
 
 For a **fresh installation** on the `bitcoin` host, you would run:

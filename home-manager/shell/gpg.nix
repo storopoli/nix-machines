@@ -118,6 +118,7 @@
 
   services.gpg-agent = lib.mkMerge [
     {
+      enable = true;
       enableBashIntegration = true;
       enableFishIntegration = true;
       enableSshSupport = true;

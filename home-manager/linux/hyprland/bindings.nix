@@ -2,147 +2,142 @@
 
 {
   wayland.windowManager.hyprland.settings = {
-    # Key bindings
-    "$mainMod" = "SUPER";
-
-    bind = [
+    bindd = [
       # Application shortcuts
-      "$mainMod, return, exec, $terminal"
-      "$mainMod, E, exec, $fileManager"
-      "$mainMod, B, exec, $browser"
-      "$mainMod, M, exec, $music"
-      "$mainMod, N, exec, $terminal -e $EDITOR"
-      "$mainMod, T, exec, $terminal -e btop"
-      "$mainMod, D, exec, $terminal -e lazydocker"
-      "$mainMod, G, exec, $messenger"
-      "$mainMod, space, exec, wofi --show drun --sort-order=alphabetical"
-      "$mainMod SHIFT, SPACE, exec, pkill -SIGUSR1 waybar"
-      "$mainMod, W, killactive,"
-      "$mainMod, Backspace, killactive,"
+      "SUPER, return, Terminal, exec, $terminal"
+      "SUPER, E, File manager, exec, $fileManager"
+      "SUPER, B, Web browser, exec, $browser"
+      "SUPER, M, Music app, exec, $music"
+      "SUPER, N, Editor, exec, $terminal -e $editor"
+      "SUPER, I, Task manager, exec, $terminal -e btop"
+      "SUPER, D, Lazydocker, exec, $terminal -e lazydocker"
+      "SUPER, G, Signal, exec, $messenger"
+      "SUPER, space, Open apps, exec, wofi --show drun --sort-order=alphabetical"
+      "SUPER SHIFT, SPACE, toggle top bar, exec, pkill -SIGUSR1 waybar"
+      "SUPER, W, Close active window, killactive,"
+      "SUPER, Backspace, Close active window, killactive,"
 
-      "$mainMod  A, exec, $webapp=https://grok.com"
-      "$mainMod  SHIFT A, exec, $webapp=https://chatgpt.com"
-      "$mainMod, Y, exec, $webapp=https://youtube.com/"
-      "$mainMod SHIFT, G, exec, $webapp=https://web.whatsapp.com/"
-      "$mainMod, X, exec, $webapp=https://x.com/"
-      "$mainMod SHIFT, X, exec, $webapp=https://x.com/compose/post"
+      "SUPER,  A, Grok, exec, $webapp=https://grok.com/"
+      "SUPER SHIFT, A, ChatGPT, exec, $webapp=https://chatgpt.com/"
+      "SUPER, Y, Youtube, exec, $webapp=https://youtube.com/"
+      "SUPER SHIFT, G, Whatsapp, exec, $webapp=https://web.whatsapp.com/"
+      "SUPER, X, X.com, exec, $webapp=https://x.com/"
+      "SUPER SHIFT, X, X.com (Post), exec, $webapp=https://x.com/compose/post"
 
       # End active session
-      "$mainMod, ESCAPE, exec, hyprlock"
-      "$mainMod SHIFT, ESCAPE, exit,"
-      "$mainMod CTRL, ESCAPE, exec, reboot"
-      "$mainMod SHIFT CTRL, ESCAPE, exec, systemctl poweroff"
-      "$mainMod, F1, exec, ~/.local/bin/show-keybindings"
+      "SUPER, ESCAPE, Lock the screen, exec, hyprlock"
+      "SUPER SHIFT, ESCAPE, Logout, exit,"
+      "SUPER CTRL, ESCAPE, Reboot, exec, reboot"
+      "SUPER SHIFT CTRL, ESCAPE, Shutdown, exec, systemctl poweroff"
+      "SUPER, F1, Show keybindings, exec, ~/.local/bin/show-keybindings"
 
       # Layouts
-      "$mainMod, T, togglesplit, # dwindle"
-      "$mainMod, P, pseudo, # dwindle"
-      "$mainMod, V, togglefloating,"
-      "$mainMod, U, togglegroup,"
-      "$mainMod, Tab, changegroupactive, f"
-      "$mainMod, F, fullscreen,"
+      "SUPER, T, Toggle split, togglesplit"
+      "SUPER, P, Pseudo window, pseudo"
+      "SUPER, V, Toggle floating, togglefloating"
+      "SUPER, U, Toggle group, togglegroup"
+      "SUPER, F, Toggle fullscreen, fullscreen"
 
       # Super workspace floating layer
-      "$mainMod, S, togglespecialworkspace, magic"
-      "$mainMod SHIFT, S, movetoworkspace, special:magic"
+      "SUPER, S, Toggle scratchpad, togglespecialworkspace, magic"
+      "SUPER SHIFT, S, Move scratchpad, movetoworkspace, special:magic"
 
       # Move focus
-      "$mainMod, left, movefocus, l"
-      "$mainMod, right, movefocus, r"
-      "$mainMod, up, movefocus, u"
-      "$mainMod, down, movefocus, d"
-      "$mainMod, H, movefocus, l"
-      "$mainMod, L, movefocus, r"
-      "$mainMod, J, movefocus, u"
-      "$mainMod, K, movefocus, d"
+      "SUPER, left, Move focus left, movefocus, l"
+      "SUPER, right, Move focus right, movefocus, r"
+      "SUPER, up, Move focus up, movefocus, u"
+      "SUPER, down, Move focus down, movefocus, d"
+      "SUPER, H, Move focus left, movefocus, l"
+      "SUPER, L, Move focus right, movefocus, r"
+      "SUPER, J, Move focus up, movefocus, u"
+      "SUPER, K, Move focus down, movefocus, d"
 
       # Workspace switching
-      "$mainMod, 1, workspace, 1"
-      "$mainMod, 2, workspace, 2"
-      "$mainMod, 3, workspace, 3"
-      "$mainMod, 4, workspace, 4"
-      "$mainMod, 5, workspace, 5"
-      "$mainMod, 6, workspace, 6"
-      "$mainMod, 7, workspace, 7"
-      "$mainMod, 8, workspace, 8"
-      "$mainMod, 9, workspace, 9"
-      "$mainMod, 0, workspace, 10"
-      "$mainMod, comma, workspace, -1"
-      "$mainMod, period, workspace, +1"
+      "SUPER, 1, Switch to workspace 1, workspace, 1"
+      "SUPER, 2, Switch to workspace 2, workspace, 2"
+      "SUPER, 3, Switch to workspace 3, workspace, 3"
+      "SUPER, 4, Switch to workspace 4, workspace, 4"
+      "SUPER, 5, Switch to workspace 5, workspace, 5"
+      "SUPER, 6, Switch to workspace 6, workspace, 6"
+      "SUPER, 7, Switch to workspace 7, workspace, 7"
+      "SUPER, 8, Switch to workspace 8, workspace, 8"
+      "SUPER, 9, Switch to workspace 9, workspace, 9"
+      "SUPER, 0, Switch to workspace 10, workspace, 10"
+      "SUPER, comma, Switch to previous workspace, workspace, -1"
+      "SUPER, period, Switch to next workspace, workspace, +1"
 
       # Move active window to workspace
-      "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
-      "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
-      "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
-      "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
-      "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
-      "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
-      "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
-      "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-      "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-      "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
+      "SUPER SHIFT, 1, Move window to workspace 1, movetoworkspacesilent, 1"
+      "SUPER SHIFT, 2, Move window to workspace 2, movetoworkspacesilent, 2"
+      "SUPER SHIFT, 3, Move window to workspace 3, movetoworkspacesilent, 3"
+      "SUPER SHIFT, 4, Move window to workspace 4, movetoworkspacesilent, 4"
+      "SUPER SHIFT, 5, Move window to workspace 5, movetoworkspacesilent, 5"
+      "SUPER SHIFT, 6, Move window to workspace 6, movetoworkspacesilent, 6"
+      "SUPER SHIFT, 7, Move window to workspace 7, movetoworkspacesilent, 7"
+      "SUPER SHIFT, 8, Move window to workspace 8, movetoworkspacesilent, 8"
+      "SUPER SHIFT, 9, Move window to workspace 9, movetoworkspacesilent, 9"
+      "SUPER SHIFT, 0, Move window to workspace 10, movetoworkspacesilent, 10"
 
       # move window in current workspace
-      "$mainMod SHIFT, H, movewindow, l"
-      "$mainMod SHIFT, L, movewindow, r"
-      "$mainMod SHIFT, J, movewindow, u"
-      "$mainMod SHIFT, K, movewindow, d"
+      "SUPER SHIFT, H, Swap window to the left, movewindow, l"
+      "SUPER SHIFT, L, Swap window to the right, movewindow, r"
+      "SUPER SHIFT, J, Swap window to up, movewindow, u"
+      "SUPER SHIFT, K, Swap window to down, movewindow, d"
 
-      "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
-      "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
-      "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
-      "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
-      "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
-      "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
-      "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
-      "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-      "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-      "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
+      # Scroll through existing workspaces with SUPER + scroll
+      "SUPER, mouse_down, Scroll active workspace forward, workspace, e+1"
+      "SUPER, mouse_up, Scroll active workspace backward, workspace, e-1"
+
+      # Tab between workspaces
+      "SUPER, TAB, Next workspace, workspace, e+1"
+      "SUPER SHIFT, TAB, Previous workspace, workspace, e-1"
+
+      # Cycle through applications on active workspace
+      "ALT, Tab, Cycle to next window, cyclenext"
+      "ALT SHIFT, Tab, Cycle to prev window, cyclenext, prev"
+      "ALT, Tab, Reveal active window on top, bringactivetotop"
+      "ALT SHIFT, Tab, Reveal active window on top, bringactivetotop"
 
       # Resize active window
-      "$mainMod, minus, resizeactive, -100 0"
-      "$mainMod, equal, resizeactive, 100 0"
-      "$mainMod SHIFT, minus, resizeactive, 0 -100"
-      "$mainMod SHIFT, equal, resizeactive, 0 100"
-
-      # Scroll through existing workspaces with mainMod + scroll
-      "$mainMod, mouse_down, workspace, e+1"
-      "$mainMod, mouse_up, workspace, e-1"
+      "SUPER, minus, Expand window left, resizeactive, -100 0"
+      "SUPER, equal, Shrink window right, resizeactive, 100 0"
+      "SUPER SHIFT, minus, Shrink window up, resizeactive, 0 -100"
+      "SUPER SHIFT, equal, Expand window down, resizeactive, 0 100"
 
       # Screenshots
-      ", PRINT, exec, hyprshot -m region"
-      "SHIFT, PRINT, exec, hyprshot -m window"
-      "CTRL, PRINT, exec, hyprshot -m output"
+      ", PRINT, Screenshot of region, exec, hyprshot -m region --clipboard-only"
+      "SHIFT, PRINT, Screenshot of window, exec, hyprshot -m window --clipboard-only"
+      "CTRL, PRINT, Screenshot of display, exec, hyprshot -m output --clipboard-only"
 
       # Color picker
-      "SUPER, PRINT, exec, hyprpicker -a"
+      "SUPER, PRINT, Color picker, exec, hyprpicker -a"
 
-      # Clipse (bluetooth)
-      "CTRL SUPER, V, exec, $terminal --class clipse -e clipse"
+      # Clipse
+      "CTRL SUPER, V, Clipboard manager, exec, $terminal --class=clipse -e clipse"
     ];
 
-    bindm = [
+    bindmd = [
       # Move/resize windows with mainMod + LMB/RMB and dragging
-      "$mainMod, mouse:272, movewindow"
-      "$mainMod, mouse:273, resizewindow"
+      "SUPER, mouse:272, Move window, movewindow"
+      "SUPER, mouse:273, Resize window, resizewindow"
     ];
 
-    bindel = [
+    bindeld = [
       # Laptop multimedia keys for volume and LCD brightness
-      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-      ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-      ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+      ",XF86AudioRaiseVolume, Volume up, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+      ",XF86AudioLowerVolume, Volume down, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ",XF86AudioMute, Mute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ",XF86AudioMicMute, Mute microphone, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ",XF86MonBrightnessUp, Brightness up, exec, brightnessctl -e4 -n2 set 5%+"
+      ",XF86MonBrightnessDown, Brightness down, exec, brightnessctl -e4 -n2 set 5%-"
     ];
 
-    bindl = [
+    bindld = [
       # Requires playerctl
-      ", XF86AudioNext, exec, playerctl next"
-      ", XF86AudioPause, exec, playerctl play-pause"
-      ", XF86AudioPlay, exec, playerctl play-pause"
-      ", XF86AudioPrev, exec, playerctl previous"
+      ", XF86AudioNext, Next track, exec, playerctl next"
+      ", XF86AudioPrev, Previous track, exec, playerctl previous"
+      ", XF86AudioPause, Pause, exec, playerctl play-pause"
+      ", XF86AudioPlay, Play, exec, playerctl play-pause"
     ];
   };
 }

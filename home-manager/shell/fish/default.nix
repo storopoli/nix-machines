@@ -7,6 +7,7 @@
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
   fishPath = ''
     # fish path stuff
     fish_add_path /run/current-system/sw/bin
@@ -23,6 +24,9 @@ let
   ''
   + lib.optionalString isDarwin ''
     fish_add_path /opt/homebrew/opt/llvm/bin
+  ''
+  + lib.optionalString isLinux ''
+    fish_add_path /run/wrappers/bin
   '';
 in
 

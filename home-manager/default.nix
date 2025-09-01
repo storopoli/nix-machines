@@ -97,7 +97,7 @@
 
       # media
       obs-studio
-      # cider-2 # TODO: needs an AppImage
+      cider-2
 
       # programming
       llvm
