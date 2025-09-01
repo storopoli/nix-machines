@@ -76,7 +76,7 @@ just install bitcoin      # Install NixOS to /mnt
 > [!IMPORTANT]
 > The `generate-config` step is crucial - it creates the hardware configuration
 > without filesystem conflicts since disko handles the filesystem setup.
->
+
 > [!WARNING]
 > The generated hardware configuration may conflict with the existing host-specific
 > hardware configuration. Review `/mnt/etc/nixos/hardware-configuration.nix` and
