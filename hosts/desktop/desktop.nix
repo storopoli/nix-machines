@@ -37,4 +37,7 @@
 
   # zram swap
   zramSwap.enable = true;
+
+  # Fucking binaries
+  programs.nix-ld.enable = true;
 }
