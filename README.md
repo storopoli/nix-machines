@@ -174,7 +174,7 @@ Additionally, you might want to enable [TPM2 LUKS unlock](https://discourse.nixo
 you can run:
 
 ```sh
-systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0 /dev/<my encrypted device>
+systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7+14 --tpm2-with-pin=yes /dev/<my encrypted device>
 ```
 
 ## Secure Boot
