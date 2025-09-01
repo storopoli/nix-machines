@@ -103,6 +103,7 @@ in
           stateVersion
           inputs
           username
+          hostname
           ;
         module = hostname;
       };
@@ -152,6 +153,7 @@ in
 
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
+
       specialArgs = {
         inherit
           inputs
@@ -161,6 +163,7 @@ in
           disks
           ;
       };
+
       modules = [
         {
           nixpkgs.config.allowUnfree = true;

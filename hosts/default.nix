@@ -3,11 +3,15 @@
   pkgs,
   stateVersion,
   username,
+  hostname,
   ...
 }:
 
 {
   system.stateVersion = stateVersion;
+
+  # Set hostname the same as the flake input entry
+  networking.hostName = hostname;
 
   environment.systemPackages = with pkgs; [
     # Terminal
