@@ -55,13 +55,13 @@
       zstd
       pkg-config
       zlib
+      openssl
       just
       sd
       dust
       jq
 
       # dev
-      rustup # NOTE: sp1 and risc0 friendly
       ghc
       cabal-install
       stack
@@ -77,6 +77,10 @@
       # media
       ffmpeg
       presenterm
+    ]
+    ++ lib.optionals isDarwin [
+      # dev
+      rustup # NOTE: sp1 and risc0 friendly
     ]
     ++ lib.optionals isLinux [
       # System utilities
@@ -100,7 +104,9 @@
       cider-2
 
       # programming
-      llvm
+      cargo
+      gcc
+      lld
       python3
     ];
 
