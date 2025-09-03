@@ -19,13 +19,13 @@
     ./cli
     ./shell
     ./helix
-    # ./neovim.nix
+    # ./neovim.nix # NOTE: using helix as default editor
     ./ghostty.nix
     # ./zed.nix
     ./browser.nix
   ]
   ++ lib.optionals isLinux [
-    ./linux/mold.nix
+    # ./linux/mold.nix # NOTE: rust uses `lld` by default in 1.90+
   ]
   ++ lib.optionals gnome [
     ./linux/gnome.nix
@@ -44,6 +44,9 @@
 
   # Follow the same stateVersion as the system (NixOS) or set manually (Darwin)
   home.stateVersion = config.system.stateVersion or "25.05";
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
   # Common user packages
   home.packages =
@@ -69,6 +72,8 @@
       sqlite
       typst
       cargo-cache
+      cargo-nextest
+      cargo-hack
 
       # Opsec
       age
@@ -106,10 +111,6 @@
       # programming
       cargo
       gcc
-      lld
       python3
     ];
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
