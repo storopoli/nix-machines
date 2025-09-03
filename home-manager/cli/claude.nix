@@ -10,15 +10,30 @@
           "../docs/"
         ];
         allow = [
+          "Bash(rg:*)"
+          "Bash(grep:*)"
+          "Bash(ls:*)"
+          "Bash(find:*)"
+          "Bash(fd:*)"
           "Bash(git diff:*)"
-          "Edit"
+          "Bash(cargo check:*)"
+          "Bash(cargo clippy:*)"
+          "Bash(cargo doc:*)"
+          "Bash(cargo test:*)"
+          "Bash(gh run view:*)"
+          "Bash(gh pr diff:*)"
+          "Bash(gh pr view:*)"
+          "WebFetch(domain:docs.rs)"
+          "WebFetch(domain:github.com)"
+          "WebFetch(domain:raw.githubusercontent.com)"
+          "WebFetch(domain:just.systems)"
         ];
         ask = [
+          "Edit"
+          "WebSearch"
           "Bash(git push:*)"
         ];
         deny = [
-          "WebFetch"
-          "Bash(curl:*)"
           "Read(./.env)"
           "Read(./secrets/**)"
         ];
