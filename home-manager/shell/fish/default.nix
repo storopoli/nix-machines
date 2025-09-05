@@ -78,7 +78,7 @@ in
       lg = "lazygit";
       rebuild = "doas nixos-rebuild switch --flake .#";
       testtor = "curl -x socks5h://localhost:9050 -s https://check.torproject.org/api/ip";
-      testmullvad = "curl -Ls am.i.mullvad.net/json | jq";
+      testmullvad = "curl -Ls https://am.i.mullvad.net/json | jq";
       y = "yazi";
       yt = "yt-dlp --add-metadata -i --format mp4 --restrict-filenames";
       yta = "yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames";
