@@ -65,9 +65,12 @@
       jq
 
       # dev
+      #cargo # TODO: remove rustup + cargo below
       ghc
       cabal-install
       stack
+      python3
+      uv
       nodejs
       sqlite
       typst
@@ -112,6 +115,5 @@
       # programming
       cargo
       gcc
-      python3
     ];
 }
