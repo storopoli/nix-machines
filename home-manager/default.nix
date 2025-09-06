@@ -74,6 +74,7 @@
       nodejs
       sqlite
       typst
+      lazydocker
       cargo-cache
       cargo-nextest
       cargo-hack
