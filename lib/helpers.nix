@@ -38,7 +38,12 @@ in
         ../hosts/${hostname}
         inputs.home-manager.darwinModules.home-manager
         {
-          nixpkgs.config.allowUnfree = true;
+          nixpkgs = {
+            config.allowUnfree = true;
+            overlays = [
+              inputs.neovix.overlays.default
+            ];
+          };
         }
         {
           home-manager.useGlobalPkgs = true;
@@ -166,7 +171,12 @@ in
 
       modules = [
         {
-          nixpkgs.config.allowUnfree = true;
+          nixpkgs = {
+            config.allowUnfree = true;
+            overlays = [
+              inputs.neovix.overlays.default
+            ];
+          };
         }
         commonExpression
         systemExpression

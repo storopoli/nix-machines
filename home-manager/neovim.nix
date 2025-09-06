@@ -1,12 +1,11 @@
 {
   pkgs,
-  inputs,
   ...
 }:
 
 {
   home.packages = [
-    inputs.neovix.packages.${pkgs.system}.default
+    pkgs.neovix
   ];
 
   home.sessionVariables = {

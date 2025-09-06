@@ -149,7 +149,6 @@
           inherit system;
           config.allowUnfree = true;
         };
-        neovix = inputs.neovix.packages.${system}.default;
         isLinux = pkgs.stdenv.isLinux;
       in
       {
