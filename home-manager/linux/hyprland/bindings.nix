@@ -6,7 +6,9 @@
       # Application shortcuts
       "SUPER, return, Terminal, exec, $terminal"
       "SUPER, E, File manager, exec, $fileManager"
-      "SUPER, B, Web browser, exec, $browser"
+      # "SUPER, B, Web browser, exec, $browser"
+      "SUPER, B, Web browser (Personal), exec, $browser --profile-directory='Default'"
+      "SUPER SHIFT, B, Web browser (Work), exec, $browser --profile-directory='Profile 1'"
       "SUPER, M, Music app, exec, $music"
       "SUPER, N, Editor, exec, $terminal -e $editor"
       "SUPER, I, Task manager, exec, $terminal -e btop"
