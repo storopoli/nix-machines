@@ -93,6 +93,7 @@
     ]
     ++ lib.optionals isLinux [
       # System utilities
+      unzip
       exfat
 
       # Opsec
