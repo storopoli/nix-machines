@@ -54,12 +54,6 @@ in
       set -x MANPAGER 'sh -c "col -bx | bat --language=man --decorations=never"'
       set -x MANROFFOPT '-c'
 
-      # TODO: 25.11 will have `programs.fish.binds`
-      # binds
-      bind ctrl-n -M insert down-or-search
-      bind ctrl-p -M insert up-or-search
-      bind ctrl-g -M insert 'git diff' repaint
-
       # Theme Gruvbox
       theme_gruvbox dark hard
     ''
@@ -84,21 +78,23 @@ in
       yta = "yt -x -f bestaudio/best --format mp4 --audio-format opus --restrict-filenames";
     };
 
-    # TODO: 25.11 will have `programs.fish.binds`
-    # binds = {
-    #   "ctrl-n" = {
-    #     command = "down-or-search";
-    #     mode = "insert";
-    #   };
-    #   "ctrl-p" = {
-    #     command = "up-or-search";
-    #     mode = "insert";
-    #   };
-    #   "ctrl-g" = {
-    #     command = "'git diff' repaint";
-    #     mode = "insert";
-    #   };
-    # };
+    binds = {
+      "ctrl-n" = {
+        command = "down-or-search";
+        mode = "insert";
+      };
+      "ctrl-p" = {
+        command = "up-or-search";
+        mode = "insert";
+      };
+      "ctrl-g" = {
+        command = [
+          "git diff"
+          "repaint"
+        ];
+        mode = "insert";
+      };
+    };
   };
 
   xdg.configFile = {
