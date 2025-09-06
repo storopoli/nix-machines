@@ -6,7 +6,10 @@
 
 {
   # Tor
-  services.tor.client.enable = true;
+  services.tor = {
+    enable = true;
+    client.enable = true;
+  };
 
   # Fish, fuck bash and zsh
   programs.fish.enable = true;
