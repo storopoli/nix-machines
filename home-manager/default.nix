@@ -65,7 +65,7 @@
       jq
 
       # dev
-      #cargo # TODO: remove rustup + cargo below
+      cargo
       ghc
       cabal-install
       stack
@@ -85,12 +85,11 @@
       age-plugin-yubikey
 
       # media
+      #ladybird # TODO: remove brave once ladybird is stable enough
       ffmpeg
       presenterm
     ]
     ++ lib.optionals isDarwin [
-      # dev
-      rustup # NOTE: sp1 and risc0 friendly
     ]
     ++ lib.optionals isLinux [
       # System utilities
