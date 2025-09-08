@@ -31,19 +31,21 @@
     };
   };
   services.xserver.videoDrivers = [ "nvidia" ];
-  environment.variables = {
-    NVD_BACKEND = "direct";
-    LIBVA_DRIVER_NAME = "nvidia";
+  environment = {
+    variables = {
+      NVD_BACKEND = "direct";
+      LIBVA_DRIVER_NAME = "nvidia";
+      # CUDA
+      CUDA_PATH = "${pkgs.cudatoolkit}";
+    };
+    systemPackages = with pkgs; [
+      # CUDA
+      cudaPackages.cudatoolkit
+      cudaPackages.cudnn
+    ];
   };
   boot.blacklistedKernelModules = [
     "nouveau"
     "i915"
   ];
-
-  # CUDA
-  environment.systemPackages = with pkgs; [
-    cudaPackages.cudatoolkit
-    cudaPackages.cudnn
-  ];
-  environment.variables.CUDA_PATH = "${pkgs.cudatoolkit}";
 }

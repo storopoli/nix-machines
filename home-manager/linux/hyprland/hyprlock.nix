@@ -6,7 +6,7 @@
 
 let
   colorScheme = nix-colors.colorSchemes.gruvbox-dark-hard;
-  palette = colorScheme.palette;
+  inherit (colorScheme) palette;
   convert = inputs.nix-colors.lib.conversions.hexToRGBString;
   wallpaper_path = "~/.wallpapers/gruvbox-dark-blue.webp";
 

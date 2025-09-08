@@ -6,7 +6,7 @@
 
 let
   # ghostty is broken on darwin, but ghostty-bin works
-  isLinux = pkgs.stdenv.isLinux;
+  inherit (pkgs.stdenv) isLinux;
   package = if isLinux then pkgs.ghostty else pkgs.ghostty-bin;
 in
 

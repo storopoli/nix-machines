@@ -5,7 +5,7 @@
 }:
 
 let
-  isLinux = pkgs.stdenv.isLinux;
+  inherit (pkgs.stdenv) isLinux;
 in
 
 {

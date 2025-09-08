@@ -86,11 +86,11 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # AMD
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  # Enable AMD/Intel microcode
-  hardware.enableRedistributableFirmware = true;
-
-  # Fix WiFi speeds
-  hardware.wirelessRegulatoryDatabase = true;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    # Enable AMD/Intel microcode
+    enableRedistributableFirmware = true;
+    # Fix WiFi speeds
+    wirelessRegulatoryDatabase = true;
+  };
 }

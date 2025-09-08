@@ -6,7 +6,7 @@
 }:
 
 let
-  nix-colors = inputs.nix-colors;
+  inherit (inputs) nix-colors;
 in
 {
   mkDarwin =
@@ -22,8 +22,7 @@ in
         inherit system;
         config.allowUnfree = true;
       };
-      isLinux = pkgs.stdenv.isLinux;
-      isDarwin = pkgs.stdenv.isDarwin;
+      inherit (pkgs.stdenv) isLinux isDarwin;
     in
 
     inputs.nix-darwin.lib.darwinSystem {
@@ -46,20 +45,22 @@ in
           };
         }
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${username} = import ../home-manager;
-          home-manager.extraSpecialArgs = {
-            inherit
-              inputs
-              username
-              isLinux
-              isDarwin
-              nix-colors
-              ;
-            gnome = false;
-            hyprland = false;
-            gaming = false;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${username} = import ../home-manager;
+            extraSpecialArgs = {
+              inherit
+                inputs
+                username
+                isLinux
+                isDarwin
+                nix-colors
+                ;
+              gnome = false;
+              hyprland = false;
+              gaming = false;
+            };
           };
         }
       ]
@@ -99,8 +100,7 @@ in
         inherit system;
         config.allowUnfree = true;
       };
-      isLinux = pkgs.stdenv.isLinux;
-      isDarwin = pkgs.stdenv.isDarwin;
+      inherit (pkgs.stdenv) isLinux isDarwin;
 
       commonExpression = import ../hosts/default.nix {
         inherit
@@ -136,21 +136,23 @@ in
       homeManagerModules = lib.optionals homeManager [
         inputs.home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${username} = import ../home-manager;
-          home-manager.extraSpecialArgs = {
-            inherit
-              inputs
-              username
-              isLinux
-              isDarwin
-              gnome
-              hyprland
-              nvidia
-              nix-colors
-              gaming
-              ;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${username} = import ../home-manager;
+            extraSpecialArgs = {
+              inherit
+                inputs
+                username
+                isLinux
+                isDarwin
+                gnome
+                hyprland
+                nvidia
+                nix-colors
+                gaming
+                ;
+            };
           };
         }
       ];

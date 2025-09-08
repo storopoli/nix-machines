@@ -6,8 +6,7 @@
 }:
 
 let
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
+  inherit (pkgs.stdenv) isDarwin isLinux;
   fishPath = ''
     # fish path stuff
     fish_add_path /run/current-system/sw/bin

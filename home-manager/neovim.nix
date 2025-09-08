@@ -4,17 +4,17 @@
 }:
 
 {
-  home.packages = [
-    pkgs.neovix
-  ];
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
-
-  home.shellAliases = {
-    vi = "nvim";
-    vim = "nvim";
-    vimdiff = "nvim -d";
+  home = {
+    packages = [
+      pkgs.neovix
+    ];
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
+    shellAliases = {
+      vi = "nvim";
+      vim = "nvim";
+      vimdiff = "nvim -d";
+    };
   };
 }

@@ -37,9 +37,11 @@
 
     neovix = {
       url = "github:storopoli/neovix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.git-hooks.follows = "git-hooks";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        git-hooks.follows = "git-hooks";
+        flake-parts.follows = "flake-parts";
+      };
     };
   };
 
@@ -149,7 +151,7 @@
           inherit system;
           config.allowUnfree = true;
         };
-        isLinux = pkgs.stdenv.isLinux;
+        inherit (pkgs.stdenv) isLinux;
         neovix = inputs.neovix.packages.${system}.default;
       in
       {
@@ -164,6 +166,7 @@
                 package = pkgs.nixfmt-tree;
                 entry = "${pkgs.nixfmt-tree}/bin/treefmt";
               };
+              statix.enable = true;
               flake-checker = {
                 enable = true;
                 args = [

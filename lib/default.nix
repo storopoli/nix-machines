@@ -6,7 +6,7 @@
   inherit
     (import ./helpers.nix {
       inherit inputs;
-      lib = inputs.nixpkgs.lib;
+      inherit (inputs.nixpkgs) lib;
     })
     mkNixos
     mkDarwin

@@ -5,7 +5,7 @@
 
 let
   colorScheme = nix-colors.colorSchemes.gruvbox-dark-hard;
-  palette = colorScheme.palette;
+  inherit (colorScheme) palette;
 
   background-color = "#${palette.base00}";
   text-color = "#${palette.base05}";

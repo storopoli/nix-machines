@@ -39,11 +39,12 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = username;
-  home.homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
-
-  # Follow the same stateVersion as the system (NixOS) or set manually (Darwin)
-  home.stateVersion = config.system.stateVersion or "25.05";
+  home = {
+    inherit username;
+    homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+    # Follow the same stateVersion as the system (NixOS) or set manually (Darwin)
+    stateVersion = config.system.stateVersion or "25.05";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
