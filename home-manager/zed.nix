@@ -1,4 +1,7 @@
-{ ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   programs.zed-editor = {
@@ -22,7 +25,7 @@
 
       ui_font_size = 16;
       buffer_font_size = 13;
-      buffer_font_family = "Zed Plex Mono";
+      buffer_font_family = ".ZedMono";
       buffer_font_features = {
         calt = false; # Disable ligatures
       };
@@ -68,23 +71,17 @@
       icon_theme = "Catppuccin Mocha";
 
       features = {
-        edit_prediction_provider = "copilot";
-      };
-
-      agent = {
-        default_model = {
-          provider = "anthropic";
-          model = "claude-opus-4-1-thinking-latest";
-        };
-        inline_assistant_model = {
-          provider = "anthropic";
-          model = "claude-sonnet-4-latest";
-        };
+        edit_prediction_provider = "zed";
       };
 
       calls = {
         mute_on_join = true;
       };
     };
+  };
+
+  home.sessionVariables = {
+    EDITOR = "${pkgs.zed-editor}/bin/zeditor --wait";
+    VISUAL = "${pkgs.zed-editor}/bin/zeditor";
   };
 }

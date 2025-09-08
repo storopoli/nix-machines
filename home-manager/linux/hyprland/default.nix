@@ -42,7 +42,7 @@
       "$terminal" = "ghostty";
       "$fileManager" = "nautilus --new-window";
       "$browser" = "brave --new-window --ozone-platform=wayland";
-      "$editor" = "hx";
+      "$editor" = "zeditor";
       "$music" = "cider-2";
       "$messenger" = "signal-desktop";
       "$webapp" = "$browser --app"; # https://support.brave.app/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave

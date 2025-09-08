@@ -18,10 +18,10 @@
     # common home-manager configs
     ./cli
     ./shell
-    ./helix
-    # ./neovim.nix # NOTE: using helix as default editor
+    # ./helix # NOTE: using zed as the defaul editor
+    # ./neovim.nix # NOTE: using zed as default editor
     ./ghostty.nix
-    # ./zed.nix
+    ./zed.nix
     ./browser.nix
   ]
   ++ lib.optionals isLinux [
