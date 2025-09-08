@@ -150,6 +150,7 @@
           config.allowUnfree = true;
         };
         isLinux = pkgs.stdenv.isLinux;
+        neovix = inputs.neovix.packages.${system}.default;
       in
       {
         checks = {
@@ -187,8 +188,7 @@
             [
               git
               just
-              vim
-              helix
+              neovix
               lazygit
               age
               age-plugin-yubikey
@@ -211,7 +211,7 @@
             ];
           shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
             export TERM=xterm
-            export EDITOR=hx
+            export EDITOR=nvim
             echo "Welcome to nix-machines devshell!"
             alias lg=lazygit
           '';
