@@ -1,12 +1,13 @@
 {
   pkgs,
+  inputs,
   ...
 }:
 
 {
   home = {
     packages = [
-      pkgs.neovix
+      inputs.neovix.packages.${pkgs.system}.default
     ];
     sessionVariables = {
       EDITOR = "nvim";
