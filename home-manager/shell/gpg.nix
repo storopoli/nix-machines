@@ -3,6 +3,7 @@
   pkgs,
   hyprland ? false,
   gnome ? false,
+  isDarwin ? false,
   ...
 }:
 
@@ -127,5 +128,6 @@
     }
     (lib.mkIf hyprland { pinentry.package = pkgs.pinentry-gtk2; })
     (lib.mkIf gnome { pinentry.package = pkgs.pinentry-gnome3; })
+    (lib.mkIf isDarwin { pinentry.package = pkgs.pinentry_mac; })
   ];
 }

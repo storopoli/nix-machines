@@ -14,7 +14,6 @@
 
     brews = [
       "llvm"
-      "pinentry-mac"
       {
         name = "tor";
         restart_service = true;
