@@ -16,7 +16,8 @@ in
     enable = true;
     enableFishIntegration = true;
     settings = {
-      command = "${pkgs.fish}/bin/fish";
+      # tmux integration
+      command = "${pkgs.fish}/bin/fish -c tmux attach -t base || tmux new -s base";
       shell-integration = "fish";
       theme = "GruvboxDarkHard";
       font-feature = [
