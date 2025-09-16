@@ -34,15 +34,6 @@
     };
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    neovix = {
-      url = "github:storopoli/neovix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        git-hooks.follows = "git-hooks";
-        flake-parts.follows = "flake-parts";
-      };
-    };
   };
 
   # Caches
@@ -152,7 +143,6 @@
           config.allowUnfree = true;
         };
         inherit (pkgs.stdenv) isLinux;
-        neovix = inputs.neovix.packages.${system}.default;
       in
       {
         checks = {
@@ -191,7 +181,7 @@
             [
               git
               just
-              neovix
+              helix
               lazygit
               age
               age-plugin-yubikey
@@ -214,7 +204,7 @@
             ];
           shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
             export TERM=xterm
-            export EDITOR=nvim
+            export EDITOR=hx
             echo "Welcome to nix-machines devshell!"
             alias lg=lazygit
           '';

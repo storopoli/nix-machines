@@ -37,13 +37,6 @@ in
       # Disable greeting
       set fish_greeting
 
-      # VI key bindings
-      if set -q INSIDE_NEOVIM
-          set fish_key_bindings fish_default_key_bindings
-      else
-          set fish_key_bindings fish_vi_key_bindings
-      end
-
       # SSH GPG auth
       set -gx GPG_TTY (tty)
       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)

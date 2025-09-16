@@ -15,7 +15,7 @@
     vscode-langservers-extracted
     pyright
     ruff
-    # rust-analyzer # conflicts with rustup
+    rust-analyzer
     taplo
     tinymist
     yaml-language-server
@@ -96,28 +96,6 @@
             "extend_to_line_bounds"
           ];
           A-g = ":reset-diff-change";
-          # lazygit integration: https://github.com/helix-editor/helix/discussions/12045
-          C-g = [
-            ":write-all"
-            ":new"
-            ":insert-output lazygit >/dev/tty"
-            ":set mouse false"
-            ":set mouse true"
-            ":buffer-close!"
-            ":redraw"
-            ":reload-all"
-          ];
-          # yazi integration: https://github.com/helix-editor/helix/discussions/12934
-          C-y = [
-            ":sh rm -f /tmp/unique-file"
-            ":set mouse false"
-            '':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/unique-file''
-            '':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty''
-            '':open %sh{cat /tmp/unique-file}''
-            ":redraw"
-            ":set mouse false"
-            ":set mouse true"
-          ];
           # Swap lines up and down
           A-j = [
             "ensure_selections_forward"
@@ -145,12 +123,7 @@
             q = ":quit";
             Q = ":quit-all!";
             space = "buffer_picker";
-            # Git blame
-            G = ":open %sh{blame_file_pretty %{buffer_name} %{cursor_line}}";
-            H = ":run-shell-command git_hunk %{buffer_name} %{cursor_line} 3";
-            B = ":run-shell-command blame_line_pretty %{buffer_name} %{cursor_line}";
             # Generate permalink for current line
-            # o = [":sh echo \"$(git remote get-url origin | sed 's/\\.git$//' | sed 's/git@github\\.com:/https:\\/\\/github\\.com\\//')/blob/$(git rev-parse HEAD)/%{buffer_name}#L%{cursor_line}\" | pbcopy"];
             o = [
               ":sh echo \"$(git remote get-url origin | sed 's/\\.git$//' | sed 's/git@github\\.com:/https:\\/\\/github\\.com\\//')/blob/$(git rev-parse HEAD)/%{buffer_name}#L%{selection_line_start}-L%{selection_line_end}\" | pbcopy"
             ];

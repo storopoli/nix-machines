@@ -18,10 +18,9 @@
     # common home-manager configs
     ./cli
     ./shell
-    # ./helix # NOTE: using neovim as the defaul editor
-    ./neovim.nix # NOTE: using neovim as default editor
+    ./helix.nix
     ./ghostty.nix
-    # ./zed.nix # NOTE: using nvim as default editor
+    # ./zed.nix # NOTE: using helix as default editor
     ./browser.nix
   ]
   ++ lib.optionals isLinux [
