@@ -24,6 +24,7 @@
           "Bash(gh pr diff:*)"
           "Bash(gh pr view:*)"
           "WebFetch(domain:docs.rs)"
+          "WebFetch(domain:hackage.haskell.org)"
           "WebFetch(domain:github.com)"
           "WebFetch(domain:raw.githubusercontent.com)"
           "WebFetch(domain:just.systems)"
