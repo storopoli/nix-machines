@@ -19,7 +19,7 @@ in
       # tmux integration
       command = "${pkgs.fish}/bin/fish -c tmux attach -t base || tmux new -s base";
       shell-integration = "fish";
-      theme = "GruvboxDarkHard";
+      theme = "Gruvbox Dark Hard";
       font-feature = [
         "-calt"
         "-liga"
