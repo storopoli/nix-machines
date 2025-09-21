@@ -18,8 +18,6 @@ let
     fish_add_path ~/.npm-global/bin
     fish_add_path ~/.local/bin
     fish_add_path ~/.cabal/bin
-    fish_add_path ~/.sp1/bin
-    fish_add_path ~/.risc0/bin
   ''
   + lib.optionalString isDarwin ''
     fish_add_path /opt/homebrew/opt/llvm/bin
