@@ -22,9 +22,5 @@
         drag_lock = false;
       };
     };
-
-    gestures = {
-      workspace_swipe = false;
-    };
   };
 }
