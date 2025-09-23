@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   username,
   ...
@@ -45,4 +46,7 @@
 
   # Fucking binaries
   programs.nix-ld.enable = true;
+
+  # Timezone
+  time.timeZone = lib.mkForce "America/Sao_Paulo";
 }
