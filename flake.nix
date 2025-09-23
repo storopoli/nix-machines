@@ -89,8 +89,7 @@
         desktop = libx.mkNixos {
           hostname = "desktop";
           username = "user";
-          gnome = false;
-          hyprland = true;
+          gnome = true;
           homeManager = true;
           nvidia = true;
           audio = true;
@@ -109,8 +108,7 @@
         framework = libx.mkNixos {
           hostname = "framework";
           username = "user";
-          gnome = false;
-          hyprland = true;
+          gnome = true;
           homeManager = true;
           nvidia = false;
           amdgpu = true;

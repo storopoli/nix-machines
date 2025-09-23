@@ -55,7 +55,6 @@ in
                 nix-colors
                 ;
               gnome = false;
-              hyprland = false;
               gaming = false;
             };
           };
@@ -76,7 +75,6 @@ in
       disks ? [ "/dev/sda" ],
       # Desktop environments
       gnome ? false,
-      hyprland ? false,
       # Hardware options
       nvidia ? false,
       amdgpu ? false,
@@ -118,7 +116,6 @@ in
       # Conditional modules based on options
       conditionalModules =
         lib.optionals gnome [ (import ./gnome.nix { inherit pkgs lib nvidia; }) ]
-        ++ lib.optionals hyprland [ (import ./hyprland.nix { inherit lib pkgs nvidia; }) ]
         ++ lib.optionals nvidia [ (import ./nvidia.nix) ]
         ++ lib.optionals amdgpu [ (import ./amdgpu.nix) ]
         ++ lib.optionals audio [ (import ./audio.nix) ]
@@ -144,7 +141,6 @@ in
                 isLinux
                 isDarwin
                 gnome
-                hyprland
                 nvidia
                 nix-colors
                 gaming

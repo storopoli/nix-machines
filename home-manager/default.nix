@@ -6,8 +6,6 @@
   isLinux ? false,
   isDarwin ? false,
   gnome ? false,
-  hyprland ? false,
-  nvidia ? false,
   gaming ? false,
   ...
 }:
@@ -28,9 +26,6 @@
   ]
   ++ lib.optionals gnome [
     ./linux/gnome.nix
-  ]
-  ++ lib.optionals hyprland [
-    (import ./linux/hyprland { inherit lib nvidia; })
   ]
   ++ lib.optionals gaming [
     ./gaming.nix
