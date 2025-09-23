@@ -9,6 +9,9 @@
     gsconnect
     appindicator
   ];
+  xdg.autostart.entries = [
+    "${pkgs.protonvpn-gui}/share/applications/protonvpn-app.desktop"
+  ];
   dconf = {
     enable = true;
     settings = {
