@@ -22,6 +22,7 @@
     nautilus
     loupe
     snapshot
+    gnome-calendar
   ];
 
   environment.gnome.excludePackages = with pkgs; [
