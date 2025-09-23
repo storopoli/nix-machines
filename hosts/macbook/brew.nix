@@ -27,6 +27,7 @@
       "android-file-transfer"
       "brave-browser"
       "cryptomator"
+      "cursor"
       "iina"
       "netnewswire"
       "obs"

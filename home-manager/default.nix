@@ -116,5 +116,6 @@
       # programming
       cargo
       gcc
+      code-cursor
     ];
 }
