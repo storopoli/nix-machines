@@ -14,6 +14,7 @@ in
       hostname,
       username ? "user",
       system ? "aarch64-darwin",
+      secretiveFingerprint ? null,
       extraModules ? [ ],
     }:
 
@@ -53,6 +54,7 @@ in
                 isLinux
                 isDarwin
                 nix-colors
+                secretiveFingerprint
                 ;
               gnome = false;
               gaming = false;

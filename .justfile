@@ -58,7 +58,7 @@ install-impure *host:
 # Initial setup for macOS with `nix-darwin` (first time only)
 [group('install')]
 setup-darwin *host:
-  sudo nix run nix-darwin/master#darwin-rebuild -- switch --impure --flake .#{{host}}
+  sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#{{host}}
 
 # Show Bitcoin service status
 [group('bitcoin')]
@@ -93,4 +93,4 @@ test-framework:
 # Test Macbook build
 [group('test')]
 test-macbook:
-  nix build --impure --dry-run -L '.#darwinConfigurations.macbook.config.system.build.toplevel'
+  nix build --dry-run -L '.#darwinConfigurations.macbook.config.system.build.toplevel'

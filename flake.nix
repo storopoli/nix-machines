@@ -130,6 +130,7 @@
           hostname = "macbook";
           username = "user";
           system = "aarch64-darwin";
+          secretiveFingerprint = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLqHZrt6LpY13sVkGWbiofJgF+IayppaMwHuEt51chWVFfE7hBt7tN5356+a7ZqU6NaTRN4IIlEvPUm+SUxOp10= ssh@secretive.macbook.local";
         };
       };
     }
