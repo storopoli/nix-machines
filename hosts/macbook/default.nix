@@ -8,11 +8,18 @@
     ./brew.nix
   ];
 
-  # System configuration version
-  system.stateVersion = 6;
+  system = {
+    # System configuration version
+    stateVersion = 6;
 
-  # Set primary user for homebrew and other user-specific options
-  system.primaryUser = username;
+    # Set primary user for homebrew and other user-specific options
+    primaryUser = username;
+
+    # Secretive
+    defaults.CustomUserPreferences."com.maxgoedjen.Secretive.Host" = {
+      defaultsHasRunSetup = true;
+    };
+  };
 
   # hostname
   networking.hostName = "macbook";

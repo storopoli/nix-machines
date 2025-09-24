@@ -34,6 +34,7 @@
       "obscura-vpn"
       "orbstack"
       "protonvpn"
+      "secretive"
       "signal"
       "sparrow"
       "tailscale-app"

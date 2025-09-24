@@ -40,7 +40,6 @@ in
 
       # SSH GPG auth
       set -gx GPG_TTY (tty)
-      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
 
       # man bat integration
@@ -49,6 +48,14 @@ in
 
       # Theme Gruvbox
       theme_gruvbox dark hard
+    ''
+    + lib.optionalString isDarwin ''
+      # secretive
+      set -x SSH_AUTH_SOCK /Users/${username}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+    ''
+    + lib.optionalString isLinux ''
+      # SSH GPG auth
+      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
     ''
     + fishPath;
 
