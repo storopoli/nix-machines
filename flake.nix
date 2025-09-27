@@ -133,6 +133,24 @@
           secretiveFingerprint = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLqHZrt6LpY13sVkGWbiofJgF+IayppaMwHuEt51chWVFfE7hBt7tN5356+a7ZqU6NaTRN4IIlEvPUm+SUxOp10= ssh@secretive.macbook.local";
         };
       };
+
+      homeConfigurations = {
+        # Standalone Home Manager for non-NixOS Linux
+        user = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            username = "user";
+            isLinux = false;
+            isDarwin = false;
+            gnome = false;
+            gaming = false;
+          };
+          modules = [ ./home-manager ];
+        };
+      };
     }
     // inputs.flake-utils.lib.eachDefaultSystem (
       system:
@@ -163,9 +181,6 @@
                   "false" # don't check for nixpkgs
                 ];
               };
-
-              # Lua
-              luacheck.enable = true;
 
               # Tin-foil hat
               zizmor.enable = true;
