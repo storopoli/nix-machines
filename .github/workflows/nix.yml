@@ -97,6 +97,9 @@ jobs:
           - os: ubuntu-latest
             os-name: "Git Server"
             flake-attr: nixosConfigurations.git.config.system.build.toplevel
+          - os: ubuntu-latest
+            os-name: "Home Manager Linux Standalone"
+            flake-attr: homeConfigurations.user.activationPackage
     permissions:
       contents: read
       actions: read

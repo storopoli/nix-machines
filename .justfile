@@ -60,6 +60,11 @@ install-impure *host:
 setup-darwin *host:
   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#{{host}}
 
+# Install/switch standalone Home Manager configuration
+[group('install')]
+install-standalone:
+  nix run nixpkgs#home-manager switch --flake .#user
+
 # Show Bitcoin service status
 [group('bitcoin')]
 bitcoin-status:
@@ -94,3 +99,8 @@ test-framework:
 [group('test')]
 test-macbook:
   nix build --dry-run -L '.#darwinConfigurations.macbook.config.system.build.toplevel'
+
+# Test standalone `home-manager` build
+[group('test')]
+test-standalone:
+  nix build --dry-run -L '.#homeConfigurations.user.activationPackage'

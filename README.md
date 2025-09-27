@@ -11,15 +11,15 @@ It uses Tailscale to connect the hosts to my Tailscale network.
 > like Wireguard or Tailscale.
 > Or you need to add reverse proxy configs to your NixOS deployments.
 
-## Hosts
+## Nix Machines
 
-Personal computers:
+Personal computers with [`home-manager`](https://github.com/nix-community/home-manager) integration:
 
 - `framework`: Framework Desktop.
 - `desktop`: Nvidia-GPU gaming and programming desktop.
   For Steam games don't forget to prepend the executables with `gamemoderun %command%`
   in the launch options.
-- `macbook`: macOS configuration with home-manager integration.
+- `macbook`: A macOS MacBook. 
 
 Hardened secure servers:
 
@@ -27,6 +27,10 @@ Hardened secure servers:
 - `monero`: a monero full node.
 - `matrix`: a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity).
 - `git`: a [`forgejo`](https://forgejo.org) server.
+
+
+There's also an standalone [`home-manager`](https://github.com/nix-community/home-manager) configuration for non-NixOS,
+yet `nix`-enabled, Linux machines.
 
 ## To deploy
 
@@ -44,6 +48,7 @@ Available recipes:
     generate-config      # Generate NixOS hardware configuration (run after `disko`, before `install`)
     install *host        # Install NixOS configuration for a specific host (run after `disko`)
     install-impure *host # Install with impure flag if restricted mode issues occur (run after `disko`)
+    install-standalone   # Install/switch standalone Home Manager configuration
     setup-darwin *host   # Initial setup for macOS with `nix-darwin` (first time only)
 
     [maintenance]
@@ -63,6 +68,7 @@ Available recipes:
     test-desktop         # Test Desktop build
     test-framework       # Test Framework build
     test-macbook         # Test Macbook build
+    test-standalone      # Test standalone `home-manager` build
 ```
 
 For a **fresh installation** on the `bitcoin` host, you would run:
