@@ -151,6 +151,7 @@
             config.allowUnfree = true;
           };
           extraSpecialArgs = {
+            inherit inputs;
             username = "user";
             isLinux = false;
             isDarwin = false;
