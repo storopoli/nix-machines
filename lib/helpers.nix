@@ -40,6 +40,9 @@ in
         {
           nixpkgs = {
             config.allowUnfree = true;
+            overlays = [
+              inputs.neovix.overlays.default
+            ];
           };
         }
         {
@@ -170,6 +173,9 @@ in
         {
           nixpkgs = {
             config.allowUnfree = true;
+            overlays = [
+              inputs.neovix.overlays.default
+            ];
           };
         }
         commonExpression
