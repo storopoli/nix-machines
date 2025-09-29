@@ -6,9 +6,6 @@
     settings = {
       includeCoAuthoredBy = false;
       permissions = {
-        additionalDirectories = [
-          "../docs/"
-        ];
         allow = [
           "Bash(rg:*)"
           "Bash(grep:*)"
