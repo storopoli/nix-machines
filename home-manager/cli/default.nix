@@ -12,7 +12,7 @@
     ./gemini.nix
     ./lazygit.nix
     ./ripgrep.nix
-    # ./tmux.nix
+    ./tmux.nix
     ./yazi
     ./yt-dlp.nix
     ./zoxide.nix
