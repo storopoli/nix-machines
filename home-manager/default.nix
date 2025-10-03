@@ -78,6 +78,8 @@
       cargo-nextest
       cargo-hack
       nix-init
+      nil
+      nixd
 
       # Opsec
       age
