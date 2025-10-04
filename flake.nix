@@ -4,8 +4,6 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
-    nix-colors.url = "github:misterio77/nix-colors";
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

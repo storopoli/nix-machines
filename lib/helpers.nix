@@ -5,9 +5,6 @@
   ...
 }:
 
-let
-  inherit (inputs) nix-colors;
-in
 {
   mkDarwin =
     {
@@ -56,7 +53,6 @@ in
                 username
                 isLinux
                 isDarwin
-                nix-colors
                 secretiveFingerprint
                 ;
               gnome = false;
@@ -147,7 +143,6 @@ in
                 isDarwin
                 gnome
                 nvidia
-                nix-colors
                 gaming
                 ;
             };
