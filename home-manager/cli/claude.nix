@@ -112,5 +112,22 @@
       BREAKING-CHANGE MUST be synonymous with BREAKING CHANGE, when used as a token in a footer.
     '';
 
+    mcpServers = {
+      github = {
+        type = "http";
+        url = "https://api.githubcopilot.com/mcp/";
+        headers = {
+          Authorization = "Bearer \${GITHUB_COPILOT_TOKEN}";
+        };
+      };
+      context7 = {
+        type = "http";
+        url = "https://mcp.context7.com/mcp";
+      };
+      notion = {
+        type = "http";
+        url = "https://mcp.notion.com/mcp";
+      };
+    };
   };
 }
