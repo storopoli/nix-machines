@@ -101,6 +101,8 @@ in
   };
 
   xdg.configFile = {
+    "fish/functions/fish_jj_prompt.fish".source = ./functions/fish_jj_prompt.fish;
+
     "fish/functions/compress.fish".source = ./functions/compress.fish;
     "fish/functions/killport.fish".source = ./functions/killport.fish;
     "fish/functions/webm2mp4.fish".source = ./functions/webm2mp4.fish;
