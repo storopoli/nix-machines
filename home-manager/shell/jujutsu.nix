@@ -128,7 +128,7 @@
             tuggable="''$(jj log -r 'closest_bookmark(@)..closest_pushable(@)' -T '"n"' --no-graph)"
             [[ -n "''$tuggable" ]] && jj tug
             pushable="''$(jj log -r 'remote_bookmarks(remote=origin)..@' -T 'bookmarks' --no-graph)"
-            [[ -n "''$pushable" ]] && jj git push || echo "Nothing to push."
+            [[ -n "''$pushable" ]] && jj git push --allow-new || echo "Nothing to push."
             closest="''$(jj log -r 'closest_bookmark(@)' -n 1 -T 'bookmarks' --no-graph | cut -d ' ' -f 1)"
             closest="''${closest%\\*}"
             tracked="''$(jj bookmark list -r ''${closest} -t -T 'if(remote == "origin", name)')"
