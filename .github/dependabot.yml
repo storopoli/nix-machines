@@ -6,6 +6,9 @@ updates:
     # Check for updates to GitHub Actions every week
     schedule:
       interval: "weekly"
+    # Cooldown
+    cooldown:
+      default-days: 5
     # Group all updates into a single PR
     groups:
       all-dependencies:
