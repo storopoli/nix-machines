@@ -18,8 +18,6 @@
         default-command = [ "status" ];
         pager = "${pkgs.delta}/bin/delta";
         diff-formatter = ":git";
-        diff-editor = "${pkgs.neovix}/bin/nvim -d";
-        merge-editor = "${pkgs.neovix}/bin/nvim -d";
       };
 
       signing =
