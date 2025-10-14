@@ -6,8 +6,8 @@
 
 {
   home = {
-    packages = [
-      inputs.neovix.packages.${pkgs.system}.default
+    packages = with pkgs; [
+      neovix
     ];
     sessionVariables = {
       EDITOR = "nvim";
