@@ -147,6 +147,9 @@
           pkgs = import inputs.nixpkgs {
             system = "x86_64-linux";
             config.allowUnfree = true;
+            overlays = [
+              inputs.neovix.overlays.default
+            ];
           };
           extraSpecialArgs = {
             inherit inputs;
