@@ -73,6 +73,15 @@
       };
 
       aliases = {
+        tug = [
+          "bookmark"
+          "move"
+          "--from"
+          "heads(::@- & bookmarks())"
+          "--to"
+          "@-"
+        ];
+
         pr = [
           "util"
           "exec"
