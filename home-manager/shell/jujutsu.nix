@@ -71,6 +71,8 @@
       };
 
       aliases = {
+        l = [ "log" ];
+
         tug = [
           "bookmark"
           "move"
