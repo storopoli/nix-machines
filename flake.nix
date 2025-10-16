@@ -207,7 +207,7 @@
             [
               git
               just
-              neovix
+              helix
               lazygit
               age
               age-plugin-yubikey
@@ -230,7 +230,7 @@
             ];
           shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
             export TERM=xterm
-            export EDITOR=nvim
+            export EDITOR=hx
             echo "Welcome to nix-machines devshell!"
             alias lg=lazygit
           '';

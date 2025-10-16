@@ -155,6 +155,17 @@
 
     languages = {
       language-server = {
+        rust-analyzer.config = {
+          cargo.features = "all";
+          procMacro = {
+            enable = true;
+            ignored = {
+              napi-derive = [ "napi" ];
+              async-recursion = [ "async_recursion" ];
+              async-trait = [ "async-trait" ];
+            };
+          };
+        };
         haskell-language-server.config.haskell = {
           formattingProvider = "fourmolu";
           cabalFormattingProvider = "cabal-fmt";
@@ -198,10 +209,23 @@
             workspace = {
               library = ''vim.api.nvim_get_runtime_file(""; true)'';
               ignoreDir = [
+                ".git"
+                "node_modules"
+                "target"
+                "deps"
+                ".cache"
                 ".vscode"
                 ".direnv"
                 "result"
               ];
+            };
+
+            format = {
+              enable = true;
+              defaultConfig = {
+                indent_style = "space";
+                indent_size = "2";
+              };
             };
 
             # Do not send telemetry data containing a randomized but unique identifier
