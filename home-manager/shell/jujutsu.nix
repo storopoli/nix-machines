@@ -17,6 +17,7 @@
       ui = {
         default-command = [ "status" ];
         pager = "${pkgs.delta}/bin/delta";
+        diff-editor = ":builtin";
         diff-formatter = ":git";
       };
 
