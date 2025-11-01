@@ -47,4 +47,7 @@
 
   # Timezone
   time.timeZone = lib.mkForce "America/Sao_Paulo";
+
+  # CUDA sometimes is broken
+  nixpkgs.config.allowBroken = true;
 }
