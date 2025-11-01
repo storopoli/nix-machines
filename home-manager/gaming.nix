@@ -9,7 +9,7 @@
     # Gaming
     bottles
     mangohud
-    protonup
+    protonup-ng
   ];
 
   # Steam compatibility
