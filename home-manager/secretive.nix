@@ -13,10 +13,10 @@ in
     inherit SSH_AUTH_SOCK;
   };
 
-  home.file.".ssh/allowed_signers".text = "* ${secretiveFingerprint}";
-
-  # Create public key file for jujutsu (needs a file path, not just the key string)
-  home.file.".ssh/secretive_signing_key.pub".text = secretiveFingerprint;
+  home.file = {
+    ".ssh/allowed_signers".text = "* ${secretiveFingerprint}";
+    ".ssh/secretive_signing_key.pub".text = secretiveFingerprint;
+  };
 
   programs = {
     git = {
