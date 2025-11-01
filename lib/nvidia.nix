@@ -18,7 +18,7 @@
         libva-vdpau-driver
         nvtopPackages.nvidia
         vulkan-tools # `vulkaninfo`, `vkcube`
-        glxinfo # sanity check OpenGL
+        mesa-demos # sanity check OpenGL
       ];
     };
     nvidia = {
