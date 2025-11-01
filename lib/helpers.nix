@@ -37,9 +37,7 @@
         {
           nixpkgs = {
             config.allowUnfree = true;
-            overlays = [
-              inputs.neovix.overlays.default
-            ];
+            overlays = [ ];
           };
         }
         {
@@ -168,9 +166,7 @@
         {
           nixpkgs = {
             config.allowUnfree = true;
-            overlays = [
-              inputs.neovix.overlays.default
-            ];
+            overlays = [ ];
           };
         }
         commonExpression

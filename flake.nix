@@ -32,15 +32,6 @@
     };
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    neovix = {
-      url = "github:storopoli/neovix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        git-hooks.follows = "git-hooks";
-        flake-parts.follows = "flake-parts";
-      };
-    };
   };
 
   # Caches
@@ -147,9 +138,7 @@
           pkgs = import inputs.nixpkgs {
             system = "x86_64-linux";
             config.allowUnfree = true;
-            overlays = [
-              inputs.neovix.overlays.default
-            ];
+            overlays = [ ];
           };
           extraSpecialArgs = {
             inherit inputs;
@@ -171,7 +160,6 @@
           config.allowUnfree = true;
         };
         inherit (pkgs.stdenv) isLinux;
-        neovix = inputs.neovix.packages.${system}.default;
       in
       {
         checks = {

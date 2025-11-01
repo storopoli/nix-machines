@@ -1,13 +1,7 @@
-{
-  pkgs,
-  ...
-}:
+{ ... }:
 
 {
   home = {
-    packages = with pkgs; [
-      neovix
-    ];
     sessionVariables = {
       EDITOR = "nvim";
     };
