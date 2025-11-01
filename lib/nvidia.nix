@@ -15,7 +15,7 @@
         libva-utils # sudo vainfo
         # https://discourse.nixos.org/t/nvidia-open-breaks-hardware-acceleration/58770/2
         nvidia-vaapi-driver
-        vaapiVdpau
+        libva-vdpau-driver
         nvtopPackages.nvidia
         vulkan-tools # `vulkaninfo`, `vkcube`
         glxinfo # sanity check OpenGL
