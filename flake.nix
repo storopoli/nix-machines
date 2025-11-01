@@ -148,6 +148,10 @@
             isDarwin = false;
             gnome = false;
             gaming = false;
+            pkgs-25-05 = import inputs.nixpkgs-25-05 {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
           };
           modules = [ ./home-manager ];
         };
