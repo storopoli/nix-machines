@@ -103,7 +103,7 @@
       cryptomator
       tor
       torsocks
-      tor-browser-bundle-bin
+      tor-browser
       protonvpn-gui # TODO: move to obscura-vpn once Linux support is available
       transmission_4-gtk
 
