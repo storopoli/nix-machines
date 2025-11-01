@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-25-05,
   secretiveFingerprint ? null,
   isDarwin ? false,
   ...
@@ -8,6 +9,7 @@
 {
   programs.jujutsu = {
     enable = true;
+    package = pkgs-25-05.jujutsu; # FIXME: broken in 25.11
     settings = {
       user = {
         name = "Jose Storopoli";
@@ -26,7 +28,8 @@
           {
             behavior = "own";
             backend = "ssh";
-            key = secretiveFingerprint;
+            # Point to the public key file created by secretive.nix
+            key = "~/.ssh/secretive_signing_key.pub";
             backends = {
               allowed-signers = "~/.ssh/allowed_signers";
             };
@@ -164,8 +167,8 @@
   programs.jjui.enable = true;
 
   home = {
-    packages = with pkgs; [
-      lazyjj
+    packages = [
+      pkgs-25-05.lazyjj # FIXME: broken in 25.11 (depends on jujutsu)
     ];
     shellAliases = {
       lj = "lazyjj";
