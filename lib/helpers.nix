@@ -20,6 +20,10 @@
         inherit system;
         config.allowUnfree = true;
       };
+      pkgs-25-05 = import inputs.nixpkgs-25-05 {
+        inherit system;
+        config.allowUnfree = true;
+      };
       inherit (pkgs.stdenv) isLinux isDarwin;
     in
 
@@ -52,6 +56,7 @@
                 isLinux
                 isDarwin
                 secretiveFingerprint
+                pkgs-25-05
                 ;
               gnome = false;
               gaming = false;
@@ -91,6 +96,10 @@
 
     let
       pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgs-25-05 = import inputs.nixpkgs-25-05 {
         inherit system;
         config.allowUnfree = true;
       };
@@ -142,6 +151,7 @@
                 gnome
                 nvidia
                 gaming
+                pkgs-25-05
                 ;
             };
           };

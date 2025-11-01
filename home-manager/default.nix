@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-25-05,
   username,
   isLinux ? false,
   isDarwin ? false,
@@ -75,7 +76,7 @@
       typst
       lazydocker
       cargo-cache
-      cargo-nextest
+      pkgs-25-05.cargo-nextest # FIXME: broken in 25.11
       cargo-hack
       nix-init
       nil
