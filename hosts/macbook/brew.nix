@@ -29,6 +29,7 @@
       "cryptomator"
       "cursor"
       "iina"
+      "mouseless"
       "netnewswire"
       "obs"
       "obscura-vpn"
