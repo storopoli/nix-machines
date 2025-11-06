@@ -9,7 +9,6 @@
 {
   programs.jujutsu = {
     enable = true;
-    package = pkgs-25-05.jujutsu; # FIXME: broken in 25.11
     settings = {
       user = {
         name = "Jose Storopoli";
@@ -167,8 +166,8 @@
   programs.jjui.enable = true;
 
   home = {
-    packages = [
-      pkgs-25-05.lazyjj # FIXME: broken in 25.11 (depends on jujutsu)
+    packages = with pkgs; [
+      lazyjj
     ];
     shellAliases = {
       lj = "lazyjj";

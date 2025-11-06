@@ -76,7 +76,7 @@
       typst
       lazydocker
       cargo-cache
-      pkgs-25-05.cargo-nextest # FIXME: broken in 25.11
+      cargo-nextest
       cargo-hack
       nix-init
       nil
