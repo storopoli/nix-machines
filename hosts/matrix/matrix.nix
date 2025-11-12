@@ -11,7 +11,7 @@
       8080
     ];
 
-    services.matrix-continuwuity = {
+    services.matrix-tuwunel = {
       enable = true;
       settings = {
         global = {
