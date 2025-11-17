@@ -35,6 +35,7 @@
       "obscura-vpn"
       "orbstack"
       "protonvpn"
+      "proton-pass"
       "secretive"
       "signal"
       "sparrow"
