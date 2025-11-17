@@ -29,6 +29,7 @@
       "cryptomator"
       "cursor"
       "iina"
+      "ledger-wallet"
       "mouseless"
       "netnewswire"
       "obs"
