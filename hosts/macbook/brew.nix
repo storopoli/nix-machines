@@ -42,6 +42,7 @@
       "tailscale-app"
       "tor-browser"
       "transmission"
+      "wasabi-wallet"
     ];
   };
   environment.variables.HOMEBREW_DOWNLOAD_CONCURRENCY = "auto";
