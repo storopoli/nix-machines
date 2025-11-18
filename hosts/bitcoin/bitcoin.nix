@@ -51,6 +51,9 @@
         "0.0.0.0/0" # Allow all addresses
       ];
 
+      # RPC user
+      rpc.users.public.name = "bitcoin";
+
       # ZMQ
       zmqpubrawblock = "tcp://0.0.0.0:28332";
       zmqpubrawtx = "tcp://0.0.0.0:28333";
