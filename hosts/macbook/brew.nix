@@ -25,6 +25,7 @@
 
     casks = [
       "android-file-transfer"
+      "antigravity"
       "brave-browser"
       "cryptomator"
       "cursor"
