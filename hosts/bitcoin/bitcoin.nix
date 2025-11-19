@@ -41,18 +41,20 @@
       # Listen to connections on all interfaces
       address = "0.0.0.0";
 
-      # Listen to RPC connections on all interfaces
-      rpc.address = "0.0.0.0";
+      rpc = {
+        # Listen to RPC connections on all interfaces
+        address = "0.0.0.0";
 
-      # Allow RPC connections from external addresses
-      rpc.allowip = [
-        #"100.64.0.0/10" # Allow a subnet
-        #"10.50.0.3" # Allow a specific address
-        "0.0.0.0/0" # Allow all addresses
-      ];
+        # Allow RPC connections from external addresses
+        allowip = [
+          #"100.64.0.0/10" # Allow a subnet
+          #"10.50.0.3" # Allow a specific address
+          "0.0.0.0/0" # Allow all addresses
+        ];
 
-      # RPC user
-      rpc.users.public.name = "bitcoin";
+        # RPC user
+        users.public.name = "bitcoin";
+      };
 
       # ZMQ
       zmqpubrawblock = "tcp://0.0.0.0:28332";
