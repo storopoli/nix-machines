@@ -13,12 +13,16 @@
     };
 
     brews = [
+      "cargo-cache"
+      "cargo-hack"
       "llvm"
+      "rustup"
       {
         name = "tor";
         restart_service = true;
       }
       "torsocks"
+      "uv"
     ];
 
     caskArgs.require_sha = true;
@@ -30,6 +34,7 @@
       "cryptomator"
       "cursor"
       "iina"
+      "gitbutler"
       "ledger-wallet"
       "mouseless"
       "netnewswire"
