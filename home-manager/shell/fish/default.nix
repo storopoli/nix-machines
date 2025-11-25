@@ -21,6 +21,10 @@ let
   ''
   + lib.optionalString isDarwin ''
     fish_add_path /opt/homebrew/opt/llvm/bin
+    fish_add_path /opt/homebrew/opt/rustup/bin
+    fish_add_path ~/.sp1/bin
+    fish_add_path ~/.risc0/bin
+    fish_add_path ~/.antigravity/antigravity/bin
   ''
   + lib.optionalString isLinux ''
     fish_add_path /run/wrappers/bin
