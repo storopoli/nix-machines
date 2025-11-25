@@ -141,6 +141,8 @@
         transfer.fsckobjects = true;
         fetch.fsckobjects = true;
         receive.fsckObjects = true;
+        # gitbutler
+        gitbutler.signCommits = true;
       };
     };
   };

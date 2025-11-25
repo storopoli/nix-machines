@@ -34,6 +34,7 @@
       "cryptomator"
       "cursor"
       "iina"
+      "gitbutler"
       "ledger-wallet"
       "mouseless"
       "netnewswire"
