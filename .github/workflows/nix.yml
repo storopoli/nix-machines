@@ -77,15 +77,6 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            os-name: "Framework Desktop"
-            flake-attr: nixosConfigurations.framework.config.system.build.toplevel
-          - os: ubuntu-latest
-            os-name: "Gaming Desktop"
-            flake-attr: nixosConfigurations.desktop.config.system.build.toplevel
-          - os: macos-latest
-            os-name: "Macbook Apple Silicon"
-            flake-attr: darwinConfigurations.macbook.config.system.build.toplevel
-          - os: ubuntu-latest
             os-name: "Bitcoin Node"
             flake-attr: nixosConfigurations.bitcoin.config.system.build.toplevel
           - os: ubuntu-latest
@@ -97,9 +88,6 @@ jobs:
           - os: ubuntu-latest
             os-name: "Git Server"
             flake-attr: nixosConfigurations.git.config.system.build.toplevel
-          - os: ubuntu-latest
-            os-name: "Home Manager Linux Standalone"
-            flake-attr: homeConfigurations.user.activationPackage
     permissions:
       contents: read
       actions: read

@@ -1,7 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-25-05.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -12,23 +11,8 @@
 
     git-hooks.url = "github:cachix/git-hooks.nix";
 
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -60,7 +44,6 @@
         bitcoin = libx.mkNixos {
           hostname = "bitcoin";
           username = "user";
-          homeManager = false;
 
           extraModules = [
             inputs.nix-bitcoin.nixosModules.default
@@ -85,76 +68,6 @@
           username = "user";
         };
 
-        desktop = libx.mkNixos {
-          hostname = "desktop";
-          username = "user";
-          gnome = true;
-          homeManager = true;
-          nvidia = true;
-          audio = true;
-          bluetooth = true;
-          virtualisation = true;
-          doas = true;
-          dns = true;
-          airplay = true;
-          gaming = true;
-          extraModules = [
-            inputs.lanzaboote.nixosModules.lanzaboote
-          ];
-        };
-
-        # Framework Desktop
-        framework = libx.mkNixos {
-          hostname = "framework";
-          username = "user";
-          gnome = true;
-          homeManager = true;
-          nvidia = false;
-          amdgpu = true;
-          audio = true;
-          bluetooth = true;
-          virtualisation = true;
-          doas = true;
-          dns = true;
-          airplay = true;
-          gaming = true;
-          extraModules = [
-            inputs.lanzaboote.nixosModules.lanzaboote
-          ];
-        };
-      };
-
-      darwinConfigurations = {
-        macbook = libx.mkDarwin {
-          hostname = "macbook";
-          username = "user";
-          system = "aarch64-darwin";
-          secretiveFingerprint = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLqHZrt6LpY13sVkGWbiofJgF+IayppaMwHuEt51chWVFfE7hBt7tN5356+a7ZqU6NaTRN4IIlEvPUm+SUxOp10= ssh@secretive.macbook.local";
-        };
-      };
-
-      homeConfigurations = {
-        # Standalone Home Manager for non-NixOS Linux
-        user = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-            overlays = [ ];
-          };
-          extraSpecialArgs = {
-            inherit inputs;
-            username = "user";
-            isLinux = false;
-            isDarwin = false;
-            gnome = false;
-            gaming = false;
-            pkgs-25-05 = import inputs.nixpkgs-25-05 {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-            };
-          };
-          modules = [ ./home-manager ];
-        };
       };
     }
     // inputs.flake-utils.lib.eachDefaultSystem (
@@ -200,22 +113,12 @@
             [
               git
               just
-              helix
+              vim
               lazygit
               age
               age-plugin-yubikey
               gnupg
               nixos-rebuild
-              nil
-              nixd
-              bash-language-server
-              fish-lsp
-              yaml-language-server
-              taplo
-              marksman
-              nixfmt-rfc-style
-              shfmt
-              statix
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
             ++ pkgs.lib.optionals isLinux [
@@ -223,9 +126,10 @@
             ];
           shellHook = self.checks.${system}.pre-commit-check.shellHook + ''
             export TERM=xterm
-            export EDITOR=hx
+            export EDITOR=vim
             echo "Welcome to nix-machines devshell!"
             alias lg=lazygit
+            alias vi=vim
           '';
         };
       }

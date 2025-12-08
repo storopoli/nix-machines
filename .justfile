@@ -30,11 +30,6 @@ update *host: update-flake-inputs reclaim-storage
 rebuild *host:
   doas nixos-rebuild switch --flake .#{{host}}
 
-# Update macOS configuration with `nix-darwin`
-[group('maintenance')]
-update-darwin *host: update-flake-inputs reclaim-storage
-  darwin-rebuild switch --flake .#{{host}}
-
 # Automated disk partitioning with `disko`
 [group('install')]
 disko *host:
@@ -55,16 +50,6 @@ install *host:
 install-impure *host:
   sudo nixos-install --root /mnt --no-root-passwd --option download-buffer-size 524288000 --impure --flake .#{{host}}
 
-# Initial setup for macOS with `nix-darwin` (first time only)
-[group('install')]
-setup-darwin *host:
-  sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#{{host}}
-
-# Install/switch standalone Home Manager configuration
-[group('install')]
-install-standalone:
-  nix run nixpkgs#home-manager switch --flake .#user
-
 # Show Bitcoin service status
 [group('bitcoin')]
 bitcoin-status:
@@ -84,23 +69,3 @@ update-flake-inputs:
 [group('maintenance')]
 reclaim-storage:
   nix-collect-garbage -d
-
-# Test Desktop build
-[group('test')]
-test-desktop:
-  nix build --dry-run -L '.#nixosConfigurations.desktop.config.system.build.toplevel'
-
-# Test Framework build
-[group('test')]
-test-framework:
-  nix build --dry-run -L '.#nixosConfigurations.framework.config.system.build.toplevel'
-
-# Test Macbook build
-[group('test')]
-test-macbook:
-  nix build --dry-run -L '.#darwinConfigurations.macbook.config.system.build.toplevel'
-
-# Test standalone `home-manager` build
-[group('test')]
-test-standalone:
-  nix build --dry-run -L '.#homeConfigurations.user.activationPackage'

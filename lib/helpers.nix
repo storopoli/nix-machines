@@ -6,67 +6,6 @@
 }:
 
 {
-  mkDarwin =
-    {
-      hostname,
-      username ? "user",
-      system ? "aarch64-darwin",
-      secretiveFingerprint ? null,
-      extraModules ? [ ],
-    }:
-
-    let
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      pkgs-25-05 = import inputs.nixpkgs-25-05 {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      inherit (pkgs.stdenv) isLinux isDarwin;
-    in
-
-    inputs.nix-darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = {
-        inherit
-          inputs
-          username
-          ;
-      };
-      modules = [
-        ../hosts/${hostname}
-        inputs.home-manager.darwinModules.home-manager
-        {
-          nixpkgs = {
-            config.allowUnfree = true;
-            overlays = [ ];
-          };
-        }
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${username} = import ../home-manager;
-            extraSpecialArgs = {
-              inherit
-                inputs
-                username
-                isLinux
-                isDarwin
-                secretiveFingerprint
-                pkgs-25-05
-                ;
-              gnome = false;
-              gaming = false;
-            };
-          };
-        }
-      ]
-      ++ extraModules;
-    };
-
   mkNixos =
     {
       hostname,
@@ -77,21 +16,10 @@
       stateVersion ? "25.05",
       extraModules ? [ ],
       disks ? [ "/dev/sda" ],
-      # Desktop environments
-      gnome ? false,
-      # Hardware options
-      nvidia ? false,
-      amdgpu ? false,
-      audio ? false,
-      bluetooth ? false,
       # Feature options
       virtualisation ? true,
       dns ? true,
       doas ? true,
-      airplay ? false,
-      gaming ? false,
-      # Home manager integration
-      homeManager ? false,
     }:
 
     let
@@ -99,11 +27,6 @@
         inherit system;
         config.allowUnfree = true;
       };
-      pkgs-25-05 = import inputs.nixpkgs-25-05 {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      inherit (pkgs.stdenv) isLinux isDarwin;
 
       commonExpression = import ../hosts/default.nix {
         inherit
@@ -123,40 +46,10 @@
 
       # Conditional modules based on options
       conditionalModules =
-        lib.optionals gnome [ (import ./gnome.nix { inherit pkgs lib nvidia; }) ]
-        ++ lib.optionals nvidia [ (import ./nvidia.nix) ]
-        ++ lib.optionals amdgpu [ (import ./amdgpu.nix) ]
-        ++ lib.optionals audio [ (import ./audio.nix) ]
-        ++ lib.optionals bluetooth [ (import ./bluetooth.nix) ]
-        ++ lib.optionals gaming [ (import ./gaming.nix) ]
-        ++ lib.optionals virtualisation [ (import ./virtualisation.nix) ]
+        lib.optionals virtualisation [ (import ./virtualisation.nix) ]
         ++ lib.optionals dns [ (import ./dns.nix) ]
-        ++ lib.optionals doas [ (import ./doas.nix) ]
-        ++ lib.optionals airplay [ (import ./airplay.nix) ];
+        ++ lib.optionals doas [ (import ./doas.nix) ];
 
-      # Home manager module (optional)
-      homeManagerModules = lib.optionals homeManager [
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${username} = import ../home-manager;
-            extraSpecialArgs = {
-              inherit
-                inputs
-                username
-                isLinux
-                isDarwin
-                gnome
-                nvidia
-                gaming
-                pkgs-25-05
-                ;
-            };
-          };
-        }
-      ];
     in
 
     inputs.nixpkgs.lib.nixosSystem {
@@ -186,7 +79,6 @@
         (import ./ssh.nix)
       ]
       ++ conditionalModules
-      ++ homeManagerModules
       ++ extraModules;
     };
 }
