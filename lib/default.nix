@@ -9,6 +9,5 @@
       inherit (inputs.nixpkgs) lib;
     })
     mkNixos
-    mkDarwin
     ;
 }
