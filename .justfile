@@ -60,6 +60,26 @@ bitcoin-status:
 bitcoin-logs:
   journalctl -b -u bitcoind
 
+# Show Ethereum consensus client service status
+[group('ethereum')]
+lighthouse-status:
+  systemctl status lighthouse-beacon-mainnet
+
+# Show Ethereum consensus client service logs since last boot
+[group('ethereum')]
+lighthouse-logs:
+  journalctl -b -u lighthouse-beacon-mainnet
+
+# Show Ethereum execution client service status
+[group('ethereum')]
+geth-status:
+  systemctl status geth-mainnet
+
+# Show Ethereum execution client service logs since last boot
+[group('ethereum')]
+geth-logs:
+  journalctl -b -u geth-mainnet
+
 # Update flake inputs to latest versions
 [group('maintenance')]
 update-flake-inputs:

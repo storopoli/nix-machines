@@ -15,6 +15,7 @@
       # WARN: DON'T CHANGE THIS VALUE ONCE YOU SET IT
       stateVersion ? "25.05",
       extraModules ? [ ],
+      extraOverlays ? [ ],
       disks ? [ "/dev/sda" ],
       # Feature options
       virtualisation ? true,
@@ -69,7 +70,7 @@
         {
           nixpkgs = {
             config.allowUnfree = true;
-            overlays = [ ];
+            overlays = extraOverlays;
           };
         }
         commonExpression
