@@ -1,10 +1,14 @@
 {
   config,
   username,
+  lib,
   ...
 }:
 
 {
+  # Configure Tailscale hostname
+  services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=bitcoin" ];
+
   nix-bitcoin = {
     # Automatically generate all secrets required by services.
     # The secrets are stored in /etc/nix-bitcoin-secrets
