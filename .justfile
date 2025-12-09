@@ -80,6 +80,16 @@ geth-status:
 geth-logs:
   journalctl -b -u geth-mainnet
 
+# Show Zcash (Zebra) service status
+[group('zcash')]
+zcash-status:
+  systemctl status zebrad
+
+# Show Zcash (Zebra) service logs since last boot
+[group('zcash')]
+zcash-logs:
+  journalctl -b -u zebrad
+
 # Update flake inputs to latest versions
 [group('maintenance')]
 update-flake-inputs:

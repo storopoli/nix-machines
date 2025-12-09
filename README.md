@@ -53,6 +53,10 @@ Available recipes:
     fix-doas-permission  # Fix `doas` permissions when deploying from a normal user
     format               # Format all Nix files
     list-hosts           # List all available hosts in the hosts/ directory
+
+    [zcash]
+    zcash-logs           # Show Zcash (Zebra) service logs since last boot
+    zcash-status         # Show Zcash (Zebra) service status
 ```
 
 For a **fresh installation** on the `bitcoin` host, you would run:
@@ -106,6 +110,16 @@ chmod 600 /var/lib/ethereum/jwt.hex
 ```
 
 A full Ethereum mainnet node requires approximately 1.5TB of storage.
+
+## Zcash
+
+The `zcash` host runs a [Zebra](https://zebra.zfnd.org/) full node.
+A full Zcash mainnet node requires approximately 300GB of storage.
+
+The node exposes:
+
+- P2P port: 8233 (for blockchain sync)
+- RPC port: 8232 (cookie auth disabled)
 
 ## Automated disk partitioning
 

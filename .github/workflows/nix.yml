@@ -68,7 +68,7 @@ jobs:
           purge-primary-key: never
 
       - name: Run pre-commit checks
-        run: nix flake check
+        run: nix flake check --accept-flake-config
 
   config-tests:
     name: "${{ matrix.os-name }} Nix Test"
@@ -82,6 +82,9 @@ jobs:
           - os: ubuntu-latest
             os-name: "Ethereum Node"
             flake-attr: nixosConfigurations.ethereum.config.system.build.toplevel
+          - os: ubuntu-latest
+            os-name: "Zcash Node"
+            flake-attr: nixosConfigurations.zcash.config.system.build.toplevel
           - os: ubuntu-latest
             os-name: "Monero Node"
             flake-attr: nixosConfigurations.monero.config.system.build.toplevel

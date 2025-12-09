@@ -1,7 +1,13 @@
-{ ... }:
+{
+  lib,
+  ...
+}:
 
 {
-  config.services.forgejo = {
+  # Configure Tailscale hostname
+  services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=git" ];
+
+  services.forgejo = {
     enable = true;
     database.type = "postgres";
     settings = {

@@ -1,8 +1,12 @@
 {
+  lib,
   ...
 }:
 
 {
+  # Configure Tailscale hostname
+  services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=ethereum" ];
+
   services.ethereum = {
     lighthouse-beacon.mainnet = {
       enable = true;
