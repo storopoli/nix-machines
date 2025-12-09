@@ -115,9 +115,7 @@
               just
               vim
               lazygit
-              age
-              age-plugin-yubikey
-              gnupg
+              mkpasswd
               nixos-rebuild
             ]
             ++ self.checks.${system}.pre-commit-check.enabledPackages
