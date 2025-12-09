@@ -68,7 +68,7 @@ jobs:
           purge-primary-key: never
 
       - name: Run pre-commit checks
-        run: nix flake check
+        run: nix flake check --accept-flake-config
 
   config-tests:
     name: "${{ matrix.os-name }} Nix Test"
