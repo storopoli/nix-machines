@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ethereum-nix = {
+      url = "github:nix-community/ethereum.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -47,9 +52,20 @@
 
           extraModules = [
             inputs.nix-bitcoin.nixosModules.default
-            inputs.disko.nixosModules.disko
-
             (inputs.nix-bitcoin + "/modules/presets/secure-node.nix")
+          ];
+        };
+
+        ethereum = libx.mkNixos {
+          hostname = "ethereum";
+          username = "user";
+
+          extraOverlays = [
+            inputs.ethereum-nix.overlays.default
+          ];
+
+          extraModules = [
+            inputs.ethereum-nix.nixosModules.default
           ];
         };
 

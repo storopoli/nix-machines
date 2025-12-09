@@ -14,6 +14,7 @@ It uses Tailscale to connect the hosts to my Tailscale network.
 ## Nix Machines
 
 - `bitcoin`: a bitcoin full node with [`nix-bitcoin`](https://nixbitcoin.org)
+- `ethereum`: an ethereum full node with [`ethereum.nix`](https://github.com/nix-community/ethereum.nix)
 - `monero`: a monero full node.
 - `matrix`: a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity).
 - `git`: a [`forgejo`](https://forgejo.org) server.
@@ -28,6 +29,12 @@ Available recipes:
     [bitcoin]
     bitcoin-logs         # Show Bitcoin service logs since last boot
     bitcoin-status       # Show Bitcoin service status
+
+    [ethereum]
+    geth-logs            # Show Ethereum execution client service logs since last boot
+    geth-status          # Show Ethereum execution client service status
+    lighthouse-logs      # Show Ethereum consensus client service logs since last boot
+    lighthouse-status    # Show Ethereum consensus client service status
 
     [install]
     disko *host          # Automated disk partitioning with `disko`
@@ -85,6 +92,20 @@ in the `lib/tailscale.nix` file.
 
 It will read a key from `/tmp/tailscale.key` so make sure to create this file
 and add your tailnet authorization key.
+
+## Ethereum
+
+Before deploying the `ethereum` host,
+create a shared JWT secret for authentication between the execution (Geth)
+and consensus (Lighthouse) clients:
+
+```bash
+mkdir -p /var/lib/ethereum
+openssl rand -hex 32 > /var/lib/ethereum/jwt.hex
+chmod 600 /var/lib/ethereum/jwt.hex
+```
+
+A full Ethereum mainnet node requires approximately 1.5TB of storage.
 
 ## Automated disk partitioning
 
