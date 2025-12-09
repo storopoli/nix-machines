@@ -80,6 +80,9 @@ jobs:
             os-name: "Bitcoin Node"
             flake-attr: nixosConfigurations.bitcoin.config.system.build.toplevel
           - os: ubuntu-latest
+            os-name: "Ethereum Node"
+            flake-attr: nixosConfigurations.ethereum.config.system.build.toplevel
+          - os: ubuntu-latest
             os-name: "Monero Node"
             flake-attr: nixosConfigurations.monero.config.system.build.toplevel
           - os: ubuntu-latest
