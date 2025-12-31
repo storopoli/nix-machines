@@ -21,6 +21,7 @@ in
   services = {
     openssh = {
       enable = true;
+      openFirewall = true;
       settings = {
         # Modern ciphers/MACs
         Ciphers = [
@@ -51,9 +52,4 @@ in
 
   users.users.root.openssh.authorizedKeys.keys = authorizedKeys;
   users.users.${username}.openssh.authorizedKeys.keys = authorizedKeys;
-
-  # Open port 22 in Firewall
-  networking.firewall.allowedTCPPorts = [
-    22
-  ];
 }
