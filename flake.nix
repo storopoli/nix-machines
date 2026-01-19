@@ -100,7 +100,7 @@
                   rev = "v${version}";
                 };
 
-                cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+                cargoHash = "sha256-dajQLKocROXHhbKH5buy0Db1CefnysvyilFzsIpKa8s=";
 
                 nativeBuildInputs = with final; [
                   pkg-config
