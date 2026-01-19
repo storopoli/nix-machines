@@ -98,7 +98,6 @@
                   owner = "ZcashFoundation";
                   repo = "zebra";
                   rev = "v${version}";
-                  hash = final.lib.fakeHash;
                 };
 
                 cargoHash = final.lib.fakeHash;
@@ -108,12 +107,15 @@
                   protobuf
                 ];
 
-                buildInputs = with final; [
-                  openssl
-                ] ++ final.lib.optionals final.stdenv.isDarwin [
-                  final.darwin.apple_sdk.frameworks.Security
-                  final.darwin.apple_sdk.frameworks.SystemConfiguration
-                ];
+                buildInputs =
+                  with final;
+                  [
+                    openssl
+                  ]
+                  ++ final.lib.optionals final.stdenv.isDarwin [
+                    final.darwin.apple_sdk.frameworks.Security
+                    final.darwin.apple_sdk.frameworks.SystemConfiguration
+                  ];
 
                 # Skip tests due to network requirements and long build times
                 doCheck = false;
