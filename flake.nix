@@ -21,11 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zebra-flake = {
-      url = "git+https://code.vergara.tech/Vergara_Tech/zebra-flake?ref=cached";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -89,17 +84,6 @@
         git = libx.mkNixos {
           hostname = "git";
           username = "user";
-        };
-
-        zcash = libx.mkNixos {
-          hostname = "zcash";
-          username = "user";
-
-          extraOverlays = [
-            (final: prev: {
-              zebrad = inputs.zebra-flake.packages.${prev.system}.default;
-            })
-          ];
         };
 
       };
