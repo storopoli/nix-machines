@@ -87,6 +87,46 @@
         zcash = libx.mkNixos {
           hostname = "zcash";
           username = "user";
+
+          extraOverlays = [
+            (final: prev: {
+              zebrad = final.rustPlatform.buildRustPackage rec {
+                pname = "zebrad";
+                version = "2.1.1";
+
+                src = final.fetchFromGitHub {
+                  owner = "ZcashFoundation";
+                  repo = "zebra";
+                  rev = "v${version}";
+                  hash = "sha256-u7rV6QsCB3lNJd/MuLPF6/lxAp9pYLy9q+BYbI39F7k=";
+                };
+
+                cargoHash = final.lib.fakeHash;
+
+                nativeBuildInputs = with final; [
+                  pkg-config
+                  protobuf
+                ];
+
+                buildInputs = with final; [
+                  openssl
+                ] ++ final.lib.optionals final.stdenv.isDarwin [
+                  final.darwin.apple_sdk.frameworks.Security
+                  final.darwin.apple_sdk.frameworks.SystemConfiguration
+                ];
+
+                # Skip tests due to network requirements and long build times
+                doCheck = false;
+
+                meta = with final.lib; {
+                  description = "Zcash node and wallet implementation in Rust";
+                  homepage = "https://github.com/ZcashFoundation/zebra";
+                  license = licenses.asl20;
+                  mainProgram = "zebrad";
+                };
+              };
+            })
+          ];
         };
 
       };
