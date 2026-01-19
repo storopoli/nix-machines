@@ -92,13 +92,13 @@
             (final: prev: {
               zebrad = final.rustPlatform.buildRustPackage rec {
                 pname = "zebrad";
-                version = "2.1.1";
+                version = "3.1.0";
 
                 src = final.fetchFromGitHub {
                   owner = "ZcashFoundation";
                   repo = "zebra";
                   rev = "v${version}";
-                  hash = "sha256-u7rV6QsCB3lNJd/MuLPF6/lxAp9pYLy9q+BYbI39F7k=";
+                  hash = final.lib.fakeHash;
                 };
 
                 cargoHash = final.lib.fakeHash;
