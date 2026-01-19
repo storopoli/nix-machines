@@ -100,6 +100,8 @@
                   rev = "v${version}";
                 };
 
+                cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+
                 nativeBuildInputs = with final; [
                   pkg-config
                   protobuf
