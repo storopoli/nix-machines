@@ -100,7 +100,7 @@
                   rev = "v${version}";
                 };
 
-                cargoHash = final.lib.fakeHash;
+                cargoHash = "";
 
                 nativeBuildInputs = with final; [
                   pkg-config
