@@ -21,11 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zebra-flake = {
-      url = "git+https://code.vergara.tech/Vergara_Tech/zebra-flake?ref=cached";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -34,12 +29,10 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://cache.iog.io"
-      "https://cache.vergara.tech"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-      "VergaraTech-1:QLRf+WPhTt6KdG3IQQXVT1y3gTDaiP4xabPMJzvGJHg="
     ];
   };
 
@@ -97,7 +90,43 @@
 
           extraOverlays = [
             (final: prev: {
-              zebrad = inputs.zebra-flake.packages.${prev.system}.default;
+              zebrad = final.rustPlatform.buildRustPackage rec {
+                pname = "zebrad";
+                version = "3.1.0";
+
+                src = final.fetchFromGitHub {
+                  owner = "ZcashFoundation";
+                  repo = "zebra";
+                  rev = "v${version}";
+                };
+
+                cargoHash = "sha256-dajQLKocROXHhbKH5buy0Db1CefnysvyilFzsIpKa8s=";
+
+                nativeBuildInputs = with final; [
+                  pkg-config
+                  protobuf
+                ];
+
+                buildInputs =
+                  with final;
+                  [
+                    openssl
+                  ]
+                  ++ final.lib.optionals final.stdenv.isDarwin [
+                    final.darwin.apple_sdk.frameworks.Security
+                    final.darwin.apple_sdk.frameworks.SystemConfiguration
+                  ];
+
+                # Skip tests due to network requirements and long build times
+                doCheck = false;
+
+                meta = with final.lib; {
+                  description = "Zcash node and wallet implementation in Rust";
+                  homepage = "https://github.com/ZcashFoundation/zebra";
+                  license = licenses.asl20;
+                  mainProgram = "zebrad";
+                };
+              };
             })
           ];
         };
