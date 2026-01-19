@@ -83,6 +83,9 @@ jobs:
             os-name: "Ethereum Node"
             flake-attr: nixosConfigurations.ethereum.config.system.build.toplevel
           - os: ubuntu-latest
+            os-name: "Zcash Node"
+            flake-attr: nixosConfigurations.zcash.config.system.build.toplevel
+          - os: ubuntu-latest
             os-name: "Monero Node"
             flake-attr: nixosConfigurations.monero.config.system.build.toplevel
           - os: ubuntu-latest
