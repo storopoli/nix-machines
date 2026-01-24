@@ -92,15 +92,16 @@
             (final: prev: {
               zebrad = final.rustPlatform.buildRustPackage rec {
                 pname = "zebrad";
-                version = "3.1.0";
+                version = "4.0.0";
 
                 src = final.fetchFromGitHub {
                   owner = "ZcashFoundation";
                   repo = "zebra";
                   rev = "v${version}";
+                  hash = "sha256-u2uk1f0iNWNmCs+JbJ8nE3uofirBHGOfFozEmKoEnls=";
                 };
 
-                cargoHash = "sha256-dajQLKocROXHhbKH5buy0Db1CefnysvyilFzsIpKa8s=";
+                cargoHash = "sha256-xz7uYBSaC2FrRVPL6pkMgRujKpspVMYIocoe38PYo54=";
 
                 nativeBuildInputs = with final; [
                   pkg-config
