@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
@@ -11,6 +12,7 @@
     lighthouse-beacon.mainnet = {
       enable = true;
       openFirewall = true;
+      package = pkgs.ethereum-nix.lighthouse;
       args = {
         network = "mainnet";
         http.address = "0.0.0.0";
@@ -23,6 +25,7 @@
     geth.mainnet = {
       enable = true;
       openFirewall = true;
+      package = pkgs.ethereum-nix.geth;
       args = {
         authrpc.jwtsecret = "/var/lib/ethereum/jwt.hex";
         http = {
