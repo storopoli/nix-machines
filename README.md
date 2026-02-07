@@ -19,6 +19,16 @@ It uses Tailscale to connect the hosts to my Tailscale network.
 - `matrix`: a matrix home server with [`continuwuity`](https://forgejo.ellis.link/continuwuation/continuwuity).
 - `git`: a [`forgejo`](https://forgejo.org) server.
 
+## Security baseline
+
+All hosts now share these defaults:
+
+- Immutable users (`users.mutableUsers = false`).
+- Keys-only SSH authentication (password and keyboard-interactive auth disabled).
+- Root SSH login disabled.
+- SSH access is Tailscale-only (`openssh.openFirewall = false` + trusted `tailscale0` interface).
+- Conservative kernel and firewall hardening defaults.
+
 ## To deploy
 
 I have configured several `just` commands to deploy the configs to the hosts.
