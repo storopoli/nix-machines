@@ -11,10 +11,10 @@
     doas.extraRules = [
       {
         users = [ "${username}" ];
-        # Optional, retains environment variables while running commands
-        # e.g. retains your NIX_PATH when applying your config
+        # Keys-only access model: no local password prompts.
+        noPass = true;
         keepEnv = true;
-        persist = true; # Optional, don't ask for the password for some time, after a successfully authentication
+        persist = false;
       }
     ];
   };

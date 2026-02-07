@@ -18,7 +18,7 @@
       extraOverlays ? [ ],
       disks ? [ "/dev/sda" ],
       # Feature options
-      virtualisation ? true,
+      virtualisation ? false,
       dns ? true,
       doas ? true,
     }:
@@ -76,6 +76,7 @@
         commonExpression
         systemExpression
         inputs.disko.nixosModules.disko
+        (import ./security-baseline.nix)
         (import ./tailscale.nix)
         (import ./ssh.nix)
       ]
