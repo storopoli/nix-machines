@@ -21,7 +21,7 @@ in
   services = {
     openssh = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
       settings = {
         # Modern ciphers/MACs
         Ciphers = [
@@ -43,13 +43,12 @@ in
 
         # Only for the user `user`
         AllowUsers = [ "${username}" ];
-        PermitRootLogin = "yes";
+        PermitRootLogin = "no";
 
         LogLevel = "INFO";
       };
     };
   };
 
-  users.users.root.openssh.authorizedKeys.keys = authorizedKeys;
   users.users.${username}.openssh.authorizedKeys.keys = authorizedKeys;
 }

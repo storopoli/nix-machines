@@ -49,15 +49,7 @@
   users.users.${username} = {
     isNormalUser = true;
     description = "user";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      "gamemode"
-      "libvirtd"
-      "video"
-      "audio"
-    ];
+    extraGroups = [ "wheel" ];
     hashedPassword = "***REMOVED***";
     packages = with pkgs; [
       hello
@@ -76,16 +68,6 @@
 
     # smartcard support
     pcscd.enable = true;
-  };
-
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
   };
 
   nix = {
