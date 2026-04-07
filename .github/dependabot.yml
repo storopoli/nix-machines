@@ -19,3 +19,11 @@ updates:
           - "patch"
     open-pull-requests-limit: 10
 
+  - package-ecosystem: "nix"
+    directory: "/"
+    # Check for updates to flake.lock every week
+    schedule:
+      interval: "weekly"
+    # Cooldown
+    cooldown:
+      default-days: 7
