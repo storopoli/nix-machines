@@ -9,11 +9,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1771437256,
-        "narHash": "sha256-bLqwib+rtyBRRVBWhMuBXPCL/OThfokA+j6+uH7jDGU=",
+        "lastModified": 1776249299,
+        "narHash": "sha256-Dt9t1TGRmJFc0xVYhttNBD6QsAgHOHCArqGa0AyjrJY=",
         "owner": "numtide",
         "repo": "blueprint",
-        "rev": "06ee7190dc2620ea98af9eb225aa9627b68b0e33",
+        "rev": "56131e8628f173d24a27f6d27c0215eff57e40dd",
         "type": "github"
       },
       "original": {
@@ -51,11 +51,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1775881849,
-        "narHash": "sha256-364CBt3AhbstiLaCmjbm+Tqg+m9ojAJ0mi0/uDfm5YA=",
+        "lastModified": 1777044628,
+        "narHash": "sha256-fZuIzEvwjKd4JJ/CQVAJkTDzNByP6pokaibBsUQQyec=",
         "owner": "nix-community",
         "repo": "ethereum.nix",
-        "rev": "8aca7dae23f2627b30e122ca58d5152f6abbec1f",
+        "rev": "062d4fe3027a39dfc43a92bff3cb96819cb192df",
         "type": "github"
       },
       "original": {
