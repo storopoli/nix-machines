@@ -26,7 +26,7 @@ jobs:
           ref: "${{ (inputs.tag != null) && format('refs/tags/{0}', inputs.tag) || '' }}"
 
       - name: Install Nix    
-        uses: DeterminateSystems/determinate-nix-action@92ffb5400c3776307a27a1727d7e2ac3dcd9f844 #v.3.18.1
+        uses: DeterminateSystems/determinate-nix-action@f4c468f2287f0f14a113841b41f2dc8957119519 #v.3.19.0
 
       - name: Push flake to flakehub
         uses: DeterminateSystems/flakehub-push@71f57208810a5d299fc6545350981de98fdbc860 #v6
