@@ -33,8 +33,8 @@
       # Enable BitcoinD
       enable = true;
 
-      # Fuck the wallet
-      disablewallet = true;
+      # Wallet enabled for Sparrow (watch-only wallets via RPC)
+      disablewallet = false;
 
       # Accept incoming peer connections
       listen = true;
