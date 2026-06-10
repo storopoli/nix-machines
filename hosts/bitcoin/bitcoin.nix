@@ -66,6 +66,7 @@
 
       extraConfig = ''
         mempoolfullrbf=1
+        blockfilterindex=1 # BIP158 compact block filters (needed by Wasabi RPC)
         dbcache=4096 # this will help sync blocks faster
         # Set this to also add IPv6 connectivity.
         bind=::
