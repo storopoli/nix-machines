@@ -133,6 +133,25 @@
     };
   };
 
+  # Fix Lightning integration for the mempool explorer.
+  #
+  # nix-bitcoin writes the custom `mempool` macaroon into LND's systemd
+  # RuntimeDirectory (`/run/lnd/mempool.macaroon`) via an `ExecStartPost`
+  # script that runs as part of `lnd.service`. The nix-bitcoin `mempool`
+  # backend service, however, only depends on mysql/electrs and has no
+  # ordering relationship with `lnd`. At boot the mempool backend therefore
+  # races LND and frequently starts before the macaroon exists, failing with:
+  #   ERR: Could not initialize LND Macaroon/TLS Cert. Disabling LIGHTNING.
+  #   ENOENT: no such file or directory, open '/run/lnd/mempool.macaroon'
+  #
+  # Ordering the backend after `lnd.service` (which only becomes active once
+  # its ExecStartPost macaroon creation has completed) makes the macaroon
+  # guaranteed to exist before mempool reads it.
+  systemd.services.mempool = {
+    wants = [ "lnd.service" ];
+    after = [ "lnd.service" ];
+  };
+
   # Open ports in the firewall
   networking.firewall.allowedTCPPorts = [
     config.services.bitcoind.port # P2P
