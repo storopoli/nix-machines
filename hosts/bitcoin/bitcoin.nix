@@ -131,6 +131,25 @@
         permissions = ''{"entity":"info","action":"read"},{"entity":"onchain","action":"read"},{"entity":"offchain","action":"read"},{"entity":"address","action":"read"},{"entity":"message","action":"read"},{"entity":"peers","action":"read"},{"entity":"signer","action":"read"},{"entity":"invoices","action":"read"},{"entity":"macaroon","action":"read"}'';
       };
     };
+
+    # Expose the mempool frontend as a Tailscale Service over HTTPS.
+    #
+    # `services.tailscale.serve` (NixOS 26.05) runs `tailscale serve set-config
+    # --all`, which both writes the serve config and advertises this node as a
+    # proxy for `svc:mempool`. Tailscale terminates TLS on :443 and reverse
+    # proxies to the local mempool frontend.
+    #
+    # Still required out-of-band in the Tailscale admin console:
+    #   * enable MagicDNS + HTTPS Certificates for the tailnet
+    #   * approve the advertised `svc:mempool` service (or set an auto-approver)
+    #   * grant tailnet access to `svc:mempool` via ACL `grants`
+    #
+    # Once approved, the service is reachable at https://mempool.<tailnet>.ts.net.
+    tailscale.serve = {
+      enable = true;
+      services.mempool.endpoints."tcp:443" =
+        "http://127.0.0.1:${toString config.services.mempool.frontend.port}";
+    };
   };
 
   # Fix Lightning integration for the mempool explorer.
