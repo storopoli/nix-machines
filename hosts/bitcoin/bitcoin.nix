@@ -152,6 +152,37 @@
     after = [ "lnd.service" ];
   };
 
+  # Expose the mempool frontend over Tailscale with HTTPS at
+  # https://bitcoin.dojo-regulus.ts.net (the node's own MagicDNS name). Classic
+  # per-node `tailscale serve` terminates TLS on :443 with the tailnet cert and
+  # reverse-proxies to the local mempool frontend.
+  #
+  # Only requires MagicDNS + "HTTPS Certificates" enabled for the tailnet; no
+  # Tailscale Service definition, approval, or ACL grant needed.
+  systemd.services.tailscale-serve-mempool = {
+    description = "Expose the mempool frontend over Tailscale Serve";
+    after = [
+      "tailscaled.service"
+      "mempool.service"
+    ];
+    wants = [
+      "tailscaled.service"
+      "mempool.service"
+    ];
+    wantedBy = [ "multi-user.target" ];
+    path = [ config.services.tailscale.package ];
+    script = ''
+      tailscale serve --yes --bg --https=443 http://127.0.0.1:${toString config.services.mempool.frontend.port}
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      Restart = "on-failure";
+      RestartSec = "5s";
+      ExecStop = "-${config.services.tailscale.package}/bin/tailscale serve --yes --https=443 off";
+    };
+  };
+
   # Open ports in the firewall
   networking.firewall.allowedTCPPorts = [
     config.services.bitcoind.port # P2P
