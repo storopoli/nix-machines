@@ -99,7 +99,6 @@
         port = 60845;
         settings = {
           LIGHTNING = true;
-          MEMPOOL_WEBSITE_URL = "https://mempool.duda.ai";
         };
       };
       tor = {
