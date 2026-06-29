@@ -147,85 +147,87 @@
   # Ordering the backend after `lnd.service` (which only becomes active once
   # its ExecStartPost macaroon creation has completed) makes the macaroon
   # guaranteed to exist before mempool reads it.
-  systemd.services.mempool = {
-    wants = [ "lnd.service" ];
-    after = [ "lnd.service" ];
-  };
-
-  # Expose services on the node's own MagicDNS name
-  # (bitcoin.dojo-regulus.ts.net):
-  #   * mempool frontend publicly over HTTPS on :443 with Tailscale Funnel
-  #
-  # Funnel requires a `funnel` node attribute in the tailnet policy for this
-  # node/user.
-  systemd.services.tailscale-funnel =
-    let
-      tailscale = "${config.services.tailscale.package}/bin/tailscale";
-    in
-    {
-      description = "Expose mempool over Tailscale Funnel";
-      after = [
-        "tailscaled.service"
-        "mempool.service"
-      ];
-      wants = [
-        "tailscaled.service"
-        "mempool.service"
-      ];
-      wantedBy = [ "multi-user.target" ];
-      script = ''
-        ${tailscale} funnel --yes --bg --https=443 http://127.0.0.1:${toString config.services.mempool.frontend.port}
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        Restart = "on-failure";
-        RestartSec = "5s";
-        ExecStop = [ "-${tailscale} funnel --yes --https=443 off" ];
-      };
+  systemd.services = {
+    mempool = {
+      wants = [ "lnd.service" ];
+      after = [ "lnd.service" ];
     };
 
-  # Expose private services on the node's own MagicDNS name
-  # (bitcoin.dojo-regulus.ts.net):
-  #   * Bitcoin Core JSON-RPC tailnet-only over TLS-terminated TCP on :8332 with
-  #     Tailscale Serve, forwarding to the plaintext RPC port on 127.0.0.1
-  #   * electrs tailnet-only over TLS-terminated TCP on :50002 with Tailscale
-  #     Serve, forwarding to the plaintext Electrum port on 127.0.0.1
-  #
-  # These exposed TLS endpoints require MagicDNS and HTTPS certificates.
-  systemd.services.tailscale-serve =
-    let
-      tailscale = "${config.services.tailscale.package}/bin/tailscale";
-      bitcoindRpcPort = 8332;
-    in
-    {
-      description = "Expose Bitcoin RPC and electrs over Tailscale Serve";
-      after = [
-        "tailscaled.service"
-        "bitcoind.service"
-        "electrs.service"
-      ];
-      wants = [
-        "tailscaled.service"
-        "bitcoind.service"
-        "electrs.service"
-      ];
-      wantedBy = [ "multi-user.target" ];
-      script = ''
-        ${tailscale} serve --yes --bg --tls-terminated-tcp=${toString bitcoindRpcPort} tcp://127.0.0.1:${toString bitcoindRpcPort}
-        ${tailscale} serve --yes --bg --tls-terminated-tcp=50002 tcp://127.0.0.1:${toString config.services.electrs.port}
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        Restart = "on-failure";
-        RestartSec = "5s";
-        ExecStop = [
-          "-${tailscale} serve --yes --tls-terminated-tcp=${toString bitcoindRpcPort} off"
-          "-${tailscale} serve --yes --tls-terminated-tcp=50002 off"
+    # Expose services on the node's own MagicDNS name
+    # (bitcoin.dojo-regulus.ts.net):
+    #   * mempool frontend publicly over HTTPS on :443 with Tailscale Funnel
+    #
+    # Funnel requires a `funnel` node attribute in the tailnet policy for this
+    # node/user.
+    tailscale-funnel =
+      let
+        tailscale = "${config.services.tailscale.package}/bin/tailscale";
+      in
+      {
+        description = "Expose mempool over Tailscale Funnel";
+        after = [
+          "tailscaled.service"
+          "mempool.service"
         ];
+        wants = [
+          "tailscaled.service"
+          "mempool.service"
+        ];
+        wantedBy = [ "multi-user.target" ];
+        script = ''
+          ${tailscale} funnel --yes --bg --https=443 http://127.0.0.1:${toString config.services.mempool.frontend.port}
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          Restart = "on-failure";
+          RestartSec = "5s";
+          ExecStop = [ "-${tailscale} funnel --yes --https=443 off" ];
+        };
       };
-    };
+
+    # Expose private services on the node's own MagicDNS name
+    # (bitcoin.dojo-regulus.ts.net):
+    #   * Bitcoin Core JSON-RPC tailnet-only over TLS-terminated TCP on :8332 with
+    #     Tailscale Serve, forwarding to the plaintext RPC port on 127.0.0.1
+    #   * electrs tailnet-only over TLS-terminated TCP on :50002 with Tailscale
+    #     Serve, forwarding to the plaintext Electrum port on 127.0.0.1
+    #
+    # These exposed TLS endpoints require MagicDNS and HTTPS certificates.
+    tailscale-serve =
+      let
+        tailscale = "${config.services.tailscale.package}/bin/tailscale";
+        bitcoindRpcPort = 8332;
+      in
+      {
+        description = "Expose Bitcoin RPC and electrs over Tailscale Serve";
+        after = [
+          "tailscaled.service"
+          "bitcoind.service"
+          "electrs.service"
+        ];
+        wants = [
+          "tailscaled.service"
+          "bitcoind.service"
+          "electrs.service"
+        ];
+        wantedBy = [ "multi-user.target" ];
+        script = ''
+          ${tailscale} serve --yes --bg --tls-terminated-tcp=${toString bitcoindRpcPort} tcp://127.0.0.1:${toString bitcoindRpcPort}
+          ${tailscale} serve --yes --bg --tls-terminated-tcp=50002 tcp://127.0.0.1:${toString config.services.electrs.port}
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          Restart = "on-failure";
+          RestartSec = "5s";
+          ExecStop = [
+            "-${tailscale} serve --yes --tls-terminated-tcp=${toString bitcoindRpcPort} off"
+            "-${tailscale} serve --yes --tls-terminated-tcp=50002 off"
+          ];
+        };
+      };
+  };
 
   # Public firewall openings. Tailscale traffic is accepted by the shared
   # trusted `tailscale0` interface, and Tailscale Serve proxies mempool/electrs
