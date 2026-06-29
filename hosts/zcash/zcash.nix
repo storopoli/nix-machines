@@ -76,21 +76,22 @@ in
         };
 
         # Expose the Zebra JSON-RPC endpoint on the node's own MagicDNS name
-        # (zcash.dojo-regulus.ts.net) over HTTPS on :8232 with Tailscale Serve.
+        # (zcash.dojo-regulus.ts.net) over TLS-terminated TCP on :8232 with
+        # Tailscale Serve.
         tailscale-serve = {
           description = "Expose Zcash RPC over Tailscale Serve";
           after = [ "tailscaled.service" ];
           wants = [ "tailscaled.service" ];
           wantedBy = [ "multi-user.target" ];
           script = ''
-            ${tailscale} serve --yes --bg --https=8232 http://127.0.0.1:8232
+            ${tailscale} serve --yes --bg --tls-terminated-tcp=8232 tcp://127.0.0.1:8232
           '';
           serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
             Restart = "on-failure";
             RestartSec = "5s";
-            ExecStop = [ "-${tailscale} serve --yes --https=8232 off" ];
+            ExecStop = [ "-${tailscale} serve --yes --tls-terminated-tcp=8232 off" ];
           };
         };
       };
