@@ -21,7 +21,8 @@
   };
 
   # Expose the restricted Monero daemon RPC endpoint on the node's own MagicDNS
-  # name (monero.dojo-regulus.ts.net) over HTTPS on :18081 with Tailscale Serve.
+  # name (monero.dojo-regulus.ts.net) over TLS-terminated TCP on :18081 with
+  # Tailscale Serve.
   systemd.services.tailscale-serve =
     let
       tailscale = "${config.services.tailscale.package}/bin/tailscale";
@@ -33,14 +34,14 @@
       wants = [ "tailscaled.service" ];
       wantedBy = [ "multi-user.target" ];
       script = ''
-        ${tailscale} serve --yes --bg --https=${toString moneroRpcPort} http://127.0.0.1:${toString moneroRpcPort}
+        ${tailscale} serve --yes --bg --tls-terminated-tcp=${toString moneroRpcPort} tcp://127.0.0.1:${toString moneroRpcPort}
       '';
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
         Restart = "on-failure";
         RestartSec = "5s";
-        ExecStop = [ "-${tailscale} serve --yes --https=${toString moneroRpcPort} off" ];
+        ExecStop = [ "-${tailscale} serve --yes --tls-terminated-tcp=${toString moneroRpcPort} off" ];
       };
     };
 

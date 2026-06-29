@@ -44,8 +44,8 @@
 
   # Expose Ethereum HTTP RPC endpoints on the node's own MagicDNS name
   # (ethereum.dojo-regulus.ts.net) with Tailscale Serve:
-  #   * Geth JSON-RPC over HTTPS on :8545
-  #   * Lighthouse Beacon HTTP API over HTTPS on :5052
+  #   * Geth JSON-RPC over TLS-terminated TCP on :8545
+  #   * Lighthouse Beacon HTTP API over TLS-terminated TCP on :5052
   #
   # The authenticated Engine API stays unserved.
   systemd.services.tailscale-serve =
@@ -60,8 +60,8 @@
       wants = [ "tailscaled.service" ];
       wantedBy = [ "multi-user.target" ];
       script = ''
-        ${tailscale} serve --yes --bg --https=${toString gethHttpPort} http://127.0.0.1:${toString gethHttpPort}
-        ${tailscale} serve --yes --bg --https=${toString beaconHttpPort} http://127.0.0.1:${toString beaconHttpPort}
+        ${tailscale} serve --yes --bg --tls-terminated-tcp=${toString gethHttpPort} tcp://127.0.0.1:${toString gethHttpPort}
+        ${tailscale} serve --yes --bg --tls-terminated-tcp=${toString beaconHttpPort} tcp://127.0.0.1:${toString beaconHttpPort}
       '';
       serviceConfig = {
         Type = "oneshot";
@@ -69,8 +69,8 @@
         Restart = "on-failure";
         RestartSec = "5s";
         ExecStop = [
-          "-${tailscale} serve --yes --https=${toString gethHttpPort} off"
-          "-${tailscale} serve --yes --https=${toString beaconHttpPort} off"
+          "-${tailscale} serve --yes --tls-terminated-tcp=${toString gethHttpPort} off"
+          "-${tailscale} serve --yes --tls-terminated-tcp=${toString beaconHttpPort} off"
         ];
       };
     };
