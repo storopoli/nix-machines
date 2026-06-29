@@ -15,13 +15,9 @@
     enable = true;
 
     rpc = {
-      address = "0.0.0.0";
+      address = "127.0.0.1";
       restricted = true;
     };
-
-    extraConfig = ''
-      confirm-external-bind=true
-    '';
   };
 
   # Expose the restricted Monero daemon RPC endpoint on the node's own MagicDNS
@@ -48,7 +44,8 @@
       };
     };
 
-  # Keep only the P2P port public. RPC binds on all interfaces for Tailscale
-  # access, but it does not need a public firewall opening.
+  # Keep only the P2P port public. Tailscale Serve proxies RPC from loopback,
+  # so it does not need a public firewall opening or a tailnet-facing plaintext
+  # listener.
   networking.firewall.allowedTCPPorts = [ 18080 ];
 }

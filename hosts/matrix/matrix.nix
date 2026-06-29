@@ -21,7 +21,7 @@
     settings = {
       global = {
         server_name = "storopoli.com";
-        address = [ "0.0.0.0" ];
+        address = [ "127.0.0.1" ];
         allow_registration = false;
         allow_encryption = true;
         allow_federation = true;

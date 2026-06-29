@@ -16,7 +16,7 @@ let
     cache_dir = "/var/lib/zebra"
 
     [rpc]
-    listen_addr = "0.0.0.0:8232"
+    listen_addr = "127.0.0.1:8232"
     enable_cookie_auth = false
 
     [tracing]
@@ -99,8 +99,9 @@ in
   # Open firewall ports
   # 8233 = P2P (Mainnet)
   # 8232 = RPC
-  # Keep only the P2P port public. RPC remains reachable over Tailscale via the
-  # shared trusted `tailscale0` interface.
+  # Keep only the P2P port public. Tailscale Serve proxies RPC from loopback,
+  # so it does not need a public firewall opening or a tailnet-facing plaintext
+  # listener.
   networking.firewall.allowedTCPPorts = [
     8233
   ];
