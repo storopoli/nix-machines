@@ -49,11 +49,11 @@
         # Listen to RPC connections on all interfaces
         address = "0.0.0.0";
 
-        # Allow RPC connections from external addresses
+        # Allow direct RPC access only from Tailscale peers.
+        # see: https://tailscale.com/docs/reference/reserved-ip-addresses
         allowip = [
-          #"100.64.0.0/10" # Allow a subnet
-          #"10.50.0.3" # Allow a specific address
-          "0.0.0.0/0" # Allow all addresses
+          "100.64.0.0/10"
+          "fd7a:115c:a1e0::/48"
         ];
 
         # RPC user
@@ -95,7 +95,7 @@
       enable = true;
       frontend = {
         enable = true;
-        address = "0.0.0.0";
+        address = "127.0.0.1";
         port = 60845;
         settings = {
           LIGHTNING = true;
@@ -193,18 +193,10 @@
       };
     };
 
-  # Open ports in the firewall
+  # Public firewall openings. Tailscale traffic is accepted by the shared
+  # trusted `tailscale0` interface, and Tailscale Serve proxies mempool/electrs
+  # from loopback, so private RPC/UI ports don't need public firewall holes.
   networking.firewall.allowedTCPPorts = [
     config.services.bitcoind.port # P2P
-    config.services.bitcoind.rpc.port # RPC
-    config.services.electrs.port # electrs
-    config.services.lnd.port # LND
-    config.services.lnd.rpcPort # LND
-    config.services.lnd.restPort # LND
-    config.services.mempool.frontend.port # Mempool
-    # ZMQ
-    28332
-    28333
-    28334
   ];
 }
