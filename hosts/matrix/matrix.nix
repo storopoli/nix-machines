@@ -38,7 +38,8 @@
   };
 
   # Expose the Matrix client/federation HTTP API on the node's own MagicDNS name
-  # (matrix.dojo-regulus.ts.net) over HTTPS on :6167 with Tailscale Serve.
+  # (matrix.dojo-regulus.ts.net) over TLS-terminated TCP on :6167 with
+  # Tailscale Serve.
   systemd.services.tailscale-serve =
     let
       tailscale = "${config.services.tailscale.package}/bin/tailscale";
@@ -49,14 +50,14 @@
       wants = [ "tailscaled.service" ];
       wantedBy = [ "multi-user.target" ];
       script = ''
-        ${tailscale} serve --yes --bg --https=6167 http://127.0.0.1:6167
+        ${tailscale} serve --yes --bg --tls-terminated-tcp=6167 tcp://127.0.0.1:6167
       '';
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
         Restart = "on-failure";
         RestartSec = "5s";
-        ExecStop = [ "-${tailscale} serve --yes --https=6167 off" ];
+        ExecStop = [ "-${tailscale} serve --yes --tls-terminated-tcp=6167 off" ];
       };
     };
 }
