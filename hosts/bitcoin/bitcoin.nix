@@ -83,8 +83,9 @@
     electrs = {
       enable = true;
 
-      # Listen to connections on all interfaces
-      address = "0.0.0.0";
+      # Listen to local connections only; Tailscale Serve exposes Electrs over
+      # TLS on the node's MagicDNS name.
+      address = "127.0.0.1";
 
       # Set this if you're using the `secure-node.nix` template
       tor.enforce = false;
