@@ -46,16 +46,14 @@
       address = "0.0.0.0";
 
       rpc = {
-        # Listen to RPC connections on all interfaces
-        address = "0.0.0.0";
+        # Listen to local RPC connections only; Tailscale Serve exposes this
+        # over HTTPS on the node's MagicDNS name.
+        address = "127.0.0.1";
 
-        # Allow RPC access from local services and Tailscale peers.
-        # see: https://tailscale.com/docs/reference/reserved-ip-addresses
+        # Allow RPC access from local services and the Tailscale Serve proxy.
         allowip = [
           "127.0.0.1"
           "::1"
-          "100.64.0.0/10"
-          "fd7a:115c:a1e0::/48"
         ];
 
         # RPC user
