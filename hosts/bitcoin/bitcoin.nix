@@ -49,9 +49,11 @@
         # Listen to RPC connections on all interfaces
         address = "0.0.0.0";
 
-        # Allow direct RPC access only from Tailscale peers.
+        # Allow RPC access from local services and Tailscale peers.
         # see: https://tailscale.com/docs/reference/reserved-ip-addresses
         allowip = [
+          "127.0.0.1"
+          "::1"
           "100.64.0.0/10"
           "fd7a:115c:a1e0::/48"
         ];
@@ -154,6 +156,8 @@
   # Expose services on the node's own MagicDNS name
   # (bitcoin.dojo-regulus.ts.net):
   #   * mempool frontend publicly over HTTPS on :443 with Tailscale Funnel
+  #   * Bitcoin Core JSON-RPC tailnet-only over HTTPS on :8332 with Tailscale
+  #     Serve, forwarding to the plaintext RPC port on 127.0.0.1
   #   * electrs tailnet-only over TLS-terminated TCP on :50002 with Tailscale
   #     Serve, forwarding to the plaintext Electrum port on 127.0.0.1
   #
@@ -163,22 +167,26 @@
   systemd.services.tailscale-serve =
     let
       tailscale = "${config.services.tailscale.package}/bin/tailscale";
+      bitcoindRpcPort = 8332;
     in
     {
-      description = "Expose mempool over Tailscale Funnel and electrs over Tailscale Serve";
+      description = "Expose mempool over Tailscale Funnel and Bitcoin RPC/electrs over Tailscale Serve";
       after = [
         "tailscaled.service"
+        "bitcoind.service"
         "mempool.service"
         "electrs.service"
       ];
       wants = [
         "tailscaled.service"
+        "bitcoind.service"
         "mempool.service"
         "electrs.service"
       ];
       wantedBy = [ "multi-user.target" ];
       script = ''
         ${tailscale} funnel --yes --bg --https=443 http://127.0.0.1:${toString config.services.mempool.frontend.port}
+        ${tailscale} serve --yes --bg --https=${toString bitcoindRpcPort} http://127.0.0.1:${toString bitcoindRpcPort}
         ${tailscale} serve --yes --bg --tls-terminated-tcp=50002 tcp://127.0.0.1:${toString config.services.electrs.port}
       '';
       serviceConfig = {
@@ -188,6 +196,7 @@
         RestartSec = "5s";
         ExecStop = [
           "-${tailscale} funnel --yes --https=443 off"
+          "-${tailscale} serve --yes --https=${toString bitcoindRpcPort} off"
           "-${tailscale} serve --yes --tls-terminated-tcp=50002 off"
         ];
       };
