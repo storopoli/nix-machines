@@ -17,6 +17,7 @@
       extraModules ? [ ],
       extraOverlays ? [ ],
       disks ? [ "/dev/sda" ],
+      tailscaleName ? "dojo-regulus",
       # Feature options
       virtualisation ? false,
       dns ? true,
@@ -63,6 +64,7 @@
           hostname
           username
           disks
+          tailscaleName
           ;
       };
 

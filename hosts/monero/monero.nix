@@ -22,9 +22,9 @@
     extraConfig = ''
       confirm-external-bind=true
     '';
-
   };
 
-  # Open the RPC port in the firewall
-  networking.firewall.allowedTCPPorts = [ 18081 ];
+  # Keep only the P2P port public. RPC binds on all interfaces for Tailscale
+  # access, but it does not need a public firewall opening.
+  networking.firewall.allowedTCPPorts = [ 18080 ];
 }

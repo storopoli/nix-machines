@@ -49,11 +49,11 @@
         # Listen to RPC connections on all interfaces
         address = "0.0.0.0";
 
-        # Allow RPC connections from external addresses
+        # Allow direct RPC access only from Tailscale peers.
+        # see: https://tailscale.com/docs/reference/reserved-ip-addresses
         allowip = [
-          #"100.64.0.0/10" # Allow a subnet
-          #"10.50.0.3" # Allow a specific address
-          "0.0.0.0/0" # Allow all addresses
+          "100.64.0.0/10"
+          "fd7a:115c:a1e0::/48"
         ];
 
         # RPC user
@@ -95,11 +95,10 @@
       enable = true;
       frontend = {
         enable = true;
-        address = "0.0.0.0";
+        address = "127.0.0.1";
         port = 60845;
         settings = {
           LIGHTNING = true;
-          MEMPOOL_WEBSITE_URL = "https://mempool.duda.ai";
         };
       };
       tor = {
@@ -152,21 +151,21 @@
     after = [ "lnd.service" ];
   };
 
-  # Expose services over Tailscale on the node's own MagicDNS name
-  # (bitcoin.dojo-regulus.ts.net) with classic per-node `tailscale serve`,
-  # which terminates TLS with the tailnet cert:
-  #   * mempool frontend over HTTPS on :443
-  #   * electrs over TLS-terminated TCP on :50002 (electrs has no native TLS),
-  #     forwarding to the plaintext Electrum port on 127.0.0.1
+  # Expose services on the node's own MagicDNS name
+  # (bitcoin.dojo-regulus.ts.net):
+  #   * mempool frontend publicly over HTTPS on :443 with Tailscale Funnel
+  #   * electrs tailnet-only over TLS-terminated TCP on :50002 with Tailscale
+  #     Serve, forwarding to the plaintext Electrum port on 127.0.0.1
   #
-  # Only requires MagicDNS + "HTTPS Certificates" enabled for the tailnet; no
-  # Tailscale Service definition, approval, or ACL grant needed.
+  # Both exposed TLS endpoints require MagicDNS and HTTPS certificates. Funnel
+  # additionally requires a `funnel` node attribute in the tailnet policy for
+  # this node/user.
   systemd.services.tailscale-serve =
     let
       tailscale = "${config.services.tailscale.package}/bin/tailscale";
     in
     {
-      description = "Expose mempool and electrs over Tailscale Serve";
+      description = "Expose mempool over Tailscale Funnel and electrs over Tailscale Serve";
       after = [
         "tailscaled.service"
         "mempool.service"
@@ -179,7 +178,7 @@
       ];
       wantedBy = [ "multi-user.target" ];
       script = ''
-        ${tailscale} serve --yes --bg --https=443 http://127.0.0.1:${toString config.services.mempool.frontend.port}
+        ${tailscale} funnel --yes --bg --https=443 http://127.0.0.1:${toString config.services.mempool.frontend.port}
         ${tailscale} serve --yes --bg --tls-terminated-tcp=50002 tcp://127.0.0.1:${toString config.services.electrs.port}
       '';
       serviceConfig = {
@@ -188,24 +187,16 @@
         Restart = "on-failure";
         RestartSec = "5s";
         ExecStop = [
-          "-${tailscale} serve --yes --https=443 off"
+          "-${tailscale} funnel --yes --https=443 off"
           "-${tailscale} serve --yes --tls-terminated-tcp=50002 off"
         ];
       };
     };
 
-  # Open ports in the firewall
+  # Public firewall openings. Tailscale traffic is accepted by the shared
+  # trusted `tailscale0` interface, and Tailscale Serve proxies mempool/electrs
+  # from loopback, so private RPC/UI ports don't need public firewall holes.
   networking.firewall.allowedTCPPorts = [
     config.services.bitcoind.port # P2P
-    config.services.bitcoind.rpc.port # RPC
-    config.services.electrs.port # electrs
-    config.services.lnd.port # LND
-    config.services.lnd.rpcPort # LND
-    config.services.lnd.restPort # LND
-    config.services.mempool.frontend.port # Mempool
-    # ZMQ
-    28332
-    28333
-    28334
   ];
 }

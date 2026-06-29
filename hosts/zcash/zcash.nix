@@ -71,8 +71,9 @@ in
   # Open firewall ports
   # 8233 = P2P (Mainnet)
   # 8232 = RPC
+  # Keep only the P2P port public. RPC remains reachable over Tailscale via the
+  # shared trusted `tailscale0` interface.
   networking.firewall.allowedTCPPorts = [
     8233
-    8232
   ];
 }
