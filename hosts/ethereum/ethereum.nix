@@ -16,7 +16,7 @@
       package = pkgs.ethereum-nix.lighthouse;
       args = {
         network = "mainnet";
-        http.address = "0.0.0.0";
+        http.address = "127.0.0.1";
         execution-jwt = "/var/lib/ethereum/jwt.hex";
         execution-endpoint = "http://127.0.0.1:8551";
         checkpoint-sync-url = "https://beaconstate.ethstaker.cc";
@@ -31,7 +31,7 @@
         authrpc.jwtsecret = "/var/lib/ethereum/jwt.hex";
         http = {
           enable = true;
-          addr = "0.0.0.0";
+          addr = "127.0.0.1";
           api = [
             "net"
             "web3"
@@ -82,7 +82,8 @@
     in
     {
       # Public Ethereum peer/discovery ports. RPC and engine API ports stay
-      # reachable over Tailscale via the shared trusted `tailscale0` interface.
+      # reachable over HTTPS via Tailscale Serve instead of tailnet-facing
+      # plaintext listeners.
       allowedTCPPorts = [ geth.port ] ++ lib.optionals beacon.disable-quic [ beacon.quic-port ];
       allowedUDPPorts = [
         geth.port
