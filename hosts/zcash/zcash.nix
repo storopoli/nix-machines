@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -36,37 +37,64 @@ in
 
   users.groups.zcash = { };
 
-  # Ensure state directory exists with correct permissions
-  systemd.tmpfiles.rules = [
-    "d /var/lib/zebra 0750 zcash zcash -"
-  ];
+  systemd =
+    let
+      tailscale = "${config.services.tailscale.package}/bin/tailscale";
+    in
+    {
+      # Ensure state directory exists with correct permissions
+      tmpfiles.rules = [
+        "d /var/lib/zebra 0750 zcash zcash -"
+      ];
 
-  # Zebra systemd service
-  systemd.services.zebrad = {
-    description = "Zcash Full Node (Zebra)";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
+      services = {
+        # Zebra systemd service
+        zebrad = {
+          description = "Zcash Full Node (Zebra)";
+          wantedBy = [ "multi-user.target" ];
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
 
-    serviceConfig = {
-      Type = "simple";
-      User = "zcash";
-      Group = "zcash";
-      ExecStart = "${pkgs.zebrad}/bin/zebrad start --config ${zebraConfig}";
-      Restart = "on-failure";
-      RestartSec = "30s";
+          serviceConfig = {
+            Type = "simple";
+            User = "zcash";
+            Group = "zcash";
+            ExecStart = "${pkgs.zebrad}/bin/zebrad start --config ${zebraConfig}";
+            Restart = "on-failure";
+            RestartSec = "30s";
 
-      # Hardening
-      PrivateTmp = true;
-      NoNewPrivileges = true;
-      ProtectSystem = "strict";
-      ProtectHome = true;
-      ReadWritePaths = [ "/var/lib/zebra" ];
+            # Hardening
+            PrivateTmp = true;
+            NoNewPrivileges = true;
+            ProtectSystem = "strict";
+            ProtectHome = true;
+            ReadWritePaths = [ "/var/lib/zebra" ];
 
-      # Resource limits
-      LimitNOFILE = 65535;
+            # Resource limits
+            LimitNOFILE = 65535;
+          };
+        };
+
+        # Expose the Zebra JSON-RPC endpoint on the node's own MagicDNS name
+        # (zcash.dojo-regulus.ts.net) over HTTPS on :8232 with Tailscale Serve.
+        tailscale-serve = {
+          description = "Expose Zcash RPC over Tailscale Serve";
+          after = [ "tailscaled.service" ];
+          wants = [ "tailscaled.service" ];
+          wantedBy = [ "multi-user.target" ];
+          script = ''
+            ${tailscale} serve --yes --bg --https=8232 http://127.0.0.1:8232
+          '';
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            Restart = "on-failure";
+            RestartSec = "5s";
+            ExecStop = [ "-${tailscale} serve --yes --https=8232 off" ];
+          };
+        };
+      };
     };
-  };
 
   # Open firewall ports
   # 8233 = P2P (Mainnet)

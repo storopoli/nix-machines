@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -15,7 +16,6 @@
 
     rpc = {
       address = "0.0.0.0";
-      port = 18081;
       restricted = true;
     };
 
@@ -23,6 +23,30 @@
       confirm-external-bind=true
     '';
   };
+
+  # Expose the restricted Monero daemon RPC endpoint on the node's own MagicDNS
+  # name (monero.dojo-regulus.ts.net) over HTTPS on :18081 with Tailscale Serve.
+  systemd.services.tailscale-serve =
+    let
+      tailscale = "${config.services.tailscale.package}/bin/tailscale";
+      moneroRpcPort = 18081;
+    in
+    {
+      description = "Expose Monero RPC over Tailscale Serve";
+      after = [ "tailscaled.service" ];
+      wants = [ "tailscaled.service" ];
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        ${tailscale} serve --yes --bg --https=${toString moneroRpcPort} http://127.0.0.1:${toString moneroRpcPort}
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        Restart = "on-failure";
+        RestartSec = "5s";
+        ExecStop = [ "-${tailscale} serve --yes --https=${toString moneroRpcPort} off" ];
+      };
+    };
 
   # Keep only the P2P port public. RPC binds on all interfaces for Tailscale
   # access, but it does not need a public firewall opening.
