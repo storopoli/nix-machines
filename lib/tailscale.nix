@@ -1,3 +1,5 @@
+{ tailscaleName, ... }:
+
 {
   networking = {
     # MagicDNS
@@ -7,7 +9,7 @@
       "1.1.1.1"
       "8.8.8.8"
     ];
-    search = [ "dojo-regulus.ts.net" ];
+    search = [ "${tailscaleName}.ts.net" ];
     firewall = {
       # enable the firewall
       enable = true;

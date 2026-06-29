@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -11,7 +12,7 @@
   services.ethereum = {
     lighthouse-beacon.mainnet = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
       package = pkgs.ethereum-nix.lighthouse;
       args = {
         network = "mainnet";
@@ -24,7 +25,7 @@
 
     geth.mainnet = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
       package = pkgs.ethereum-nix.geth;
       args = {
         authrpc.jwtsecret = "/var/lib/ethereum/jwt.hex";
@@ -40,4 +41,20 @@
       };
     };
   };
+
+  networking.firewall =
+    let
+      geth = config.services.ethereum.geth.mainnet.args;
+      beacon = config.services.ethereum.lighthouse-beacon.mainnet.args;
+    in
+    {
+      # Public Ethereum peer/discovery ports. RPC and engine API ports stay
+      # reachable over Tailscale via the shared trusted `tailscale0` interface.
+      allowedTCPPorts = [ geth.port ] ++ lib.optionals beacon.disable-quic [ beacon.quic-port ];
+      allowedUDPPorts = [
+        geth.port
+        beacon.discovery-port
+      ]
+      ++ lib.optionals (!beacon.disable-quic) [ beacon.quic-port ];
+    };
 }

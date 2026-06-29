@@ -7,13 +7,12 @@
   # Configure Tailscale hostname
   services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=matrix" ];
 
-  # HTTP, HTTPS, Matrix federation, and Bridges
+  # HTTP, HTTPS, and Matrix federation. Bridge ports remain reachable over
+  # Tailscale via the shared trusted `tailscale0` interface.
   networking.firewall.allowedTCPPorts = [
     80
     443
     8448
-    6167
-    8080
   ];
 
   services.matrix-tuwunel = {
