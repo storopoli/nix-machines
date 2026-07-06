@@ -5,6 +5,18 @@
   ...
 }:
 
+let
+  nbLib = config.nix-bitcoin.lib;
+  mkLocalOnionService =
+    address: port:
+    nbLib.mkOnionService {
+      inherit port;
+      target = {
+        addr = nbLib.address address;
+        inherit port;
+      };
+    };
+in
 {
   # Configure Tailscale hostname
   services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=bitcoin" ];
@@ -19,8 +31,31 @@
       name = username;
     };
 
-    # Enable the frontend
-    onionServices.mempool-frontend.enable = true;
+    # Onion services for public/private Bitcoin node access:
+    #   * mempool-frontend: mempool web UI over Tor
+    #   * bitcoind: Bitcoin Core P2P over Tor
+    #   * electrs: Electrum protocol over Tor
+    #   * lnd: LND P2P over Tor, announced as LND's external address
+    #   * sshd: SSH over Tor, provided by the secure-node preset
+    onionServices = {
+      mempool-frontend.enable = true;
+      bitcoind = {
+        enable = true;
+        public = true;
+      };
+      electrs.enable = true;
+      lnd = {
+        enable = true;
+        public = true;
+      };
+    };
+
+    onionAddresses.access.${username} = lib.mkAfter [
+      "bitcoind-rpc"
+      "lnd-rpc"
+      "lnd-rest"
+      "sshd"
+    ];
 
     # The nix-bitcoin release version that your config is compatible with.
     # When upgrading to a backwards-incompatible release, nix-bitcoin will display an
@@ -29,6 +64,13 @@
   };
 
   services = {
+    tor.relay.onionServices = {
+      "bitcoind-rpc" =
+        mkLocalOnionService config.services.bitcoind.rpc.address config.services.bitcoind.rpc.port;
+      "lnd-rpc" = mkLocalOnionService config.services.lnd.rpcAddress config.services.lnd.rpcPort;
+      "lnd-rest" = mkLocalOnionService config.services.lnd.restAddress config.services.lnd.restPort;
+    };
+
     bitcoind = {
       # Enable BitcoinD
       enable = true;
