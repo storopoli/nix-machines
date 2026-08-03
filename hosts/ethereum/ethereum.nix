@@ -5,20 +5,50 @@
   ...
 }:
 
+let
+  jwtSecret = "/var/lib/ethereum/jwt.hex";
+
+  gethPort = 30303;
+  gethHttpPort = 8545;
+  gethAuthrpcPort = 8551;
+
+  beaconHttpPort = 5052;
+  beaconMetricsPort = 5054;
+  beaconDiscoveryPort = 9000;
+  beaconQuicPort = beaconDiscoveryPort + 1;
+  beaconDisableQuic = false;
+in
 {
   # Configure Tailscale hostname
   services.tailscale.extraUpFlags = lib.mkAfter [ "--hostname=ethereum" ];
 
+  # `settings` is a freeform attrset that ethereum.nix renders into CLI flags:
+  # dashed keys for lighthouse, dotted keys for geth. It carries no defaults of
+  # its own, so every flag this host relies on is spelled out below.
   services.ethereum = {
     lighthouse-beacon.mainnet = {
       enable = true;
       openFirewall = false;
       package = pkgs.ethereum-nix.lighthouse;
-      args = {
-        network = "mainnet";
-        http.address = "127.0.0.1";
-        execution-jwt = "/var/lib/ethereum/jwt.hex";
-        execution-endpoint = "http://127.0.0.1:8551";
+      # ethereum.nix renders `settings.network` into `--network` twice, which
+      # clap rejects as a repeated argument, so the network is picked here.
+      extraArgs = [
+        "--network"
+        "mainnet"
+      ];
+      settings = {
+        http = true;
+        http-address = "127.0.0.1";
+        http-port = beaconHttpPort;
+        metrics = true;
+        metrics-address = "127.0.0.1";
+        metrics-port = beaconMetricsPort;
+        discovery-port = beaconDiscoveryPort;
+        quic-port = beaconQuicPort;
+        disable-quic = beaconDisableQuic;
+        disable-upnp = true;
+        execution-jwt = jwtSecret;
+        execution-endpoint = "http://127.0.0.1:${toString gethAuthrpcPort}";
         checkpoint-sync-url = "https://beaconstate.ethstaker.cc";
       };
     };
@@ -27,17 +57,19 @@
       enable = true;
       openFirewall = false;
       package = pkgs.ethereum-nix.geth;
-      args = {
-        authrpc.jwtsecret = "/var/lib/ethereum/jwt.hex";
-        http = {
-          enable = true;
-          addr = "127.0.0.1";
-          api = [
-            "net"
-            "web3"
-            "eth"
-          ];
-        };
+      settings = {
+        port = gethPort;
+        http = true;
+        "http.addr" = "127.0.0.1";
+        "http.port" = gethHttpPort;
+        "http.api" = [
+          "net"
+          "web3"
+          "eth"
+        ];
+        "authrpc.addr" = "127.0.0.1";
+        "authrpc.port" = gethAuthrpcPort;
+        "authrpc.jwtsecret" = jwtSecret;
       };
     };
   };
@@ -51,8 +83,6 @@
   systemd.services.tailscale-serve =
     let
       tailscale = "${config.services.tailscale.package}/bin/tailscale";
-      gethHttpPort = 8545;
-      beaconHttpPort = 5052;
     in
     {
       description = "Expose Ethereum RPC endpoints over Tailscale Serve";
@@ -75,20 +105,15 @@
       };
     };
 
-  networking.firewall =
-    let
-      geth = config.services.ethereum.geth.mainnet.args;
-      beacon = config.services.ethereum.lighthouse-beacon.mainnet.args;
-    in
-    {
-      # Public Ethereum peer/discovery ports. RPC and engine API ports stay
-      # reachable over HTTPS via Tailscale Serve instead of tailnet-facing
-      # plaintext listeners.
-      allowedTCPPorts = [ geth.port ] ++ lib.optionals beacon.disable-quic [ beacon.quic-port ];
-      allowedUDPPorts = [
-        geth.port
-        beacon.discovery-port
-      ]
-      ++ lib.optionals (!beacon.disable-quic) [ beacon.quic-port ];
-    };
+  networking.firewall = {
+    # Public Ethereum peer/discovery ports. RPC and engine API ports stay
+    # reachable over HTTPS via Tailscale Serve instead of tailnet-facing
+    # plaintext listeners.
+    allowedTCPPorts = [ gethPort ] ++ lib.optionals beaconDisableQuic [ beaconQuicPort ];
+    allowedUDPPorts = [
+      gethPort
+      beaconDiscoveryPort
+    ]
+    ++ lib.optionals (!beaconDisableQuic) [ beaconQuicPort ];
+  };
 }
