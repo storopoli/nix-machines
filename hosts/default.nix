@@ -42,15 +42,11 @@
     p7zip
   ];
 
-  # root password
-  users.users.root.hashedPassword = "$y$j9T$bQQD1tHdgxA4qTFI1s4ih/$zOgREkZW2woes8c741V4mPpY0EP.7LlUu3MVVFGTnJ.";
-
   # Userland
   users.users.${username} = {
     isNormalUser = true;
     description = "user";
     extraGroups = [ "wheel" ];
-    hashedPassword = "$y$j9T$cQZQPmIVl64rervwIFIAT1$ZVLx2KkTMnWpCGKnxqHv.ptnz7pGl2WzBxkUyeQsXFB";
     packages = with pkgs; [
       hello
     ];
@@ -77,10 +73,6 @@
         "flakes"
       ];
       warn-dirty = false;
-      trusted-users = [
-        "@wheel"
-        "${username}"
-      ];
       # 500mb buffer
       download-buffer-size = 500000000;
       auto-optimise-store = true;
@@ -106,12 +98,4 @@
   # System localization
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
-
-  # Hardware configuration
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
 }

@@ -102,10 +102,6 @@ in
         users.public.name = "bitcoin";
       };
 
-      # ZMQ
-      zmqpubrawblock = "tcp://0.0.0.0:28332";
-      zmqpubrawtx = "tcp://0.0.0.0:28333";
-
       extraConfig = ''
         mempoolfullrbf=1
         blockfilterindex=1 # BIP158 compact block filters (needed by Wasabi RPC)
@@ -165,14 +161,22 @@ in
     lnd = {
       enable = true;
       address = "0.0.0.0";
-      rpcAddress = "0.0.0.0";
-      restAddress = "0.0.0.0";
-      certificate.extraIPs = [ "0.0.0.0" ];
+
+      # Listen to local connections only; remote access goes through the
+      # lnd-rpc/lnd-rest onion services, which target these addresses.
+      rpcAddress = "127.0.0.1";
+      restAddress = "127.0.0.1";
       macaroons.mempool = {
         inherit (config.services.mempool) user;
         permissions = ''{"entity":"info","action":"read"},{"entity":"onchain","action":"read"},{"entity":"offchain","action":"read"},{"entity":"address","action":"read"},{"entity":"message","action":"read"},{"entity":"peers","action":"read"},{"entity":"signer","action":"read"},{"entity":"invoices","action":"read"},{"entity":"macaroon","action":"read"}'';
       };
     };
+
+    # Keep longer logs than the shared 36h baseline: this host runs
+    # financial infrastructure and needs history for incident response.
+    journald.extraConfig = lib.mkForce ''
+      MaxRetentionSec=3month
+    '';
   };
 
   # Fix Lightning integration for the mempool explorer.
