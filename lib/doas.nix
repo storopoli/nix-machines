@@ -13,7 +13,6 @@
         users = [ "${username}" ];
         # Keys-only access model: no local password prompts.
         noPass = true;
-        keepEnv = true;
         persist = false;
       }
     ];

@@ -42,15 +42,11 @@
     p7zip
   ];
 
-  # root password
-  users.users.root.hashedPassword = "***REMOVED***";
-
   # Userland
   users.users.${username} = {
     isNormalUser = true;
     description = "user";
     extraGroups = [ "wheel" ];
-    hashedPassword = "***REMOVED***";
     packages = with pkgs; [
       hello
     ];
@@ -77,10 +73,6 @@
         "flakes"
       ];
       warn-dirty = false;
-      trusted-users = [
-        "@wheel"
-        "${username}"
-      ];
       # 500mb buffer
       download-buffer-size = 500000000;
       auto-optimise-store = true;
@@ -106,12 +98,4 @@
   # System localization
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
-
-  # Hardware configuration
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
 }
